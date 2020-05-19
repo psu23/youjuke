@@ -1,11 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>YouJuke</title>
+    <!--Link to bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!--Link to jQuery-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Link to stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Add this for mobile viewing-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-    
+
+    <div class="wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-3" id="left-panel">
+
+                    <div class="container">
+
+                        <div id="left-panel-title">
+                            <h2>queue</h2>
+                        </div>
+
+                        <div class="queued-tracks-list">
+                            <div class="queued-track-container">
+                                <span class="queued-track">This is an upcoming track</span>
+
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary">👍</button>
+                                    <button type="button" class="btn btn-secondary">👎</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6" id="center-panel">
+
+                    <div id="title-and-track">
+
+                        <div class="container">
+
+                            <div class="row">
+
+                                <div class="col-md-3" id="app-title">
+                                    <h1>YouJuke</h1>
+                                </div>
+
+                                <div class="col-md-6" id="current-track-box">
+                                </div>
+
+                                <div class="col-md-3" id="current-track-thumbs">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-secondary">👍</button>
+                                        <button type="button" class="btn btn-secondary">👎</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="search-input"
+                            placeholder="enter track title or artist..." aria-label="Spotify search"
+                            aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">search</button>
+                        </div>
+                    </div>
+
+                    <div class="music-facts-container">
+                        <div class="music-fact">
+                            <h3>Music facts go here</h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3" id="right-panel">
+                    <div class="chat-container"></div>
+                    <h2>Chat</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
+
 </html>
