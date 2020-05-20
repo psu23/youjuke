@@ -1,0 +1,24 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.wrapper {
+    margin-top: 10px;
+}
+
+#left-panel, #center-panel, #right-panel {
+    background-color: rgb(34, 34, 34);
+    padding: 5px;
+    height: 550px;
+}
+
+.music-facts-container, .queued-track-container {
+    background: rgb(58, 58, 58);
+}
+
+
+[class*="col-"] {
+    background-clip: padding-box;
+    border: 5px solid transparent;
+}
