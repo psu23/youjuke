@@ -23,6 +23,16 @@ body {
     overflow: auto;
 }
 
+.queued-song {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.album-pic {
+    width: 50px;
+    height: 50px;
+}
+
 
 [class*="col-"] {
     background-clip: padding-box;
