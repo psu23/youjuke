@@ -65,7 +65,7 @@ function renderQueue() {
         }
         
         $.ajax(settings).done(function (response) {
-            console.log(response);
+            
             var results = response;
 
             var queuedTrack = $("<div>");
@@ -131,14 +131,13 @@ $("#search-button").on("click", function (event) {
     $(".music-facts-container").prepend(searchResultsContainer);
 
     $.ajax(settings).done(function (response) {
-        console.log(response.data[0].preview);
-
+        
         var results = response.data;
 
         for (var i = 0; i < 10; i++) {
 
-            var searchResult = $("<div>");
-            searchResult.addClass("search-result");
+            var searchResult = $("<div>").addClass("search-result");
+            // searchResult.addClass("search-result"); Added this to the line above
             var artistName = results[i].artist.name;
             var songName = results[i].title;
             var songNameP = $("<p>").text(songName);
@@ -148,9 +147,9 @@ $("#search-button").on("click", function (event) {
             var deezerID = results[i].id;
 
             //audio information
-            var preview = results[i].preview;
-            var audioSample = $("<audio>");
-            audioSample.attr("src", preview);
+            // var preview = results[i].preview;
+            // var audioSample = $("<audio>"); I don't think this is necessary
+            // audioSample.attr("src", preview);
 
             //album artwork information
             var thumbnail = results[i].album.cover;
@@ -164,7 +163,7 @@ $("#search-button").on("click", function (event) {
             addToQueue.text("add");
 
             searchResult.append(thumbnailImg);
-            searchResult.append(audioSample);
+            // searchResult.append(audioSample);
             searchResult.append(songNameP);
             searchResult.append(artistNameP);
             searchResult.append(addToQueue);
@@ -174,18 +173,29 @@ $("#search-button").on("click", function (event) {
 
 
         }
+        $(document).on("click", ".add-button", function (event){
+        
+            for (var i = 0; response.data.length; i++) {
+                var newSong = {};
+                if (response.data[i].id == $(this).attr("data-deezer")) {
+                    newSong = {artistName: response.data[i].artist.name, songName: response.data[i].title};
+                    playlist.push(newSong);
+                }
+            }
+        })
     })
 
 });
 
-$(document).on("click", ".add-button", function (event) {
+// $(document).on("click", ".add-button", function (event) {
 
-    var deezerID = $(this).attr("data-deezer");
-    console.log(deezerID);
-    queuedTracksArr.push(deezerID);
-    renderQueue();
+//     var deezerID = $(this).attr("data-deezer");
+//     console.log(this);
+//     queuedTracksArr.push(deezerID);
+//     playlist.push()
+//     renderQueue();
 
-});
+// });
 
 
 
@@ -242,4 +252,19 @@ audio.on("ended", (event) => {
     $("#song").attr("src", playlist[songIndex].preview);
     playPause();
 });
+
+function getLyrics() {
+    var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
+    
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function (response) {
+            $(".music-fact").append(response);
+        })
+}
+getLyrics();
+
+// queryURL: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + currentSong + "&q_artist=" + currentArtist + "&apikey=2cfbc4e7d607a2feef36118210237514"
 
