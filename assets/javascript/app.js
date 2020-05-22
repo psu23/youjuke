@@ -54,7 +54,7 @@ function renderQueue() {
         var deezerID = queuedTracksArr[i];
 
         var settings = {
-            "async": true,
+            "async": false,//set to false to keep proper order
             "crossDomain": true,
             "url": "https://deezerdevs-deezer.p.rapidapi.com/track/" + deezerID,
             "method": "GET",
@@ -65,7 +65,7 @@ function renderQueue() {
         }
         
         $.ajax(settings).done(function (response) {
-            
+        
             var results = response;
 
             var queuedTrack = $("<div>");
@@ -107,7 +107,7 @@ function renderQueue() {
 
 }
 
-renderQueue();
+renderQueue();//or $(document).ready(renderQueue());
 
 $("#search-button").on("click", function (event) {
     //first remove the results from any previous search
@@ -146,11 +146,6 @@ $("#search-button").on("click", function (event) {
             //deezer catalogue id
             var deezerID = results[i].id;
 
-            //audio information
-            // var preview = results[i].preview;
-            // var audioSample = $("<audio>"); I don't think this is necessary
-            // audioSample.attr("src", preview);
-
             //album artwork information
             var thumbnail = results[i].album.cover;
             var thumbnailImg = $("<img>");
@@ -187,15 +182,15 @@ $("#search-button").on("click", function (event) {
 
 });
 
-// $(document).on("click", ".add-button", function (event) {
+$(document).on("click", ".add-button", function (event) {
 
-//     var deezerID = $(this).attr("data-deezer");
-//     console.log(this);
-//     queuedTracksArr.push(deezerID);
-//     playlist.push()
-//     renderQueue();
+    var deezerID = $(this).attr("data-deezer");
+    console.log(this);
+    queuedTracksArr.push(deezerID);
+    playlist.push()
+    renderQueue();
 
-// });
+});
 
 
 
@@ -258,12 +253,22 @@ function getLyrics() {
     
     $.ajax({
         url: queryURL,
-        method: "GET"
+        type: "GET",
+        data: {
+            format: "jsonp",
+            callback: "jsonp_callback"
+        },
+        dataType: "jsonp",
+        jsonpCallback: "jsonp_callback",
+        contentType: "application/json"
     })
         .then(function (response) {
-            $(".music-fact").append(response);
+            var results = response;
+            var musicLyrics = results.message.body.lyrics.lyrics_body;
+            $(".music-lyrics").append(musicLyrics);
         })
 }
+
 getLyrics();
 
 // queryURL: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + currentSong + "&q_artist=" + currentArtist + "&apikey=2cfbc4e7d607a2feef36118210237514"
