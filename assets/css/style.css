@@ -13,7 +13,7 @@ body {
     height: 550px;
 }
 
-.music-facts-container, .queued-track-container,
+.music-lyrics-container, .queued-track-container,
 .search-results-container {
     background: rgb(58, 58, 58);
 }

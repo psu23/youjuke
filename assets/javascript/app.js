@@ -4,40 +4,40 @@ var playlist = [
         songName: "Do I Wanna Know?",
         thumbnail: "https://api.deezer.com/album/6899610/image",
         preview: "https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3",
-        upVote: 0,
-        downVote: 0
+        upvote: 0,
+        downvote: 0
     },
     {
         artistName: "The Kinks",
         songName: "Shangri-La",
         thumbnail: "https://api.deezer.com/album/115918642/image",
         preview: "https://cdns-preview-c.dzcdn.net/stream/c-c91369d8fbb0d5c5eacc14c839741090-2.mp3",
-        upVote: 0,
-        downVote: 0
+        upvote: 0,
+        downvote: 0
     },
     {
         artistName: "Pink Floyd",
         songName: "Money",
         thumbnail: "https://api.deezer.com/album/12114240/image",
         preview: "https://cdns-preview-f.dzcdn.net/stream/c-f15121774a7b2486d30328d0ca4b5d05-2.mp3",
-        upVote: 0,
-        downVote: 0
+        upvote: 0,
+        downvote: 0
     },
     {
         artistName: "The Mars Volta",
         songName: "The Widow",
         thumbnail: "https://api.deezer.com/album/230048/image",
         preview: "https://cdns-preview-b.dzcdn.net/stream/c-ba2309052dbba45d2362d5175f306db8-6.mp3",
-        upVote: 0,
-        downVote: 0
+        upvote: 0,
+        downvote: 0
     },
     {
         artistName: "Portugal. The Man",
         songName: "Modern Jesus",
         thumbnail: "https://api.deezer.com/album/6607726/image",
         preview: "https://cdns-preview-d.dzcdn.net/stream/c-d6afe829858e7b165d53df214a2123a8-2.mp3",
-        upVote: 0,
-        downVote: 0
+        upvote: 0,
+        downvote: 0
     }
 ];
 
@@ -46,68 +46,94 @@ var songIndex = 0;
 var queuedTracksArr = ["70322130", "781869182", "116914026", "2309096", "67511941"];
 
 function renderQueue() {
-
     $(".queued-track").empty();
+    
+    for (var i = songIndex; i < playlist.length; i++){
+    
+        var queuedTrack = $("<div>");
+        queuedTrack.addClass("queued-song");
+        var artistName = playlist[i].artistName;
+        var songName = playlist[i].songName;
+        var songNameP = $("<p>").text(songName);
+        var artistNameP = $("<p>").text(artistName);
 
-    for (var i = 0; i < queuedTracksArr.length; i++) {
+        //consider adding data attributes to this track..
+        //..one for the index of the array..
+        //..and perhaps one for the deezer song id..
 
-        var deezerID = queuedTracksArr[i];
+        //album artwork information
+        var thumbnail = playlist[i].thumbnail;
+        var thumbnailImg = $("<img>").addClass("album-pic");
+        thumbnailImg.attr("src", thumbnail);
 
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://deezerdevs-deezer.p.rapidapi.com/track/" + deezerID,
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-                "x-rapidapi-key": "2b465189c6msh70d8eec8b15ca2bp19227bjsn69a9133db5ad"
-            }
-        }
+        queuedTrack.append(thumbnailImg);
+        queuedTrack.append(songNameP);
+        queuedTrack.append(artistNameP);
+
+        $(".queued-track").append(queuedTrack);
+    }
+
+    // $(".queued-track").empty();
+
+    // for (var i = 0; i < queuedTracksArr.length; i++) {
+
+    //     var deezerID = queuedTracksArr[i];
+
+    //     var settings = {
+    //         "async": false,//set to false to keep proper order
+    //         "crossDomain": true,
+    //         "url": "https://deezerdevs-deezer.p.rapidapi.com/track/" + deezerID,
+    //         "method": "GET",
+    //         "headers": {
+    //             "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+    //             "x-rapidapi-key": "2b465189c6msh70d8eec8b15ca2bp19227bjsn69a9133db5ad"
+    //         }
+    //     }
         
-        $.ajax(settings).done(function (response) {
-            
-            var results = response;
+    //     $.ajax(settings).done(function (response) {
+        
+    //         var results = response;
 
-            var queuedTrack = $("<div>");
-            queuedTrack.addClass("queued-song");
-            var artistName = results.artist.name;
-            var songName = results.title;
-            var songNameP = $("<p>").text(songName);
-            var artistNameP = $("<p>").text(artistName);
+    //         var queuedTrack = $("<div>");
+    //         queuedTrack.addClass("queued-song");
+    //         var artistName = results.artist.name;
+    //         var songName = results.title;
+    //         var songNameP = $("<p>").text(songName);
+    //         var artistNameP = $("<p>").text(artistName);
 
-            //consider adding data attributes to this track..
-            //..one for the index of the array..
-            //..and perhaps one for the deezer song id..
+    //         //consider adding data attributes to this track..
+    //         //..one for the index of the array..
+    //         //..and perhaps one for the deezer song id..
 
-            //audio information
-            var preview = results.preview;
-            var audioSample = $("<audio>");
-            audioSample.attr("src", preview);
+    //         //audio information
+    //         var preview = results.preview;
+    //         var audioSample = $("<audio>");
+    //         audioSample.attr("src", preview);
 
-            //album artwork information
-            var thumbnail = results.album.cover_small;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
+    //         //album artwork information
+    //         var thumbnail = results.album.cover_small;
+    //         var thumbnailImg = $("<img>").addClass("album-pic");
+    //         thumbnailImg.attr("src", thumbnail);
 
-            queuedTrack.append(thumbnailImg);
-            queuedTrack.append(audioSample);
-            queuedTrack.append(songNameP);
-            queuedTrack.append(artistNameP);
-
-
-
-            $(".queued-track").append(queuedTrack);
+    //         queuedTrack.append(thumbnailImg);
+    //         queuedTrack.append(audioSample);
+    //         queuedTrack.append(songNameP);
+    //         queuedTrack.append(artistNameP);
 
 
-        });
-    };
+
+    //         $(".queued-track").append(queuedTrack);
+
+
+    //     });
+    // };
 
 
 
 
 }
 
-renderQueue();
+$(document).ready(renderQueue());//or $(document).ready(renderQueue());
 
 $("#search-button").on("click", function (event) {
     //first remove the results from any previous search
@@ -128,12 +154,11 @@ $("#search-button").on("click", function (event) {
     //create the search results div only when a search is first called
     var searchResultsContainer = $("<div>");
     searchResultsContainer.addClass("search-results-container");
-    $(".music-facts-container").prepend(searchResultsContainer);
+    $(".music-lyrics-container").prepend(searchResultsContainer);
 
     $.ajax(settings).done(function (response) {
         
         var results = response.data;
-
         for (var i = 0; i < 10; i++) {
 
             var searchResult = $("<div>").addClass("search-result");
@@ -145,11 +170,6 @@ $("#search-button").on("click", function (event) {
 
             //deezer catalogue id
             var deezerID = results[i].id;
-
-            //audio information
-            // var preview = results[i].preview;
-            // var audioSample = $("<audio>"); I don't think this is necessary
-            // audioSample.attr("src", preview);
 
             //album artwork information
             var thumbnail = results[i].album.cover;
@@ -174,12 +194,16 @@ $("#search-button").on("click", function (event) {
 
         }
         $(document).on("click", ".add-button", function (event){
-        
+        console.log("added!");
             for (var i = 0; response.data.length; i++) {
+                var results = response.data;
                 var newSong = {};
-                if (response.data[i].id == $(this).attr("data-deezer")) {
-                    newSong = {artistName: response.data[i].artist.name, songName: response.data[i].title};
+                if (results[i].id == $(this).attr("data-deezer")) {
+                    newSong = {artistName: results[i].artist.name, songName: results[i].title, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0};
                     playlist.push(newSong);
+                    renderQueue();
+
+                    // consider adding a modal indicating that the song was successfully added
                 }
             }
         })
@@ -231,6 +255,7 @@ function songInfo() {
 
 function playPause() {
     if (playing) {
+        getLyrics();
         const song = document.querySelector('#song');
 
         song.play(); //this will play the audio track
@@ -251,20 +276,30 @@ audio.on("ended", (event) => {
     playing = true;
     $("#song").attr("src", playlist[songIndex].preview);
     playPause();
+    getLyrics();
 });
 
 function getLyrics() {
+    $(".music-lyrics").empty();
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
     
     $.ajax({
         url: queryURL,
-        method: "GET"
+        type: "GET",
+        data: {
+            format: "jsonp",
+            callback: "jsonp_callback"
+        },
+        dataType: "jsonp",
+        jsonpCallback: "jsonp_callback",
+        contentType: "application/json"
     })
         .then(function (response) {
-            $(".music-fact").append(response);
+            var results = response;
+            var musicLyrics = results.message.body.lyrics.lyrics_body;
+            $(".music-lyrics").append(musicLyrics);
         })
 }
-getLyrics();
 
 // queryURL: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + currentSong + "&q_artist=" + currentArtist + "&apikey=2cfbc4e7d607a2feef36118210237514"
 
