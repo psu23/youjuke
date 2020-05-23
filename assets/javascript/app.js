@@ -50,7 +50,7 @@ var songIndex = 0;
 
 function renderQueue() {
     $(".queued-track").empty();
-    
+
     for (var i = songIndex; i < playlist.length; i++){
     
         if (i == songIndex) {
@@ -60,6 +60,26 @@ function renderQueue() {
             var songName = playlist[i].songName;
             var songNameP = $("<p>").text(songName);
             var artistNameP = $("<p>").text(artistName);
+            var thumbsDiv = $("<div>");
+          
+            thumbsDiv.addClass("btn-group");
+            thumbsDiv.attr("role", "group");
+          
+            var upButton = $("<button>");
+            upButton.attr("type", "button");
+            upButton.attr("id", playlist[i].deezerID + "-u");
+            upButton.addClass("btn btn-secondary");
+            upButton.text("👍");
+          
+            var downButton = $("<button>");
+            downButton.attr("type", "button");
+            downButton.attr("id", playlist[i].deezerID + "-d");
+            downButton.addClass("btn btn-secondary");
+            downButton.text("👎");
+          
+            thumbsDiv.append(upButton);
+            thumbsDiv.append(downButton);
+
 
             //album artwork information
             var thumbnail = playlist[i].thumbnail;
@@ -69,6 +89,7 @@ function renderQueue() {
             queuedTrack.append(thumbnailImg);
             queuedTrack.append(songNameP);
             queuedTrack.append(artistNameP);
+            queuedTrack.append(thumbsDiv);
 
             $("#current-track-box").empty();
             $("#current-track-box").append(queuedTrack);
@@ -80,15 +101,32 @@ function renderQueue() {
             var songName = playlist[i].songName;
             var songNameP = $("<p>").text(songName);
             var artistNameP = $("<p>").text(artistName);
+            var thumbsDiv = $("<div>");
 
             //album artwork information
             var thumbnail = playlist[i].thumbnail;
             var thumbnailImg = $("<img>").addClass("album-pic");
             thumbnailImg.attr("src", thumbnail);
+          
+            var upButton = $("<button>");
+            upButton.attr("type", "button");
+            upButton.attr("id", playlist[i].deezerID + "-u");
+            upButton.addClass("btn btn-secondary");
+            upButton.text("👍");
+          
+            var downButton = $("<button>");
+            downButton.attr("type", "button");
+            downButton.attr("id", playlist[i].deezerID + "-d");
+            downButton.addClass("btn btn-secondary");
+            downButton.text("👎");
+          
+            thumbsDiv.append(upButton);
+            thumbsDiv.append(downButton);
 
             queuedTrack.append(thumbnailImg);
             queuedTrack.append(songNameP);
             queuedTrack.append(artistNameP);
+            queuedTrack.append(thumbsDiv);
 
             $(".queued-track").append(queuedTrack);
         }
@@ -121,7 +159,7 @@ $("#search-button").on("click", function (event) {
     $(".search-results-container").append(searchResults);
 
     $.ajax(settings).done(function (response) {
-        
+
         var results = response.data;
         for (var i = 0; i < 10; i++) {
 
@@ -157,12 +195,13 @@ $("#search-button").on("click", function (event) {
 
 
         }
-        $(document).on("click", ".add-button", function (event){
-        console.log("added!");
+        $(document).on("click", ".add-button", function (event) {
+            console.log("added!");
             for (var i = 0; response.data.length; i++) {
                 var results = response.data;
                 var newSong = {};
                 if (results[i].id == $(this).attr("data-deezer")) {
+
                     newSong = {artistName: results[i].artist.name, songName: results[i].title, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id};
                     playlist.push(newSong);
                     renderQueue();
@@ -207,7 +246,7 @@ $("#song").on("ended", (event) => {
 });
 
 function getLyrics() {
-    
+
     $(".music-lyrics-container").empty();
     var musicLyrics = $("<div>");
     musicLyrics.addClass("music-lyrics");
@@ -216,7 +255,7 @@ function getLyrics() {
     $(".music-lyrics-container").append(musicLyrics);
 
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-    
+
     $.ajax({
         url: queryURL,
         type: "GET",
