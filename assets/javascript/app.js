@@ -67,14 +67,14 @@ function renderQueue() {
           
             var upButton = $("<button>");
             upButton.attr("type", "button");
-            upButton.attr("id", playlist[i].deezerID + "-u");
-            upButton.addClass("btn btn-secondary");
+            upButton.attr("id", playlist[i].deezerID);
+            upButton.addClass("btn btn-secondary upvote");
             upButton.text("👍");
           
             var downButton = $("<button>");
             downButton.attr("type", "button");
-            downButton.attr("id", playlist[i].deezerID + "-d");
-            downButton.addClass("btn btn-secondary");
+            downButton.attr("id", playlist[i].deezerID);
+            downButton.addClass("btn btn-secondary downvote");
             downButton.text("👎");
           
             thumbsDiv.append(upButton);
@@ -110,14 +110,14 @@ function renderQueue() {
           
             var upButton = $("<button>");
             upButton.attr("type", "button");
-            upButton.attr("id", playlist[i].deezerID + "-u");
-            upButton.addClass("btn btn-secondary");
+            upButton.attr("id", playlist[i].deezerID);
+            upButton.addClass("btn btn-secondary upvote");
             upButton.text("👍");
           
             var downButton = $("<button>");
             downButton.attr("type", "button");
-            downButton.attr("id", playlist[i].deezerID + "-d");
-            downButton.addClass("btn btn-secondary");
+            downButton.attr("id", playlist[i].deezerID);
+            downButton.addClass("btn btn-secondary downvote");
             downButton.text("👎");
           
             thumbsDiv.append(upButton);
@@ -276,4 +276,7 @@ function getLyrics() {
     
 }
 
-
+$(document).on("click", ".upvote", function (event) {
+    var grabbedID = $(this).attr("id");
+    console.log(grabbedID);
+})
