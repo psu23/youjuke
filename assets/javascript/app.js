@@ -137,7 +137,7 @@ $(document).ready(renderQueue());//or $(document).ready(renderQueue());
 
 $("#search-button").on("click", function (event) {
     //first remove the results from any previous search
-    $(".search-results-container").remove();
+    $(".search-results").remove();
 
     var searchName = $("#search-input").val().trim();
     var settings = {
@@ -152,9 +152,11 @@ $("#search-button").on("click", function (event) {
     }
 
     //create the search results div only when a search is first called
-    var searchResultsContainer = $("<div>");
-    searchResultsContainer.addClass("search-results-container");
-    $(".music-lyrics-container").prepend(searchResultsContainer);
+    var searchResults = $("<div>");
+    searchResults.addClass("search-results");
+    searchResults.css("height", "150px");
+    // searchResults.css("overflow", "auto");
+    $(".search-results-container").append(searchResults);
 
     $.ajax(settings).done(function (response) {
         
@@ -189,7 +191,7 @@ $("#search-button").on("click", function (event) {
             searchResult.append(addToQueue);
 
 
-            searchResultsContainer.append(searchResult);
+            searchResults.append(searchResult);
 
 
         }
@@ -280,7 +282,14 @@ audio.on("ended", (event) => {
 });
 
 function getLyrics() {
-    $(".music-lyrics").empty();
+    
+    $(".music-lyrics-container").empty();
+    var musicLyrics = $("<div>");
+    musicLyrics.addClass("music-lyrics");
+    // musicLyrics.css("overflow", "auto");
+    $(".music-lyrics-container").append("<h3>Lyrics</h3>");
+    $(".music-lyrics-container").append(musicLyrics);
+
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
     
     $.ajax({

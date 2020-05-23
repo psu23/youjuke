@@ -1,6 +1,7 @@
-body {
+body, html {
     background-color: black;
     color: white;
+    height: 100%;
 }
 
 .wrapper {
@@ -18,8 +19,17 @@ body {
     background: rgb(58, 58, 58);
 }
 
+.results-and-lyrics {
+    height: 410px;
+}
+
 .search-results-container {
-    height: 150px;
+    max-height: 30%;
+    overflow: auto;
+}
+
+.music-lyrics-container {
+    max-height: 70%;
     overflow: auto;
 }
 
