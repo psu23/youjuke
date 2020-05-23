@@ -43,6 +43,16 @@ body, html {
     overflow: auto;
 }
 
+.search-result {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-name {
+    width: 410px;
+    margin-bottom: 5px;
+}
+
 .music-lyrics-container {
     max-height: 70%;
     overflow: auto;
@@ -70,6 +80,10 @@ body, html {
 
 .btn {
     padding: 5px;
+}
+
+.add-button {
+    height:35px;
 }
 
 .container {

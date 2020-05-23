@@ -164,6 +164,7 @@ $("#search-button").on("click", function (event) {
         for (var i = 0; i < 10; i++) {
 
             var searchResult = $("<div>").addClass("search-result");
+            var nameContainers = $("<div>").addClass("name-container search-name");
             var artistName = results[i].artist.name;
             var songName = results[i].title;
             var songNameP = $("<p>").text(songName);
@@ -184,9 +185,8 @@ $("#search-button").on("click", function (event) {
             addToQueue.text("add");
 
             searchResult.append(thumbnailImg);
-            // searchResult.append(audioSample);
-            searchResult.append(songNameP);
-            searchResult.append(artistNameP);
+            nameContainers.append(songNameP, artistNameP);
+            searchResult.append(nameContainers);
             searchResult.append(addToQueue);
 
 
