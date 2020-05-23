@@ -49,18 +49,18 @@ var playlist = [
 var songIndex = 0;
 
 function renderQueue() {
-    $(".queued-track").empty();
+    $(".queued-track-container").empty();
 
     for (var i = songIndex; i < playlist.length; i++){
     
         if (i == songIndex) {
-            var queuedTrack = $("<div>");
-            queuedTrack.addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var nameContainer = $("<div>").addClass("name-container current-song");
             var artistName = playlist[i].artistName;
             var songName = playlist[i].songName;
-            var songNameP = $("<p>").text(songName);
-            var artistNameP = $("<p>").text(artistName);
-            var thumbsDiv = $("<div>");
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            var thumbsDiv = $("<div>").addClass("thumbs-container");
           
             thumbsDiv.addClass("btn-group");
             thumbsDiv.attr("role", "group");
@@ -86,21 +86,21 @@ function renderQueue() {
             var thumbnailImg = $("<img>").addClass("album-pic");
             thumbnailImg.attr("src", thumbnail);
 
+            nameContainer.append(songNameP, artistNameP);
             queuedTrack.append(thumbnailImg);
-            queuedTrack.append(songNameP);
-            queuedTrack.append(artistNameP);
+            queuedTrack.append(nameContainer);
             queuedTrack.append(thumbsDiv);
 
             $("#current-track-box").empty();
             $("#current-track-box").append(queuedTrack);
         }
         else {
-            var queuedTrack = $("<div>");
-            queuedTrack.addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var nameContainer = $("<div>").addClass("name-container");
             var artistName = playlist[i].artistName;
             var songName = playlist[i].songName;
-            var songNameP = $("<p>").text(songName);
-            var artistNameP = $("<p>").text(artistName);
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
             var thumbsDiv = $("<div>");
 
             //album artwork information
@@ -123,12 +123,12 @@ function renderQueue() {
             thumbsDiv.append(upButton);
             thumbsDiv.append(downButton);
 
+            nameContainer.append(songNameP, artistNameP);
             queuedTrack.append(thumbnailImg);
-            queuedTrack.append(songNameP);
-            queuedTrack.append(artistNameP);
+            queuedTrack.append(nameContainer);
             queuedTrack.append(thumbsDiv);
 
-            $(".queued-track").append(queuedTrack);
+            $(".queued-track-container").append(queuedTrack);
         }
     }
 }
@@ -164,7 +164,6 @@ $("#search-button").on("click", function (event) {
         for (var i = 0; i < 10; i++) {
 
             var searchResult = $("<div>").addClass("search-result");
-            // searchResult.addClass("search-result"); Added this to the line above
             var artistName = results[i].artist.name;
             var songName = results[i].title;
             var songNameP = $("<p>").text(songName);

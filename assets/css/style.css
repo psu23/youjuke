@@ -23,6 +23,21 @@ body, html {
     height: 410px;
 }
 
+.name-container {
+    margin: 0;
+    width: 105px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.current-song {
+    width: 200px;
+}
+
+.name-container p {
+    margin-bottom: 0;
+}
+
 .search-results-container {
     max-height: 30%;
     overflow: auto;
@@ -35,8 +50,9 @@ body, html {
 
 .queued-song {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     height: 38px;
+    justify-content: space-between;
 }
 
 .album-pic {
@@ -50,6 +66,25 @@ body, html {
 
 .input-group {
     margin-top: 35px;
+}
+
+.btn {
+    padding: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.queued-track-container {
+    height: 100%;
+}
+
+.thumbs-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
 }
 
 [class*="col-"] {
