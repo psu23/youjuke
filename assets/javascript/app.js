@@ -133,7 +133,7 @@ function renderQueue() {
     }
 }
 
-$(document).ready(renderQueue());//or $(document).ready(renderQueue());
+$(document).ready(renderQueue());
 
 $("#search-button").on("click", function (event) {
     //first remove the results from any previous search
@@ -176,7 +176,7 @@ $("#search-button").on("click", function (event) {
             //album artwork information
             var thumbnail = results[i].album.cover;
             var thumbnailImg = $("<img>");
-            thumbnailImg.attr("src", thumbnail);
+            thumbnailImg.attr("src", thumbnail).addClass("album-pic");
 
             //add button for option of adding it to the queue
             var addToQueue = $("<button>");
@@ -214,7 +214,7 @@ $("#search-button").on("click", function (event) {
 
 });
 
-$("#play-pause").on("click", function () {
+$("#start-listening").on("click", function () {
     playPause();
 });
 
@@ -227,12 +227,11 @@ function playPause() {
 
         song.play(); //this will play the audio track
         playing = false;
+        $("#start-listening").text("Stop Listening")
     } else {
-
-
-
         song.pause();
         playing = true;
+        $("#start-listening").text("Start Listening")
     }
 }
 
