@@ -18,84 +18,75 @@
 
 <body>
 
-    <div class="wrapper">
+    <div class="container">
 
-        <div class="container">
+        <div class="row">
 
-            <div class="row">
+            <div class="col-md-3" id="left-panel">
 
-                <div class="col-md-3" id="left-panel">
+                <div class="container">
 
-                    <div class="container">
-
-                        <div id="app-title">
-                            <h1>YouJuke</h1>
-                        </div>
-
-                        <div id="left-panel-title">
-                            <h2>queue</h2>
-                        </div>
-
-                        <div class="queued-tracks-list">
-                            <div class="queued-track-container">
-                                <span class="queued-track">This is an upcoming track</span>
-
-                            </div>
-                        </div>
+                    <div id="app-title">
+                        <h1>YouJuke</h1>
                     </div>
 
+                    <div id="left-panel-title">
+                        <h2>queue</h2>
+                    </div>
+                        <div class="queued-track-container"></div>
                 </div>
 
-                <div class="col-md-6" id="center-panel">
+            </div>
 
-                    <div id="title-and-track">
+            <div class="col-md-6" id="center-panel">
 
-                        <div class="container">
+                <div id="title-and-track">
 
-                            <div class="row">
+                    <div class="container-2">
 
-                                <div class="col-md-9" id="current-track-box">
-                                </div>
+                        <div class="row">
 
-                                <div class="col-md-3">
-                                        <button type="button" class="btn btn-secondary" id="start-listening">Start Listening</button>
-                                </div>
+                            <div class="col-md-9" id="current-track-box">
+                            </div>
 
+                            <div class="col-md-3 current-song-buttons">
+                                    <button type="button" class="btn btn-secondary" id="start-listening">Start Listening</button>
                             </div>
 
                         </div>
 
                     </div>
 
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="search-input"
-                            placeholder="enter track title or artist..." aria-label="Deezer search"
-                            aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="search-button">search</button>
-                        </div>
-                    </div>
-
-                    <div class="results-and-lyrics">
-                        <div class="search-results-container">
-                        </div>
-
-                        <div class="music-lyrics-container">
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="col-md-3" id="right-panel">
-                    <div class="chat-container"></div>
-                    <h2>Chat</h2>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="search-input"
+                        placeholder="enter track title or artist..." aria-label="Deezer search"
+                        aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="search-button">search</button>
+                    </div>
                 </div>
 
+                <div class="results-and-lyrics">
+                    <div class="search-results-container">
+                    </div>
+
+                    <div class="music-lyrics-container">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3" id="right-panel">
+                <div class="chat-container"></div>
+                <h2>Chat</h2>
             </div>
 
         </div>
 
     </div>
+
     <audio src="https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3" id="song"></audio>
 
     <script src="assets/javascript/app.js"></script>
