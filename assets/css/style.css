@@ -99,6 +99,10 @@ body, html {
     height:35px;
 }
 
+#add-song-modal {
+    color: black;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -127,7 +131,7 @@ body, html {
 #clear-search {
     position: absolute;
     color: gray;
-    right: 100px;
+    right: 10px;
     font-size: 1.5em;
     visibility: hidden;
     z-index: 1;
