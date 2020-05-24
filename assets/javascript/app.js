@@ -48,6 +48,8 @@ var playlist = [
 
 var songIndex = 0;
 
+var searchResultArr = {};
+
 function renderQueue() {
     $(".queued-track-container").empty();
 
@@ -62,7 +64,6 @@ function renderQueue() {
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
             var thumbsDiv = $("<div>").addClass("thumbs-container");
-          
 
             thumbsDiv.addClass("btn-group");
             thumbsDiv.attr("role", "group");
@@ -135,83 +136,96 @@ function renderQueue() {
     }
 }
 
+function clearSearchResults() {
+    $(".search-results").remove();
+    $("#search-input").val("");
+    $("#clear-search").css("visibility", "hidden")
+}
+
 $(document).ready(renderQueue());
 
-$("#search-button").on("click", function (event) {
+$("#search-input").keyup(function (event) {
     //first remove the results from any previous search
-    $(".search-results").remove();
+    var searchStatus = $("#search-input").val();
 
-    var searchName = $("#search-input").val().trim();
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://deezerdevs-deezer.p.rapidapi.com/search?q=" + searchName,
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-            "x-rapidapi-key": "2b465189c6msh70d8eec8b15ca2bp19227bjsn69a9133db5ad"
-        }
+    if (searchStatus == "") {
+        $(".search-results").remove();
+        $("#clear-search").css("visibility", "hidden")
     }
-
-    //create the search results div only when a search is first called
-    var searchResults = $("<div>");
-    searchResults.addClass("search-results");
-    searchResults.css("height", "150px");
-    // searchResults.css("overflow", "auto");
-    $(".search-results-container").append(searchResults);
-
-    $.ajax(settings).done(function (response) {
-        var results = response.data;
-        for (var i = 0; i < 10; i++) {
-
-            var searchResult = $("<div>").addClass("search-result");
-            var nameContainers = $("<div>").addClass("name-container search-name");
-            var artistName = results[i].artist.name;
-            var songName = results[i].title_short;
-            var songNameP = $("<p>").text(songName);
-            var artistNameP = $("<p>").text(artistName);
-
-            //deezer catalogue id
-            var deezerID = results[i].id;
-
-            //album artwork information
-            var thumbnail = results[i].album.cover;
-            var thumbnailImg = $("<img>");
-            thumbnailImg.attr("src", thumbnail).addClass("album-pic");
-
-            //add button for option of adding it to the queue
-            // var addToQueue = $("<button>");
-            searchResult.attr("data-deezer", deezerID);
-            // addToQueue.addClass("add-button");
-            // addToQueue.text("add");
-
-            searchResult.append(thumbnailImg);
-            nameContainers.append(songNameP, artistNameP);
-            searchResult.append(nameContainers);
-
-
-            searchResults.append(searchResult);
-
-
-        }
-        $(document).on("click", ".search-result", function (event) {
-           
-            for (var i = 0; response.data.length; i++) {
-                var results = response.data;
-                var newSong = {};
-                if (results[i].id == $(this).attr("data-deezer")) {
-
-                    newSong = {artistName: results[i].artist.name, songName: results[i].title_short, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id};
-
-                    playlist.push(newSong);
-                    renderQueue();
-
-                    // consider adding a modal indicating that the song was successfully added
-                }
+    else {
+        $("#clear-search").css("visibility", "visible");
+        $(".search-results").replaceWith();
+        var searchName = $("#search-input").val().trim();
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://deezerdevs-deezer.p.rapidapi.com/search?q=" + searchName,
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+                "x-rapidapi-key": "2b465189c6msh70d8eec8b15ca2bp19227bjsn69a9133db5ad"
             }
-        })
-    })
+        }
 
+        //create the search results div only when a search is first called
+        var searchResults = $("<div>");
+        searchResults.addClass("search-results");
+        searchResults.css("height", "150px");
+        // searchResults.css("overflow", "auto");
+        $(".search-results-container").append(searchResults);
+
+        $.ajax(settings).done(function (response) {
+            var results = response.data;
+            searchResultArr = response.data;
+            for (var i = 0; i < 10; i++) {
+
+                var searchResult = $("<div>").addClass("search-result");
+                var nameContainers = $("<div>").addClass("name-container search-name");
+                var artistName = results[i].artist.name;
+                var songName = results[i].title_short;
+                var songNameP = $("<p>").text(songName);
+                var artistNameP = $("<p>").text(artistName);
+
+                //deezer catalogue id
+                var deezerID = results[i].id;
+
+                //album artwork information
+                var thumbnail = results[i].album.cover;
+                var thumbnailImg = $("<img>");
+                thumbnailImg.attr("src", thumbnail).addClass("album-pic");
+
+                //add button for option of adding it to the queue
+                // var addToQueue = $("<button>");
+                searchResult.attr("data-deezer", deezerID);
+                // addToQueue.addClass("add-button");
+                // addToQueue.text("add");
+
+                searchResult.append(thumbnailImg);
+                nameContainers.append(songNameP, artistNameP);
+                searchResult.append(nameContainers);
+
+
+                searchResults.append(searchResult);
+
+            }
+            $(document).on("click", ".search-result", function (event) {
+
+                for (var i = 0; searchResultArr.length; i++) {
+                    var results = searchResultArr;
+                    var newSong = {};
+                    if (results[i].id == $(this).attr("data-deezer")) {
+
+                        newSong = { artistName: results[i].artist.name, songName: results[i].title_short, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id };
+                        playlist.push(newSong);
+                        renderQueue();
+
+                        // consider adding a modal indicating that the song was successfully added
+                    }
+                }
+            })
+            $(document).on("click", "#clear-search", clearSearchResults)
+        })
+    }
 });
 
 $("#start-listening").on("click", function () {
@@ -246,7 +260,7 @@ $("#song").on("ended", (event) => {
     playing = true;
     $("#song").attr("src", playlist[songIndex].preview);
     playPause();
-    getLyrics();
+    // getLyrics();
     renderQueue();
 });
 
@@ -281,6 +295,23 @@ function getLyrics() {
 
 }
 
+
+function sortPlaylist(arr) {
+    var sorted = false;
+    while (!sorted) {
+        sorted = true;
+        for (var i = songIndex + 1; i < arr.length - 1; i++) {
+            if (arr[i].upvote < arr[i + 1].upvote) {
+                sorted = false;
+                var temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+    }
+    return arr;
+    renderQueue();
+}
 $(document).on("click", ".upvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote++;
@@ -292,31 +323,5 @@ $(document).on("click", ".downvote", function (event) {
     playlist[index].upvote--;
     console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
 })
-
-
-
-// function sortPlaylist(arr) {
-
-//     var sorted = false;
-
-//     // console.log("playlist[0].songName: " + playlist[0].songName);
-//     // console.log("playlist[0].upvote: " + playlist[0].upvote);
-
-//     while (!sorted) {
-//         for (var i = 0; i < arr.length; i++) {
-//             if (arr[i].upvote > arr[i + 1].upvote) {
-//                 sorted = false;
-//                 var temp = arr[i];
-//                 arr[i] = arr[i+1];
-//                 arr[i+1] = temp;
-//             }
-//         }
-//     }
-
-//     var playlist = arr;
-//     return playlist;
-    
-
-// }
 
 // sortPlaylist(playlist);
