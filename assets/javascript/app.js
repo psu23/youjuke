@@ -54,7 +54,7 @@ function renderQueue() {
     $(".queued-track-container").empty();
 
     for (var i = songIndex; i < playlist.length; i++) {
-
+        console.log(playlist[i].songName + ":" + playlist[i].upvote)
         if (i == songIndex) {
             var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
             var nameContainer = $("<div>").addClass("name-container current-song");
@@ -295,7 +295,6 @@ function getLyrics() {
 
 }
 
-
 function sortPlaylist(arr) {
     var sorted = false;
     while (!sorted) {
@@ -309,12 +308,14 @@ function sortPlaylist(arr) {
             }
         }
     }
-    return arr;
     renderQueue();
+    // return arr;
 }
+
 $(document).on("click", ".upvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote++;
+    sortPlaylist(playlist);
     console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
 })
 
