@@ -54,7 +54,7 @@ function renderQueue() {
     $(".queued-track-container").empty();
 
     for (var i = songIndex; i < playlist.length; i++) {
-        console.log(playlist[i].songName + ":" + playlist[i].upvote)
+        
         if (i == songIndex) {
             var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
             var nameContainer = $("<div>").addClass("name-container current-song");
@@ -179,7 +179,7 @@ $("#search-input").keyup(function (event) {
             searchResultArr = response.data;
             for (var i = 0; i < 10; i++) {
 
-                var searchResult = $("<div>").addClass("search-result");
+                var searchResult = $("<div>").addClass("search-result").attr("data-target", "#add-song-modal").attr("data-toggle", "modal").attr("data-backdrop", "false");
                 var nameContainers = $("<div>").addClass("name-container search-name");
                 var artistName = results[i].artist.name;
                 var songName = results[i].title_short;
@@ -219,11 +219,15 @@ $("#search-input").keyup(function (event) {
                         playlist.push(newSong);
                         renderQueue();
 
-                        // consider adding a modal indicating that the song was successfully added
+                        $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
+                            window.setTimeout(function () {
+                                $("#add-song-modal").modal("hide");
+                            }, 1000);
+                        });
                     }
                 }
             })
-            $(document).on("click", "#clear-search", clearSearchResults)
+            $(document).on("click", "#clear-search", clearSearchResults);
         })
     }
 });
@@ -316,13 +320,10 @@ $(document).on("click", ".upvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote++;
     sortPlaylist(playlist);
-    console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
 })
 
 $(document).on("click", ".downvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote--;
-    console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
 })
 
-// sortPlaylist(playlist);
