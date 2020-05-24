@@ -14,6 +14,11 @@ body, html {
     height: 550px;
 }
 
+#left-panel {
+    min-height: 550px;
+    height: 100%;
+}
+
 .music-lyrics-container, .queued-track-container,
 .search-results-container {
     background: rgb(58, 58, 58);
@@ -26,8 +31,8 @@ body, html {
 .name-container {
     margin: 0;
     width: 105px;
-    height: 50px;
-    overflow: hidden;
+    min-height: 50px;
+    height: 100%;
 }
 
 .current-song {
@@ -38,6 +43,11 @@ body, html {
     margin-bottom: 0;
 }
 
+.search-result:hover, .queued-song:hover {
+    cursor: pointer;
+    background-color: rgb(95, 95, 95);
+}
+
 .search-results-container {
     max-height: 30%;
     overflow: auto;
@@ -45,7 +55,6 @@ body, html {
 
 .search-result {
     display: flex;
-    justify-content: space-between;
 }
 
 .search-name {
@@ -56,18 +65,19 @@ body, html {
 .music-lyrics-container {
     max-height: 70%;
     overflow: auto;
+    padding: 5px;
 }
 
 .queued-song {
     display: flex;
-    margin-bottom: 20px;
-    height: 38px;
+    min-height: 50px;
     justify-content: space-between;
 }
 
 .album-pic {
     width: 50px;
     height: 50px;
+    margin: 5px;
 }
 
 .btn-group {
@@ -75,11 +85,14 @@ body, html {
 }
 
 .input-group {
-    margin-top: 35px;
+    margin-top: 15px;
 }
 
 .btn {
     padding: 5px;
+    height: 36px;
+    margin-top: 5px;
+    margin-right: 3px;
 }
 
 .add-button {
@@ -89,16 +102,47 @@ body, html {
 .container {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
 
 .queued-track-container {
     height: 100%;
+    line-height: 1.25;
+}
+
+.artist-name {
+    font-size: .75em;
 }
 
 .thumbs-container {
     display: flex;
     flex-direction: row;
     justify-content: end;
+}
+
+#left-panel .container {
+    margin: 0;
+}
+
+#search-button {
+    width: 85px;
+    margin: 0;
+    height: 38px;
+}
+
+#start-listening {
+    padding-right: 5px;
+}
+
+.current-song-container {
+    display: flex;
+    min-height: 50px;
+    justify-content: space-between;
+}
+
+.current-album {
+    height: 75px;
+    width: 75px;
 }
 
 [class*="col-"] {
