@@ -5,7 +5,7 @@ var playlist = [
         thumbnail: "https://api.deezer.com/album/6899610/image",
         preview: "https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3",
         upvote: 0,
-        downvote: 0,
+        // downvote: 0,
         deezerID: 70322130
     },
     {
@@ -14,7 +14,7 @@ var playlist = [
         thumbnail: "https://api.deezer.com/album/115918642/image",
         preview: "https://cdns-preview-c.dzcdn.net/stream/c-c91369d8fbb0d5c5eacc14c839741090-2.mp3",
         upvote: 0,
-        downvote: 0,
+        // downvote: 0,
         deezerID: 781869182
     },
     {
@@ -23,7 +23,7 @@ var playlist = [
         thumbnail: "https://api.deezer.com/album/12114240/image",
         preview: "https://cdns-preview-f.dzcdn.net/stream/c-f15121774a7b2486d30328d0ca4b5d05-2.mp3",
         upvote: 0,
-        downvote: 0,
+        // downvote: 0,
         deezerID: 116914026
     },
     {
@@ -32,7 +32,7 @@ var playlist = [
         thumbnail: "https://api.deezer.com/album/230048/image",
         preview: "https://cdns-preview-b.dzcdn.net/stream/c-ba2309052dbba45d2362d5175f306db8-6.mp3",
         upvote: 0,
-        downvote: 0,
+        // downvote: 0,
         deezerID: 2309096
     },
     {
@@ -41,7 +41,7 @@ var playlist = [
         thumbnail: "https://api.deezer.com/album/6607726/image",
         preview: "https://cdns-preview-d.dzcdn.net/stream/c-d6afe829858e7b165d53df214a2123a8-2.mp3",
         upvote: 0,
-        downvote: 0,
+        // downvote: 0,
         deezerID: 67511941
     }
 ];
@@ -51,32 +51,34 @@ var songIndex = 0;
 function renderQueue() {
     $(".queued-track-container").empty();
 
-    for (var i = songIndex; i < playlist.length; i++){
-    
+    for (var i = songIndex; i < playlist.length; i++) {
+
         if (i == songIndex) {
             var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
             var nameContainer = $("<div>").addClass("name-container current-song");
             var artistName = playlist[i].artistName;
             var songName = playlist[i].songName;
+
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
             var thumbsDiv = $("<div>").addClass("thumbs-container");
           
+
             thumbsDiv.addClass("btn-group");
             thumbsDiv.attr("role", "group");
-          
+
             var upButton = $("<button>");
             upButton.attr("type", "button");
-            upButton.attr("id", playlist[i].deezerID);
+            upButton.attr("data-index", i);
             upButton.addClass("btn btn-secondary upvote");
             upButton.text("👍");
-          
+
             var downButton = $("<button>");
             downButton.attr("type", "button");
-            downButton.attr("id", playlist[i].deezerID);
+            downButton.attr("data-index", i);
             downButton.addClass("btn btn-secondary downvote");
             downButton.text("👎");
-          
+
             thumbsDiv.append(upButton);
             thumbsDiv.append(downButton);
 
@@ -107,19 +109,19 @@ function renderQueue() {
             var thumbnail = playlist[i].thumbnail;
             var thumbnailImg = $("<img>").addClass("album-pic");
             thumbnailImg.attr("src", thumbnail);
-          
+
             var upButton = $("<button>");
             upButton.attr("type", "button");
-            upButton.attr("id", playlist[i].deezerID);
+            upButton.attr("data-index", i);
             upButton.addClass("btn btn-secondary upvote");
             upButton.text("👍");
-          
+
             var downButton = $("<button>");
             downButton.attr("type", "button");
-            downButton.attr("id", playlist[i].deezerID);
+            downButton.attr("data-index", i);
             downButton.addClass("btn btn-secondary downvote");
             downButton.text("👎");
-          
+
             thumbsDiv.append(upButton);
             thumbsDiv.append(downButton);
 
@@ -200,6 +202,7 @@ $("#search-button").on("click", function (event) {
                 if (results[i].id == $(this).attr("data-deezer")) {
 
                     newSong = {artistName: results[i].artist.name, songName: results[i].title_short, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id};
+
                     playlist.push(newSong);
                     renderQueue();
 
@@ -232,7 +235,13 @@ function playPause() {
     }
 }
 
+var playedTracks = [];
+
 $("#song").on("ended", (event) => {
+    //remove first (most recently finished) track from playlist
+    // var playedTrack = playlist.shift();
+    // playedTracks.push(playedTrack);
+    // sortPlaylist(playlist);
     songIndex++;
     playing = true;
     $("#song").attr("src", playlist[songIndex].preview);
@@ -268,11 +277,46 @@ function getLyrics() {
             var musicLyrics = results.message.body.lyrics.lyrics_body;
             $(".music-lyrics").append(musicLyrics);
         })
-    
-    
+
+
 }
 
 $(document).on("click", ".upvote", function (event) {
-    var grabbedID = $(this).attr("id");
-    console.log(grabbedID);
+    var index = $(this).attr("data-index");
+    playlist[index].upvote++;
+    console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
 })
+
+$(document).on("click", ".downvote", function (event) {
+    var index = $(this).attr("data-index");
+    playlist[index].upvote--;
+    console.log(playlist[index].songName + " tally: " + playlist[index].upvote);
+})
+
+
+
+// function sortPlaylist(arr) {
+
+//     var sorted = false;
+
+//     // console.log("playlist[0].songName: " + playlist[0].songName);
+//     // console.log("playlist[0].upvote: " + playlist[0].upvote);
+
+//     while (!sorted) {
+//         for (var i = 0; i < arr.length; i++) {
+//             if (arr[i].upvote > arr[i + 1].upvote) {
+//                 sorted = false;
+//                 var temp = arr[i];
+//                 arr[i] = arr[i+1];
+//                 arr[i+1] = temp;
+//             }
+//         }
+//     }
+
+//     var playlist = arr;
+//     return playlist;
+    
+
+// }
+
+// sortPlaylist(playlist);
