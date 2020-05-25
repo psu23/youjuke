@@ -99,7 +99,7 @@ body, html {
     height:35px;
 }
 
-#add-song-modal {
+.modal {
     color: black;
 }
 
@@ -135,6 +135,28 @@ body, html {
     font-size: 1.5em;
     visibility: hidden;
     z-index: 1;
+}
+
+.upvote:active {
+    animation: float 2s forwards;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+@keyframes float {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(10%, -20%) }
+    30% { transform:translate(-5%, -30%) }
+    40% { transform:translate(5%, -40%) }
+    50% { transform:translate(-10%, -50%) }
+    60% { transform:translate(5%, -60%) }
+    70% { transform:translate(-5%, -70%) }
+    80% { transform:translate(10%, -80%) }
+    90% { transform:translate(-10%, -90%) }
 }
 
 #clear-search:hover {

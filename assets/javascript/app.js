@@ -47,8 +47,8 @@ var playlist = [
 ];
 
 var songIndex = 0;
-
 var searchResultArr = {};
+var userName = "";
 
 function renderQueue() {
     $(".queued-track-container").empty();
@@ -233,7 +233,9 @@ $("#search-input").keyup(function (event) {
 });
 
 $("#start-listening").on("click", function () {
-    playPause();
+    if (userName != "") {
+        playPause();
+    }   
 });
 
 let playing = true;
@@ -325,5 +327,9 @@ $(document).on("click", ".upvote", function (event) {
 $(document).on("click", ".downvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote--;
+})
+
+$(document).on("click", "#sign-in-submit", function (event) {
+    userName = $("#recipient-name").val().trim();
 })
 
