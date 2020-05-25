@@ -294,8 +294,7 @@ function getLyrics() {
             var musicLyrics = results.message.body.lyrics.lyrics_body;
             var lyricTitle = playlist[songIndex].songName;
             var lyricTitleDiv = $("<h3>");
-            lyricTitleDiv.append("\'" + lyricTitle + "\'");
-            lyricTitleDiv.append(" lyrics: ");
+            lyricTitleDiv.append("\'" + lyricTitle + "\':");
             $(".music-lyrics-container").append(lyricTitleDiv);
             $(".music-lyrics-container").append(musicLyrics);
             $(".music-lyrics").append(musicLyrics);
