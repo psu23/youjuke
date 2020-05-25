@@ -2,6 +2,8 @@ body, html {
     background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     color: white;
     height: 100%;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .header-container {
@@ -12,7 +14,7 @@ body, html {
 }
 
 #masthead {
-    position: fixed;
+    /* position: fixed; */
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
@@ -26,8 +28,8 @@ body, html {
     margin: 10px;
 }
 
-.wrapper {
-    margin-top: 10px;
+#main-container {
+    /* padding-top: 100px; */
 }
 
 #left-panel, #center-panel, #right-panel {
@@ -210,4 +212,42 @@ body, html {
 [class*="col-"] {
     background-clip: padding-box;
     border: 5px solid transparent;
+}
+
+@media screen and (max-width: 980px) {
+
+}
+
+@media screen and (max-width: 768px) {
+    #masthead {
+        position: fixed;
+        z-index: 99;
+        width: 100%;
+        margin: 0 0 10px;
+        border-bottom: 10px;
+        text-align: center;
+    }
+
+    #app-title {
+        text-align: center;
+        display: inline-block;
+    }
+    
+    #logo-tagline {
+        clear: both;
+        margin: 0px;
+    }
+
+    #title-and-track {
+        clear: both;
+        display: inline-block;
+    }
+    
+    #main-container {
+        padding-top: 250px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    
 }
