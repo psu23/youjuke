@@ -233,9 +233,12 @@ $("#search-input").keyup(function (event) {
 });
 
 $("#start-listening").on("click", function () {
-    if (userName != "") {
-        playPause();
-    }   
+    playPause();
+
+    // requires sign in for music to play
+    // if (userName != "") {
+    //     playPause();
+    // }   
 });
 
 let playing = true;
