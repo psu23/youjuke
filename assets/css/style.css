@@ -1,7 +1,29 @@
 body, html {
-    background-color: black;
+    background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     color: white;
     height: 100%;
+}
+
+.header-container {
+    background: rgb(34, 34, 34);
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+}
+
+#masthead {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    margin: 0 0 10px;
+    border-bottom: 10px;
+}
+
+#logo-tagline {
+    float: left;
+    width: 300px;
+    height: 100%;
+    margin: 10px;
 }
 
 .wrapper {
