@@ -6,6 +6,10 @@ body, html {
     padding-top: 0;
 }
 
+a {
+    color: #ffffff;
+}
+
 .header-container {
     background: rgb(34, 34, 34);
     width: 100%;
@@ -28,7 +32,7 @@ body, html {
 
 #logo-tagline {
     float: left;
-    width: 300px;
+    width: 350px;
     height: 100%;
     margin: 10px;
 }
@@ -46,6 +50,15 @@ body, html {
 #left-panel {
     min-height: 550px;
     height: 100%;
+}
+
+#sign-in-button {
+    float: right;
+}
+
+#search-input {
+    border-bottom-right-radius: .25rem;
+    border-top-right-radius: .25rem;
 }
 
 .music-lyrics-container, .queued-track-container,
@@ -94,7 +107,6 @@ body, html {
 .music-lyrics-container {
     max-height: 70%;
     overflow: auto;
-    padding: 5px;
 }
 
 .queued-song {
@@ -200,7 +212,7 @@ body, html {
 
 #start-listening {
     padding-right: 5px;
-    margin-left: 100px;
+    margin-left: 15px;
 }
 
 .main-container {
