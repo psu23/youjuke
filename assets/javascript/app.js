@@ -327,6 +327,7 @@ $(document).on("click", ".upvote", function (event) {
 $(document).on("click", ".downvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote--;
+    sortPlaylist(playlist);
 })
 
 $(document).on("click", "#sign-in-submit", function (event) {
