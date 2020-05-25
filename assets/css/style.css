@@ -57,8 +57,7 @@ a {
     border-top-right-radius: .25rem;
 }
 
-.music-lyrics-container, .queued-track-container,
-.search-results-container {
+.queued-track-container {
     background: rgb(58, 58, 58);
 }
 
@@ -87,8 +86,13 @@ a {
 }
 
 .search-results-container {
-    max-height: 30%;
+    height: 400px;
     overflow: auto;
+    background: rgb(34, 34, 34);
+}
+
+.search-results {
+    height: 100%;
 }
 
 .search-result {
