@@ -11,6 +11,11 @@ body, html {
     width: 100%;
     margin: 0 auto;
     clear: both;
+    display: flex;
+}
+
+#title-and-track {
+    display: flex;
 }
 
 #masthead {
@@ -158,7 +163,6 @@ body, html {
     right: 10px;
     font-size: 1.5em;
     visibility: hidden;
-    z-index: 1;
 }
 
 .upvote:active {
@@ -196,6 +200,11 @@ body, html {
 
 #start-listening {
     padding-right: 5px;
+    margin-left: 100px;
+}
+
+.main-container {
+    padding-top:150px;
 }
 
 .current-song-container {
