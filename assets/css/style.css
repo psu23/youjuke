@@ -174,7 +174,7 @@ a {
     visibility: hidden;
 }
 
-.upvote:active {
+.clicked-upvote {
     animation: float 2s forwards;
 }
 
@@ -184,16 +184,16 @@ a {
 }
 
 @keyframes float {
-    0%, 100% { transform:translate(0, 0) }
-    10% { transform:translate(-5%, -10%) }
-    20% { transform:translate(10%, -20%) }
-    30% { transform:translate(-5%, -30%) }
-    40% { transform:translate(5%, -40%) }
-    50% { transform:translate(-10%, -50%) }
-    60% { transform:translate(5%, -60%) }
-    70% { transform:translate(-5%, -70%) }
-    80% { transform:translate(10%, -80%) }
-    90% { transform:translate(-10%, -90%) }
+    0%, 100% {transform:translate(0, 0) }
+    10% {opacity:0.9; transform:translate(-5%, -10%) }
+    20% {opacity:0.8; transform:translate(10%, -20%) }
+    30% {opacity:0.7; transform:translate(-5%, -30%) }
+    40% {opacity:0.6; transform:translate(5%, -40%) }
+    50% {opacity:0.5; transform:translate(-10%, -50%) }
+    60% {opacity:0.4; transform:translate(5%, -60%) }
+    70% {opacity:0.3; transform:translate(-5%, -70%) }
+    80% {opacity:0.2; transform:translate(10%, -80%) }
+    90% {opacity:0.1; transform:translate(-10%, -90%) }
 }
 
 #clear-search:hover {
