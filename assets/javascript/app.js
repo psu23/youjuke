@@ -41,6 +41,49 @@ var playlist = [
     }
 ];
 
+Chart.defaults.global.defaultFontColor = 'white';
+
+var ctx = $('#myChart');
+// var Chart = require('chart.js');
+var myRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+        labels: ['Punk', 'Rap', 'Rock', 'Indie', 'Metal'],
+        datasets: [{
+            data: [20, 30, 60, 75, 10],
+            borderColor: 'red',
+            backgroundColor: 'rgba(255, 10, 13, 0.1)',
+            label: 'Current Users'
+        }],
+    },
+    options: {
+        scale: {
+            angleLines: {
+                display: false
+            },
+            ticks: {
+                suggestedMin: 50,
+                suggestedMax: 100
+            },
+            gridLines: {
+                color: '#ffffff'
+            }
+        },
+        legend: {
+            labels: {
+                fontColor: 'white'
+            }
+        }
+    }
+});
+
+// $(document).ready(function() {
+//     var radarChartContainer = $("<div>");
+
+//     radarChartContainer.append(myRadarChart);
+//     $("#info-tab").append(radarChartContainer);
+// })
+
 var songIndex = 0;
 var searchResultArr = {};
 var userName = "";
