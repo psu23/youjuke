@@ -49,7 +49,7 @@ function renderQueue() {
     $(".queued-track-container").empty();
 
     for (var i = songIndex; i < playlist.length; i++) {
-        
+
         if (i == songIndex) {
             var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
             var nameContainer = $("<div>").addClass("name-container current-song");
@@ -165,7 +165,7 @@ $("#search-input").keyup(function (event) {
         //create the search results div only when a search is first called
         var searchResults = $("<div>");
         searchResults.addClass("search-results");
-        searchResults.css("height", "150px");
+        // searchResults.css("height", "150px");
         // searchResults.css("overflow", "auto");
         $(".search-results-container").append(searchResults);
 
@@ -274,8 +274,7 @@ function getLyrics() {
     var musicLyrics = $("<div>");
     musicLyrics.addClass("music-lyrics");
     // musicLyrics.css("overflow", "auto");
-    $(".music-lyrics-container").append("<h3>Lyrics</h3>");
-    $(".music-lyrics-container").append(musicLyrics);
+
 
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
 
@@ -293,6 +292,11 @@ function getLyrics() {
         .then(function (response) {
             var results = response;
             var musicLyrics = results.message.body.lyrics.lyrics_body;
+            var lyricTitle = playlist[songIndex].songName;
+            var lyricTitleDiv = $("<h3>");
+            lyricTitleDiv.append("\'" + lyricTitle + "\':");
+            $(".music-lyrics-container").append(lyricTitleDiv);
+            $(".music-lyrics-container").append(musicLyrics);
             $(".music-lyrics").append(musicLyrics);
         })
 
