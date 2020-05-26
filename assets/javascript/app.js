@@ -257,7 +257,7 @@ $("#search-input").keyup(function (event) {
                         newSong = { artistName: results[i].artist.name, songName: results[i].title_short, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id };
                         playlist.push(newSong);
                         renderQueue();
-
+                        
                         $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
                             window.setTimeout(function () {
                                 $("#add-song-modal").modal("hide");
