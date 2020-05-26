@@ -6,6 +6,8 @@
   <title>YouJuke</title>
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- link to ChartJS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <!--Link to jQuery-->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -100,9 +102,11 @@
             <div class="music-lyrics-container">
           </div>
         </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <canvas id="myChart" width="200" height="200"></canvas>
+          </div>
         </div>
-
+        
       </div>
 
       <div class="col-md-3" id="right-panel">
@@ -115,6 +119,7 @@
     </div>
 
   </div>
+  
 
   <!-- modal for add song -->
   <div class="modal fade" id="add-song-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
