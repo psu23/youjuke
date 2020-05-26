@@ -1,3 +1,20 @@
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDIAOPYeVbv9YgJsKQ9JDSHImO3CGcYzJ8",
+    authDomain: "youjuke-63253.firebaseapp.com",
+    databaseURL: "https://youjuke-63253.firebaseio.com",
+    projectId: "youjuke-63253",
+    storageBucket: "youjuke-63253.appspot.com",
+    messagingSenderId: "859147308716",
+    appId: "1:859147308716:web:d21f0411fe121a2c1d9909",
+    measurementId: "G-FMLC6K90WT"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+//   var database = firebase.database();
+
 var playlist = [
     {
         artistName: "Arctic Monkeys",
@@ -76,13 +93,6 @@ var myRadarChart = new Chart(ctx, {
         }
     }
 });
-
-// $(document).ready(function() {
-//     var radarChartContainer = $("<div>");
-
-//     radarChartContainer.append(myRadarChart);
-//     $("#info-tab").append(radarChartContainer);
-// })
 
 var songIndex = 0;
 var searchResultArr = {};
@@ -375,7 +385,7 @@ function sortPlaylist(arr) {
 $(document).on("click", ".upvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote++;
-    sortPlaylist(playlist);
+    sortPlaylist(playlist);    
 })
 
 $(document).on("click", ".downvote", function (event) {
