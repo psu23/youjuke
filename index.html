@@ -22,45 +22,41 @@
 
 <body>
 
-  <header id="masthead">
+  <div id="masthead">
     <div class="header-container">
 
-        <div id="logo-tagline">
-          <h1>YouJuke</h1>
-          <p id="slogan">Sick of algorithms telling you what to listen to?</p>
-        </div>
-
+      <div id="logo-tagline">
+        <h1>YouJuke</h1>
+        <p id="slogan">Sick of algorithms telling you what to listen to?</p>
+      </div>
 
       <div id="title-and-track">
 
+        <div class="col-md-9" id="current-track-box"></div>
 
-        <div id="current-track-box"></div>
-
-        <div class="current-song-buttons">
+        <div class="col-md-5 current-song-buttons">
           <button type="button" class="btn btn-secondary" id="start-listening">Start
             Listening</button>
-          <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+            <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
             data-whatever="@mdo">Sign in</button>
         </div>
-
-
-
+        
 
       </div>
 
     </div>
 
-  </header>
+  </div>
 
 
 
   <div class="container main-container">
 
-    <div class="row main-row">
+    <div class="row">
 
-      <div class="col-lg-4 col-md-5" id="left-panel">
+      <div class="col-md-4" id="left-panel">
 
-        <div class="wrapper queued-tracks-wrapper">
+        <div class="container">
 
 
 
@@ -72,7 +68,7 @@
 
       </div>
 
-      <div class="col-lg-5 col-md-7" id="center-panel">
+      <div class="col-md-5" id="center-panel">
 
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -96,20 +92,18 @@
                 aria-label="Deezer search" aria-describedby="basic-addon2">
               <div id="clear-search">&times;</div>
             </div>
-
+    
             <div class="results-and-lyrics">
               <div class="search-results-container">
               </div>
-
+    
               <!-- <div class="music-lyrics-container">
               </div> -->
             </div>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="music-lyrics-container">
-            </div>
           </div>
-
         </div>
           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
             <canvas id="myChart" width="200" height="200"></canvas>
@@ -118,7 +112,7 @@
         
       </div>
 
-      <div class="col-lg-3" id="right-panel">
+      <div class="col-md-3" id="right-panel">
         <div class="chat-header">
           <h2>Chat</h2>
         </div>

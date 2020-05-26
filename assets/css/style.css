@@ -14,14 +14,16 @@ a {
     background: rgb(34, 34, 34);
     width: 100%;
     margin: 0 auto;
-    /* clear: both; */
-    /* display: flex; */
+    clear: both;
+    display: flex;
 }
 
-
+#title-and-track {
+    display: flex;
+}
 
 #masthead {
-    position: fixed;
+    /* position: fixed; */
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
@@ -33,11 +35,6 @@ a {
     width: 350px;
     height: 100%;
     margin: 10px;
-}
-
-#title-and-track {
-    display: flex;
-    justify-content: space-between;
 }
 
 #left-panel, #center-panel, #right-panel {
@@ -64,11 +61,6 @@ a {
     height: 480px;
     overflow: auto;
     background: rgb(58, 58, 58);
-}
-
-#current-track-box {
-    background: black;
-    padding: 10px;
 }
 
 /* .results-and-lyrics {
@@ -131,9 +123,9 @@ a {
     margin: 5px;
 }
 
-/* .btn-group {
+.btn-group {
     right: -25px;
-} */
+}
 
 .input-group {
     margin-top: 15px;
@@ -221,11 +213,7 @@ a {
 }
 
 .main-container {
-    padding-top: 120px;
-}
-
-.container-fluid {
-    padding: 0;
+    /* padding-top:100px; */
 }
 
 .current-song-container {
@@ -245,16 +233,14 @@ a {
 }
 
 @media screen and (max-width: 980px) {
-    body, html {
-        background: black;
-    }
 
-    .queued-track-container {
-        background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
-    }
 }
 
 @media screen and (max-width: 768px) {
+
+    body, html {
+        background: black;
+    }
 
     #masthead {
         position: fixed;
@@ -262,26 +248,26 @@ a {
         width: 100%;
         margin: 0 0 10px;
         border-bottom: 10px;
-        vertical-align: center;
+        text-align: center;
     }
 
-    .header-container {
-        vertical-align: center;
+    #app-title {
+        text-align: center;
+        display: inline-block;
     }
     
     #logo-tagline {
-        text-align: center;
+        clear: both;
         margin: 0px;
-        width: 100%;
     }
 
     #title-and-track {
+        clear: both;
         display: inline-block;
-        width: 100%;
     }
     
     .main-container {
-        padding-top: 260px;
+        padding-top: 150px;
     }
 
     #left-panel, #center-panel, #right-panel {
