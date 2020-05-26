@@ -46,89 +46,90 @@ var searchResultArr = {};
 var userName = "";
 
 function renderQueue() {
+    
     $(".queued-track-container").empty();
 
-    for (var i = songIndex; i < playlist.length; i++) {
+        for (var i = songIndex; i < playlist.length; i++) {
 
-        if (i == songIndex) {
-            var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
-            var nameContainer = $("<div>").addClass("name-container current-song");
-            var artistName = playlist[i].artistName;
-            var songName = playlist[i].songName;
+            if (i == songIndex) {
+                var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
+                var nameContainer = $("<div>").addClass("name-container current-song");
+                var artistName = playlist[i].artistName;
+                var songName = playlist[i].songName;
 
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsDiv = $("<div>").addClass("thumbs-container");
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-            thumbsDiv.addClass("btn-group");
-            thumbsDiv.attr("role", "group");
+                thumbsDiv.addClass("btn-group");
+                thumbsDiv.attr("role", "group");
 
-            var upButton = $("<button>");
-            upButton.attr("type", "button");
-            upButton.attr("data-index", i);
-            upButton.addClass("btn btn-secondary upvote");
-            upButton.text("👍");
+                var upButton = $("<button>");
+                upButton.attr("type", "button");
+                upButton.attr("data-index", i);
+                upButton.addClass("btn btn-secondary upvote");
+                upButton.text("👍");
 
-            var downButton = $("<button>");
-            downButton.attr("type", "button");
-            downButton.attr("data-index", i);
-            downButton.addClass("btn btn-secondary downvote");
-            downButton.text("👎");
+                var downButton = $("<button>");
+                downButton.attr("type", "button");
+                downButton.attr("data-index", i);
+                downButton.addClass("btn btn-secondary downvote");
+                downButton.text("👎");
 
-            thumbsDiv.append(upButton);
-            thumbsDiv.append(downButton);
+                thumbsDiv.append(upButton);
+                thumbsDiv.append(downButton);
 
 
-            //album artwork information
-            var thumbnail = playlist[i].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic current-album");
-            thumbnailImg.attr("src", thumbnail);
+                //album artwork information
+                var thumbnail = playlist[i].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic current-album");
+                thumbnailImg.attr("src", thumbnail);
 
-            nameContainer.append(songNameP, artistNameP);
-            queuedTrack.append(thumbnailImg);
-            queuedTrack.append(nameContainer);
-            queuedTrack.append(thumbsDiv);
+                nameContainer.append(songNameP, artistNameP);
+                queuedTrack.append(thumbnailImg);
+                queuedTrack.append(nameContainer);
+                queuedTrack.append(thumbsDiv);
 
-            $("#current-track-box").empty();
-            $("#current-track-box").append(queuedTrack);
+                $("#current-track-box").empty();
+                $("#current-track-box").append(queuedTrack);
+            }
+            else {
+                var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
+                var nameContainer = $("<div>").addClass("name-container");
+                var artistName = playlist[i].artistName;
+                var songName = playlist[i].songName;
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                var thumbsDiv = $("<div>");
+
+                //album artwork information
+                var thumbnail = playlist[i].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic");
+                thumbnailImg.attr("src", thumbnail);
+
+                var upButton = $("<button>");
+                upButton.attr("type", "button");
+                upButton.attr("data-index", i);
+                upButton.addClass("btn btn-secondary upvote");
+                upButton.text("👍");
+
+                var downButton = $("<button>");
+                downButton.attr("type", "button");
+                downButton.attr("data-index", i);
+                downButton.addClass("btn btn-secondary downvote");
+                downButton.text("👎");
+
+                thumbsDiv.append(upButton);
+                thumbsDiv.append(downButton);
+
+                nameContainer.append(songNameP, artistNameP);
+                queuedTrack.append(thumbnailImg);
+                queuedTrack.append(nameContainer);
+                queuedTrack.append(thumbsDiv);
+
+                $(".queued-track-container").append(queuedTrack);
+            }
         }
-        else {
-            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
-            var nameContainer = $("<div>").addClass("name-container");
-            var artistName = playlist[i].artistName;
-            var songName = playlist[i].songName;
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsDiv = $("<div>");
-
-            //album artwork information
-            var thumbnail = playlist[i].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
-
-            var upButton = $("<button>");
-            upButton.attr("type", "button");
-            upButton.attr("data-index", i);
-            upButton.addClass("btn btn-secondary upvote");
-            upButton.text("👍");
-
-            var downButton = $("<button>");
-            downButton.attr("type", "button");
-            downButton.attr("data-index", i);
-            downButton.addClass("btn btn-secondary downvote");
-            downButton.text("👎");
-
-            thumbsDiv.append(upButton);
-            thumbsDiv.append(downButton);
-
-            nameContainer.append(songNameP, artistNameP);
-            queuedTrack.append(thumbnailImg);
-            queuedTrack.append(nameContainer);
-            queuedTrack.append(thumbsDiv);
-
-            $(".queued-track-container").append(queuedTrack);
-        }
-    }
 }
 
 function clearSearchResults() {
@@ -205,7 +206,7 @@ $("#search-input").keyup(function (event) {
             }
             $(document).on("click", ".search-result", function (event) {
 
-                for (var i = 0; searchResultArr.length; i++) {
+                for (var i = 0; i < searchResultArr.length; i++) {
                     var results = searchResultArr;
                     var newSong = {};
                     if (results[i].id == $(this).attr("data-deezer")) {
@@ -228,8 +229,8 @@ $("#search-input").keyup(function (event) {
 });
 
 $("#start-listening").on("click", function () {
+    $("#song").attr("src", playlist[songIndex].preview);
     playPause();
-
     // requires sign in for music to play
     // if (userName != "") {
     //     playPause();
@@ -260,12 +261,19 @@ $("#song").on("ended", (event) => {
     // var playedTrack = playlist.shift();
     // playedTracks.push(playedTrack);
     // sortPlaylist(playlist);
-    songIndex++;
-    playing = true;
-    $("#song").attr("src", playlist[songIndex].preview);
-    playPause();
-    // getLyrics();
-    renderQueue();
+    if (songIndex < playlist.length - 1) {
+        songIndex++;
+        playing = true;
+        $("#song").attr("src", playlist[songIndex].preview);
+        
+        playPause();
+        // getLyrics();
+        renderQueue();
+    }
+    else {
+        playPause();
+        songIndex++;
+    }
 });
 
 function getLyrics() {
@@ -277,7 +285,7 @@ function getLyrics() {
 
 
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-
+    
     $.ajax({
         url: queryURL,
         type: "GET",
@@ -298,6 +306,7 @@ function getLyrics() {
             $(".music-lyrics-container").append(lyricTitleDiv);
             $(".music-lyrics-container").append(musicLyrics);
             $(".music-lyrics").append(musicLyrics);
+            
         })
 
 
