@@ -14,16 +14,14 @@ a {
     background: rgb(34, 34, 34);
     width: 100%;
     margin: 0 auto;
-    clear: both;
-    display: flex;
+    /* clear: both; */
+    /* display: flex; */
 }
 
-#title-and-track {
-    display: flex;
-}
+
 
 #masthead {
-    /* position: fixed; */
+    position: fixed;
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
@@ -35,6 +33,11 @@ a {
     width: 350px;
     height: 100%;
     margin: 10px;
+}
+
+#title-and-track {
+    display: flex;
+    justify-content: space-between;
 }
 
 #left-panel, #center-panel, #right-panel {
@@ -61,6 +64,11 @@ a {
     height: 480px;
     overflow: auto;
     background: rgb(58, 58, 58);
+}
+
+#current-track-box {
+    background: black;
+    padding: 10px;
 }
 
 /* .results-and-lyrics {
@@ -123,9 +131,9 @@ a {
     margin: 5px;
 }
 
-.btn-group {
+/* .btn-group {
     right: -25px;
-}
+} */
 
 .input-group {
     margin-top: 15px;
@@ -174,7 +182,7 @@ a {
     visibility: hidden;
 }
 
-.clicked-upvote {
+.upvote:active {
     animation: float 2s forwards;
 }
 
@@ -184,16 +192,16 @@ a {
 }
 
 @keyframes float {
-    0%, 100% {transform:translate(0, 0) }
-    10% {opacity:0.9; transform:translate(-5%, -10%) }
-    20% {opacity:0.8; transform:translate(10%, -20%) }
-    30% {opacity:0.7; transform:translate(-5%, -30%) }
-    40% {opacity:0.6; transform:translate(5%, -40%) }
-    50% {opacity:0.5; transform:translate(-10%, -50%) }
-    60% {opacity:0.4; transform:translate(5%, -60%) }
-    70% {opacity:0.3; transform:translate(-5%, -70%) }
-    80% {opacity:0.2; transform:translate(10%, -80%) }
-    90% {opacity:0.1; transform:translate(-10%, -90%) }
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(10%, -20%) }
+    30% { transform:translate(-5%, -30%) }
+    40% { transform:translate(5%, -40%) }
+    50% { transform:translate(-10%, -50%) }
+    60% { transform:translate(5%, -60%) }
+    70% { transform:translate(-5%, -70%) }
+    80% { transform:translate(10%, -80%) }
+    90% { transform:translate(-10%, -90%) }
 }
 
 #clear-search:hover {
@@ -213,7 +221,11 @@ a {
 }
 
 .main-container {
-    /* padding-top:100px; */
+    padding-top: 120px;
+}
+
+.container-fluid {
+    padding: 0;
 }
 
 .current-song-container {
@@ -233,14 +245,16 @@ a {
 }
 
 @media screen and (max-width: 980px) {
-
-}
-
-@media screen and (max-width: 768px) {
-
     body, html {
         background: black;
     }
+
+    .queued-track-container {
+        background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+    }
+}
+
+@media screen and (max-width: 768px) {
 
     #masthead {
         position: fixed;
@@ -248,26 +262,26 @@ a {
         width: 100%;
         margin: 0 0 10px;
         border-bottom: 10px;
-        text-align: center;
+        vertical-align: center;
     }
 
-    #app-title {
-        text-align: center;
-        display: inline-block;
+    .header-container {
+        vertical-align: center;
     }
     
     #logo-tagline {
-        clear: both;
+        text-align: center;
         margin: 0px;
+        width: 100%;
     }
 
     #title-and-track {
-        clear: both;
         display: inline-block;
+        width: 100%;
     }
     
     .main-container {
-        padding-top: 150px;
+        padding-top: 260px;
     }
 
     #left-panel, #center-panel, #right-panel {
