@@ -388,9 +388,6 @@ a {
         background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     }
 
-    #left-panel, #right-panel {
-        background: linear-gradient(90deg, rgb(34, 34, 34, 0.50), rgb(24, 24, 24, 0.50), rgb(34, 34, 34, 0.50));
-    }
 }
 
 @media screen and (max-width: 768px) {
