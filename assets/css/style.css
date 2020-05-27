@@ -17,7 +17,7 @@ a {
     width: 100%;
     margin: 0 0 10px;
     padding: 10px 10px 0 10px;
-    border-bottom: 2px solid rgb(24, 24, 24);
+    border-bottom: 2px solid rgb(49, 49, 49);
 }
 
 #logo-tagline {
@@ -70,7 +70,6 @@ a {
     height: 480px;
     overflow: auto;
     background: rgb(58, 58, 58);
-    border-radius: 0 0 5px 5px;
 }
 
 .name-container {
@@ -380,6 +379,28 @@ a {
 
 
 @media screen and (max-width: 980px) {
+    /* body, html {
+        background: black;
+    }
+
+    .queued-track-container {
+        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+    } */
+
+}
+
+@media screen and (max-width: 768px) {
+
+    /* #masthead {
+        position: fixed;
+        z-index: 99;
+        width: 100%;
+        margin: 0 0 10px;
+        border-bottom: 10px;
+        vertical-align: center;
+        padding-bottom: 5px;
+    } */
+
     body, html {
         background: black;
     }
@@ -388,18 +409,8 @@ a {
         background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     }
 
-}
-
-@media screen and (max-width: 768px) {
-
     #masthead {
-        position: fixed;
-        z-index: 99;
-        width: 100%;
-        margin: 0 0 10px;
-        border-bottom: 10px;
-        vertical-align: center;
-        padding-bottom: 5px;
+        position: relative;
     }
 
     .header-container {
@@ -428,8 +439,12 @@ a {
         clear: both;
     }
     
-    .main-container {
+    /* .main-container {
         padding-top: 260px;
+    } */
+
+    .main-container {
+        padding-top: 0;
     }
 
     #left-panel, #right-panel {
