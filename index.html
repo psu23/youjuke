@@ -52,7 +52,7 @@
 
     <div class="row main-row">
 
-      <div class="col-lg-4 col-md-5" id="left-panel">
+      <div class="col-lg-5 col-md-5" id="left-panel">
 
         <div class="wrapper queued-track-wrapper">
 
@@ -66,7 +66,7 @@
 
       </div>
 
-      <div class="col-lg-5 col-md-7" id="right-panel">
+      <div class="col-lg-7 col-md-7" id="right-panel">
 
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -81,6 +81,10 @@
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
               aria-selected="false"><i class="material-icons">insert_chart</i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info"
+              aria-selected="false"><i class="material-icons">info</i></a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -101,24 +105,22 @@
             <div class="music-lyrics-container">
             </div>
           </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <div class="tab-pane fade chart-container" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="position: relative; height: 40vh; width: 40vw">
             <canvas id="myChart" width="200" height="200"></canvas>
+          </div>
+          <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+            <div class="about-app"><p>About app and instructions coming soon</p></div>
           </div>
         </div>
 
       </div>
 
-      <div class="col-lg-3" id="right-panel">
-        <div class="chat-header">
-          <h2>Chat</h2>
-        </div>
-        <div class="chat-container"></div>
-      </div>
 
     </div>
 
   </div>
 
+  
 
   <!-- modal for add song -->
   <div class="modal fade" id="add-song-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"

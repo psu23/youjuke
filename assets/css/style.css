@@ -39,7 +39,7 @@ a {
 }
 
 
-#left-panel, #center-panel, #right-panel {
+#left-panel, #right-panel {
     background-color: rgb(34, 34, 34);
     padding: 5px;
     height: 550px;
@@ -405,7 +405,7 @@ a {
         padding-top: 260px;
     }
 
-    #left-panel, #center-panel, #right-panel {
+    #left-panel, #right-panel {
         height: 100%;
     }
 }
