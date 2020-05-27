@@ -13,7 +13,7 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
-//   var database = firebase.database();
+  var database = firebase.database();
 
 var playlist = [
     {
