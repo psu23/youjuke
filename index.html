@@ -27,28 +27,24 @@
 <body>
 
   <header id="masthead">
-    <div class="header-container">
+    <!-- <div class="header-container"> -->
 
       <div id="logo-tagline">
         <h1>YouJuke</h1>
         <p id="slogan">Sick of algorithms telling you what to listen to?</p>
       </div>
 
-      <div id="title-and-track">
-
+      <div id="current-track-wrapper">
         <div id="current-track-box"></div>
-
-        <div class="current-song-buttons">
-          <button type="button" class="btn btn-secondary" id="start-listening">Start
-            Listening</button>
-          <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-            data-whatever="@mdo">Sign in</button>
-        </div>
-        
-
       </div>
 
-    </div>
+      <div id="header-menu-buttons">
+        <button type="button" class="btn btn-secondary" id="start-listening">Start
+          Listening</button>
+        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+          data-whatever="@mdo">Sign in</button>
+      <!-- </div> -->
+
 
   </header>
 
@@ -96,24 +92,24 @@
                 aria-label="Deezer search" aria-describedby="basic-addon2">
               <div id="clear-search">&times;</div>
             </div>
-    
+
             <div class="results-and-lyrics">
               <div class="search-results-container">
               </div>
-    
+
               <!-- <div class="music-lyrics-container">
               </div> -->
             </div>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="music-lyrics-container">
+            </div>
           </div>
-        </div>
           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
             <canvas id="myChart" width="200" height="200"></canvas>
           </div>
         </div>
-        
+
       </div>
 
       <div class="col-lg-3" id="right-panel">
@@ -126,7 +122,7 @@
     </div>
 
   </div>
-  
+
 
   <!-- modal for add song -->
   <div class="modal fade" id="add-song-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"

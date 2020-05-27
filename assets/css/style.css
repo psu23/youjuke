@@ -10,34 +10,32 @@ a {
     color: #ffffff;
 }
 
-.header-container {
-    background: rgb(34, 34, 34);
-    width: 100%;
-    margin: 0 auto;
-    /* clear: both; */
-    /* display: flex; */
-}
-
-
-
 #masthead {
+    background: rgb(34, 34, 34);
     position: fixed;
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
-    border-bottom: 10px;
+    padding: 10px 10px 0 10px;
 }
 
 #logo-tagline {
     float: left;
-    width: 350px;
-    height: 100%;
-    margin: 10px;
+    width: 25%;
+    position: static;
+    /* margin: 10px; */
 }
 
-#title-and-track {
-    display: flex;
-    justify-content: space-between;
+#current-track-wrapper {
+    width: 50%;
+    /* position: static; */
+    float: left;
+}
+
+#current-track-box {
+    background: black;
+    padding: 10px;
+
 }
 
 #left-panel, #center-panel, #right-panel {
@@ -65,15 +63,6 @@ a {
     overflow: auto;
     background: rgb(58, 58, 58);
 }
-
-#current-track-box {
-    background: black;
-    padding: 10px;
-}
-
-/* .results-and-lyrics {
-    height: 410px;
-} */
 
 .name-container {
     margin: 0;
@@ -221,7 +210,7 @@ a {
 }
 
 .main-container {
-    padding-top: 120px;
+    padding-top: 140px;
 }
 
 .container-fluid {
@@ -244,7 +233,9 @@ a {
     border: 5px solid transparent;
 }
 
-/*MATERIALIZE CLASS START: */
+/*MATERIALIZE CLASSES START: */
+
+
 .waves-effect {
     position: relative;
     cursor: pointer;
@@ -352,9 +343,8 @@ a {
 }
 
 
+/*MATERIALIZE CLASSES END.*/
 
-
-/*MATERIALIZE CLASS END.*/
 
 @media screen and (max-width: 980px) {
     body, html {
@@ -375,6 +365,7 @@ a {
         margin: 0 0 10px;
         border-bottom: 10px;
         vertical-align: center;
+        padding-bottom: 5px;
     }
 
     .header-container {
@@ -387,9 +378,13 @@ a {
         width: 100%;
     }
 
-    #title-and-track {
-        display: inline-block;
-        width: 100%;
+    #current-track-box {
+        width: 200%;
+        clear: both;
+    }
+
+    #header-menu-buttons {
+        clear: both;
     }
     
     .main-container {
