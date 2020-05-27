@@ -43,14 +43,9 @@ a {
 #left-panel, #right-panel {
     background-color: rgb(34, 34, 34);
     padding: 5px;
-    height: 550px;
+    height: 40em;
     /* border-radius: 10px; */
     background: linear-gradient(90deg, rgb(34, 34, 34, 0.50), rgb(24, 24, 24, 0.50), rgb(34, 34, 34, 0.50));
-}
-
-#left-panel {
-    height: 550px;
-    /* height: 100%; */
 }
 
 #left-panel-title {
@@ -66,8 +61,12 @@ a {
     border-top-right-radius: .25rem;
 }
 
+#contact {
+    width: 30vw;
+}
+
 .queued-track-container {
-    height: 480px;
+    height: 36em;
     overflow: auto;
     background: rgb(58, 58, 58);
 }
@@ -94,7 +93,7 @@ a {
 }
 
 .search-results-container {
-    height: 410px;
+    height: 31.5em;
     overflow: auto;
     background: rgb(34, 34, 34);
 }
@@ -376,6 +375,10 @@ a {
     background-color: transparent !important;
     color: #b3b2b2 !important;
     cursor: default;
+}
+
+canvas {
+    width: 70%;
 }
 
 
