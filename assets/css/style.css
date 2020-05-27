@@ -1,5 +1,5 @@
 body, html {
-    background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+    background: linear-gradient(180deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     color: white;
     height: 100%;
     margin-top: 0;
@@ -43,6 +43,7 @@ a {
     background-color: rgb(34, 34, 34);
     padding: 5px;
     height: 550px;
+    border-radius: 10px;
 }
 
 #left-panel {
@@ -67,6 +68,7 @@ a {
     height: 480px;
     overflow: auto;
     background: rgb(58, 58, 58);
+    border-radius: 0 0 5px 5px;
 }
 
 .name-container {
@@ -240,6 +242,28 @@ a {
     border: 5px solid transparent;
 }
 
+/* Scrollbar: */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(34, 34, 34);
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
 /*MATERIALIZE CLASSES START: */
 
 
@@ -359,7 +383,7 @@ a {
     }
 
     .queued-track-container {
-        background: linear-gradient(75deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
     }
 }
 
