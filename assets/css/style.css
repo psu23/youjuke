@@ -69,6 +69,7 @@ a {
     width: 105px;
     min-height: 50px;
     height: 100%;
+    text-align: center;
 }
 
 .current-song {
@@ -221,6 +222,7 @@ a {
     display: flex;
     min-height: 50px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .current-album {
@@ -380,8 +382,15 @@ a {
 
     #current-track-box {
         width: 200%;
-        clear: both;
     }
+
+    /* .name-container {
+        width: 220px;
+    }
+
+    .artist-name {
+        font-size: 1em;
+    } */
 
     #header-menu-buttons {
         clear: both;
