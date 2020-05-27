@@ -249,9 +249,9 @@ $("#search-input").keyup(function (event) {
 
         $.ajax(settings).done(function (response) {
             var results = response.data;
-            searchResultArr = response.data;
+            searchResultArr = results;
+            
             for (var i = 0; i < 10; i++) {
-
                 var searchResult = $("<div>").addClass("search-result").attr("data-target", "#add-song-modal").attr("data-toggle", "modal").attr("data-backdrop", "false");
                 var nameContainers = $("<div>").addClass("name-container search-name");
                 var artistName = results[i].artist.name;
@@ -279,31 +279,30 @@ $("#search-input").keyup(function (event) {
 
 
                 searchResults.append(searchResult);
-
             }
-            $(document).on("click", ".search-result", function (event) {
-
-                for (var i = 0; i < searchResultArr.length; i++) {
-                    var results = searchResultArr;
-                    var newSong = {};
-                    if (results[i].id == $(this).attr("data-deezer")) {
-
-                        newSong = { artistName: results[i].artist.name, songName: results[i].title_short, thumbnail: results[i].album.cover, preview: results[i].preview, upvote: 0, downvote: 0, deezerID: results.id };
-                        playlist.push(newSong);
-                        renderQueue();
-                        
-                        $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
-                            window.setTimeout(function () {
-                                $("#add-song-modal").modal("hide");
-                            }, 1000);
-                        });
-                    }
-                }
-            })
-            $(document).on("click", "#clear-search", clearSearchResults);
         })
     }
 });
+
+$(document).on("click", ".search-result", function (event) {
+    console.log(this);
+    for (var i = 0; i < 25; i++) {
+        if (searchResultArr[i].id == $(this).attr("data-deezer")) {
+            var newSong = {};
+
+            newSong = { artistName: searchResultArr[i].artist.name, songName: searchResultArr[i].title_short, thumbnail: searchResultArr[i].album.cover, preview: searchResultArr[i].preview, upvote: 0, downvote: 0, deezerID: searchResultArr[i].id };
+            playlist.push(newSong);
+            renderQueue();
+            
+            $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
+                window.setTimeout(function () {
+                    $("#add-song-modal").modal("hide");
+                }, 1000);
+            });
+        }
+    }
+})
+$(document).on("click", "#clear-search", clearSearchResults);
 
 $("#start-listening").on("click", function () {
     $("#song").attr("src", playlist[songIndex].preview);
