@@ -180,10 +180,6 @@ a {
     visibility: hidden;
 }
 
-.upvote:active {
-    animation: float 2s forwards;
-}
-
 .chat-header {
     display: flex;
     justify-content: space-between;
@@ -236,6 +232,14 @@ a {
 .current-album {
     height: 75px;
     width: 75px;
+}
+
+.upvote .material-icons:hover {
+    color: lightgreen;
+}
+
+.downvote .material-icons:hover {
+    color: rgb(252, 90, 90);
 }
 
 [class*="col-"] {
