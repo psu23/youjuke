@@ -244,7 +244,7 @@ a {
     border: 5px solid transparent;
 }
 
-/*MATERIALIZE CLASS START*/
+/*MATERIALIZE CLASS START: */
 .waves-effect {
     position: relative;
     cursor: pointer;
@@ -325,7 +325,36 @@ a {
   .waves-effect .waves-ripple {
     z-index: -1;
   }
-/*MATERIALIZE CLASS END*/
+
+.btn-flat {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    background-color: transparent;
+    color: #343434;
+    cursor: pointer;
+    -webkit-transition: background-color .2s;
+    transition: background-color .2s;
+}
+
+.btn-flat:focus, .btn-flat:hover {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+.btn-flat:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn-flat.disabled, .btn-flat.btn-flat[disabled] {
+    background-color: transparent !important;
+    color: #b3b2b2 !important;
+    cursor: default;
+}
+
+
+
+
+/*MATERIALIZE CLASS END.*/
 
 @media screen and (max-width: 980px) {
     body, html {

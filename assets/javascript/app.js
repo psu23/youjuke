@@ -132,13 +132,13 @@ function renderQueue() {
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
                 upButton.attr("data-index", i);
-                upButton.addClass("btn waves-effect waves-green upvote");
+                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
                 upButton.html("<i class='material-icons'>thumb_up</i>");
 
                 var downButton = $("<a>");
                 // downButton.attr("type", "button");
                 downButton.attr("data-index", i);
-                downButton.addClass("btn waves-effect waves-green downvote");
+                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
                 downButton.html("<i class='material-icons'>thumb_down</i>");
 
                 thumbsDiv.append(upButton);
@@ -187,13 +187,13 @@ function renderQueue() {
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
                 upButton.attr("data-index", i);
-                upButton.addClass("btn waves-effect waves-green upvote");
+                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
                 upButton.html("<i class='material-icons'>thumb_up</i>");
 
                 var downButton = $("<a>");
                 // downButton.attr("type", "button");
                 downButton.attr("data-index", i);
-                downButton.addClass("btn waves-effect waves-green downvote");
+                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
                 downButton.html("<i class='material-icons'>thumb_down</i>");
 
                 thumbsDiv.append(upButton);
