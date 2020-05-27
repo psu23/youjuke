@@ -27,7 +27,6 @@
 <body>
 
   <header id="masthead">
-    <!-- <div class="header-container"> -->
 
       <div id="logo-tagline">
         <h1>YouJuke</h1>
@@ -43,7 +42,6 @@
           Listening</button>
         <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
           data-whatever="@mdo">Sign in</button>
-      <!-- </div> -->
 
 
   </header>
@@ -61,28 +59,28 @@
 
 
           <div id="left-panel-title">
-            <h2>queue</h2>
+            <h2><i class="material-icons queue-title-text">playlist_play</i></h2>
           </div>
           <div class="queued-track-container"></div>
         </div>
 
       </div>
 
-      <div class="col-lg-5 col-md-7" id="center-panel">
+      <div class="col-lg-5 col-md-7" id="right-panel">
 
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="search"
-              aria-selected="true">Search</a>
+              aria-selected="true"><i class="material-icons">search</i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-              aria-selected="false">Lyrics</a>
+              aria-selected="false"><i class="material-icons">library_books</i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-              aria-selected="false">Info</a>
+              aria-selected="false"><i class="material-icons">insert_chart</i></a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -97,8 +95,6 @@
               <div class="search-results-container">
               </div>
 
-              <!-- <div class="music-lyrics-container">
-              </div> -->
             </div>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
