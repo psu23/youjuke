@@ -57,7 +57,7 @@ var database = firebase.database();
 //         deezerID: 67511941
 //     }
 // ];
-var playlist = {};
+var playlist = [];
 
 Chart.defaults.global.defaultFontColor = 'white';
 
@@ -101,19 +101,23 @@ var searchResultArr = {};
 var userName = "";
 
 function renderQueue() {
-    database.ref("/playlist").on("child_added", function (snapshot) {
-        console.log(snapshot.key);
-        playlist = snapshot.val();
-    });
+    database.ref("/playlist").on("value", function (snapshot) {
+        livePlaylist = snapshot.val();
+        for (var property in livePlaylist) {
+            console.log(`${property}: ${livePlaylist[property].artistName}`);
+            console.log(livePlaylist[property].index)
+        }
+    
     $(".queued-track-container").empty();
 
-    for (var i = songIndex; i < playlist.length; i++) {
-
-        if (i == songIndex) {
-            var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
+    // for (var i = songIndex; i < playlist.length; i++) {
+        for (var property in livePlaylist) {
+        // if (i == songIndex) {
+            if (songIndex == livePlaylist[property].index) {
+            var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
             var nameContainer = $("<div>").addClass("name-container current-song");
-            var artistName = playlist[i].artistName;
-            var songName = playlist[i].songName;
+            var artistName = livePlaylist[property].artistName;
+            var songName = livePlaylist[property].songName;
 
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
@@ -124,13 +128,13 @@ function renderQueue() {
 
             var upButton = $("<a>");
             // upButton.attr("type", "button");
-            upButton.attr("data-index", i);
+            upButton.attr("data-index", livePlaylist[property].index);
             upButton.addClass("btn btn-flat waves-effect waves-green upvote");
             upButton.html("<i class='material-icons'>thumb_up</i>");
 
             var downButton = $("<a>");
             // downButton.attr("type", "button");
-            downButton.attr("data-index", i);
+            downButton.attr("data-index", livePlaylist[property].index);
             downButton.addClass("btn btn-flat waves-effect waves-red downvote");
             downButton.html("<i class='material-icons'>thumb_down</i>");
 
@@ -139,7 +143,7 @@ function renderQueue() {
 
 
             //album artwork information
-            var thumbnail = playlist[i].thumbnail;
+            var thumbnail = livePlaylist[property].thumbnail;
             var thumbnailImg = $("<img>").addClass("album-pic current-album");
             thumbnailImg.attr("src", thumbnail);
 
@@ -152,28 +156,28 @@ function renderQueue() {
             $("#current-track-box").append(queuedTrack);
         }
         else {
-            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
             var nameContainer = $("<div>").addClass("name-container");
-            var artistName = playlist[i].artistName;
-            var songName = playlist[i].songName;
+            var artistName = livePlaylist[property].artistName;
+            var songName = livePlaylist[property].songName;
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
             var thumbsDiv = $("<div>");
 
             //album artwork information
-            var thumbnail = playlist[i].thumbnail;
+            var thumbnail = livePlaylist[property].thumbnail;
             var thumbnailImg = $("<img>").addClass("album-pic");
             thumbnailImg.attr("src", thumbnail);
 
             var upButton = $("<a>");
             // upButton.attr("type", "button");
-            upButton.attr("data-index", i);
+            upButton.attr("data-index", livePlaylist[property].index);
             upButton.addClass("btn btn-flat waves-effect waves-green upvote");
             upButton.html("<i class='material-icons'>thumb_up</i>");
 
             var downButton = $("<a>");
             // downButton.attr("type", "button");
-            downButton.attr("data-index", i);
+            downButton.attr("data-index", livePlaylist[property].index);
             downButton.addClass("btn btn-flat waves-effect waves-red downvote");
             downButton.html("<i class='material-icons'>thumb_down</i>");
 
@@ -188,6 +192,7 @@ function renderQueue() {
             $(".queued-track-container").append(queuedTrack);
         }
     }
+});
 }
 
 function clearSearchResults() {
