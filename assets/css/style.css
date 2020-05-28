@@ -12,13 +12,12 @@ a {
 }
 
 #masthead {
-    background: rgb(34, 34, 34);
+    background: linear-gradient(90deg, rgb(34, 34, 34, 0.80), rgb(24, 24, 24, 0.80), rgb(34, 34, 34, 0.80));
     position: fixed;
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
     padding: 10px 10px 0 10px;
-    border-bottom: 2px solid rgb(49, 49, 49);
 }
 
 #logo-tagline {
@@ -42,7 +41,6 @@ a {
 
 
 #left-panel, #right-panel {
-    background-color: rgb(34, 34, 34);
     padding: 5px;
     height: 40em;
     /* border-radius: 10px; */
@@ -96,11 +94,6 @@ a {
 .search-results-container {
     height: 31.5em;
     overflow: auto;
-    /* background: rgb(34, 34, 34); */
-}
-
-.search-results {
-    height: 100%;
 }
 
 .search-result {
@@ -112,12 +105,32 @@ a {
     margin-bottom: 5px;
 }
 
-.music-lyrics-container {
-    max-height: 470px;
+.chat-container {
+    height: 36em;
     overflow: auto;
 }
 
-.queued-song {
+.music-lyrics-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.canvas-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.rankings-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.about-app {
+    height: 36em;
+    overflow: auto;
+}
+
+.queued-song, .ranked-song {
     display: flex;
     min-height: 50px;
     justify-content: space-between;
