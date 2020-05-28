@@ -155,6 +155,7 @@ function renderQueue() {
             $("#current-track-box").empty();
             $("#current-track-box").append(queuedTrack);
         }
+
         else {
             var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
             var nameContainer = $("<div>").addClass("name-container");
@@ -193,6 +194,7 @@ function renderQueue() {
         }
     }
 });
+
 }
 
 function clearSearchResults() {
