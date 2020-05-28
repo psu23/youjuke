@@ -360,8 +360,12 @@ function getLyrics() {
             var lyricTitle = playlist[songIndex].songName;
             var lyricTitleDiv = $("<h3>");
             lyricTitleDiv.append("\'" + lyricTitle + "\':");
+            var lyricDisclaimer = $("<p>");
+            lyricDisclaimer.html("</br></br>(Full lyrics are not yet available on YouJuke)");
+            lyricDisclaimer.css("font-weight", "bold");
             $(".music-lyrics-container").append(lyricTitleDiv);
             $(".music-lyrics-container").append(musicLyrics);
+            $(".music-lyrics-container").append(lyricDisclaimer);
             $(".music-lyrics").append(musicLyrics);
             
         })
