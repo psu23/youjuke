@@ -12,7 +12,7 @@ a {
 }
 
 #masthead {
-    background: linear-gradient(90deg, rgb(34, 34, 34, 0.85), rgb(24, 24, 24, 0.85), rgb(34, 34, 34, 0.85));
+    background: linear-gradient(90deg, rgb(34, 34, 34, 0.80), rgb(24, 24, 24, 0.80), rgb(34, 34, 34, 0.80));
     position: fixed;
     z-index: 99;
     width: 100%;
