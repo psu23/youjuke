@@ -12,13 +12,12 @@ a {
 }
 
 #masthead {
-    background: rgb(34, 34, 34);
+    background: linear-gradient(90deg, rgb(34, 34, 34, 0.85), rgb(24, 24, 24, 0.85), rgb(34, 34, 34, 0.85));
     position: fixed;
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
     padding: 10px 10px 0 10px;
-    border-bottom: 2px solid rgb(49, 49, 49);
 }
 
 #logo-tagline {
@@ -42,7 +41,6 @@ a {
 
 
 #left-panel, #right-panel {
-    background-color: rgb(34, 34, 34);
     padding: 5px;
     height: 40em;
     /* border-radius: 10px; */
@@ -132,7 +130,7 @@ a {
     overflow: auto;
 }
 
-.queued-song {
+.queued-song, .ranked-song {
     display: flex;
     min-height: 50px;
     justify-content: space-between;

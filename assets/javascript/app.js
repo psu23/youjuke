@@ -429,10 +429,29 @@ function listRankings() {
 
     for (var i = 0; i < arr.length; i++) {
         if (arr[i].upvote > 0) {
-            var rankItem = "<li>" + arr[i].artistName + " - \'" + arr[i].songName
-                + "\' (" + arr[i].upvote + ") </li>";
-            console.log(rankItem);
-            orderedList.append(rankItem);
+            //artist and song
+            var rankedTrack = $("<div>").addClass("ranked-song");
+            var nameContainer = $("<div>").addClass("name-container");
+            var artistName = arr[i].artistName;
+            var songName = arr[i].songName;
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name"); 
+            //artwork
+            var thumbnail = arr[i].thumbnail;
+            var thumbnailImg = $("<img>").addClass("album-pic");
+            thumbnailImg.attr("src", thumbnail);
+            //ranking
+            var songLikes = arr[i].upvote;
+            var songLikesP = $("<p>").html("&uarr;" + songLikes).addClass("song-likes");
+            //append song details together
+            nameContainer.append(songNameP, artistNameP);
+            rankedTrack.append("<li></li>");
+            rankedTrack.append(thumbnailImg);
+            rankedTrack.append(nameContainer);
+            rankedTrack.append(songLikesP);
+            //append song to list
+            orderedList.append(rankedTrack);
+
         }
 
     }
@@ -440,4 +459,3 @@ function listRankings() {
     $("#rankings-list").append(orderedList);
 
 }
-
