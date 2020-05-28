@@ -8,55 +8,56 @@ var firebaseConfig = {
     messagingSenderId: "859147308716",
     appId: "1:859147308716:web:d21f0411fe121a2c1d9909",
     measurementId: "G-FMLC6K90WT"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
-  var database = firebase.database();
+var database = firebase.database();
 
-var playlist = [
-    {
-        artistName: "Arctic Monkeys",
-        songName: "Do I Wanna Know?",
-        thumbnail: "https://api.deezer.com/album/6899610/image",
-        preview: "https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3",
-        upvote: 0,
-        deezerID: 70322130
-    },
-    {
-        artistName: "The Kinks",
-        songName: "Shangri-La",
-        thumbnail: "https://api.deezer.com/album/115918642/image",
-        preview: "https://cdns-preview-c.dzcdn.net/stream/c-c91369d8fbb0d5c5eacc14c839741090-2.mp3",
-        upvote: 0,
-        deezerID: 781869182
-    },
-    {
-        artistName: "Pink Floyd",
-        songName: "Money",
-        thumbnail: "https://api.deezer.com/album/12114240/image",
-        preview: "https://cdns-preview-f.dzcdn.net/stream/c-f15121774a7b2486d30328d0ca4b5d05-2.mp3",
-        upvote: 0,
-        deezerID: 116914026
-    },
-    {
-        artistName: "The Mars Volta",
-        songName: "The Widow",
-        thumbnail: "https://api.deezer.com/album/230048/image",
-        preview: "https://cdns-preview-b.dzcdn.net/stream/c-ba2309052dbba45d2362d5175f306db8-6.mp3",
-        upvote: 0,
-        deezerID: 2309096
-    },
-    {
-        artistName: "Portugal. The Man",
-        songName: "Modern Jesus",
-        thumbnail: "https://api.deezer.com/album/6607726/image",
-        preview: "https://cdns-preview-d.dzcdn.net/stream/c-d6afe829858e7b165d53df214a2123a8-2.mp3",
-        upvote: 0,
-        deezerID: 67511941
-    }
-];
+// var playlist = [
+//     {
+//         artistName: "Arctic Monkeys",
+//         songName: "Do I Wanna Know?",
+//         thumbnail: "https://api.deezer.com/album/6899610/image",
+//         preview: "https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3",
+//         upvote: 0,
+//         deezerID: 70322130
+//     },
+//     {
+//         artistName: "The Kinks",
+//         songName: "Shangri-La",
+//         thumbnail: "https://api.deezer.com/album/115918642/image",
+//         preview: "https://cdns-preview-c.dzcdn.net/stream/c-c91369d8fbb0d5c5eacc14c839741090-2.mp3",
+//         upvote: 0,
+//         deezerID: 781869182
+//     },
+//     {
+//         artistName: "Pink Floyd",
+//         songName: "Money",
+//         thumbnail: "https://api.deezer.com/album/12114240/image",
+//         preview: "https://cdns-preview-f.dzcdn.net/stream/c-f15121774a7b2486d30328d0ca4b5d05-2.mp3",
+//         upvote: 0,
+//         deezerID: 116914026
+//     },
+//     {
+//         artistName: "The Mars Volta",
+//         songName: "The Widow",
+//         thumbnail: "https://api.deezer.com/album/230048/image",
+//         preview: "https://cdns-preview-b.dzcdn.net/stream/c-ba2309052dbba45d2362d5175f306db8-6.mp3",
+//         upvote: 0,
+//         deezerID: 2309096
+//     },
+//     {
+//         artistName: "Portugal. The Man",
+//         songName: "Modern Jesus",
+//         thumbnail: "https://api.deezer.com/album/6607726/image",
+//         preview: "https://cdns-preview-d.dzcdn.net/stream/c-d6afe829858e7b165d53df214a2123a8-2.mp3",
+//         upvote: 0,
+//         deezerID: 67511941
+//     }
+// ];
+var playlist = {};
 
 Chart.defaults.global.defaultFontColor = 'white';
 
@@ -100,94 +101,93 @@ var searchResultArr = {};
 var userName = "";
 
 function renderQueue() {
-    
+    database.ref("/playlist").on("child_added", function (snapshot) {
+        console.log(snapshot.key);
+        playlist = snapshot.val();
+    });
     $(".queued-track-container").empty();
 
-        for (var i = songIndex; i < playlist.length; i++) {
+    for (var i = songIndex; i < playlist.length; i++) {
 
-            if (i == songIndex) {
-                var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
-                var nameContainer = $("<div>").addClass("name-container current-song");
-                var artistName = playlist[i].artistName;
-                var songName = playlist[i].songName;
+        if (i == songIndex) {
+            var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlist[i].deezerID);
+            var nameContainer = $("<div>").addClass("name-container current-song");
+            var artistName = playlist[i].artistName;
+            var songName = playlist[i].songName;
 
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                var thumbsDiv = $("<div>").addClass("thumbs-container");
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-                thumbsDiv.addClass("btn-group");
-                thumbsDiv.attr("role", "group");
+            thumbsDiv.addClass("btn-group");
+            thumbsDiv.attr("role", "group");
 
-                var upButton = $("<a>");
-                // upButton.attr("type", "button");
-                upButton.attr("data-index", i);
-                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
-                upButton.html("<i class='material-icons'>thumb_up</i>");
+            var upButton = $("<a>");
+            // upButton.attr("type", "button");
+            upButton.attr("data-index", i);
+            upButton.addClass("btn btn-flat waves-effect waves-green upvote");
+            upButton.html("<i class='material-icons'>thumb_up</i>");
 
-                var downButton = $("<a>");
-                // downButton.attr("type", "button");
-                downButton.attr("data-index", i);
-                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
-                downButton.html("<i class='material-icons'>thumb_down</i>");
+            var downButton = $("<a>");
+            // downButton.attr("type", "button");
+            downButton.attr("data-index", i);
+            downButton.addClass("btn btn-flat waves-effect waves-red downvote");
+            downButton.html("<i class='material-icons'>thumb_down</i>");
 
-                thumbsDiv.append(upButton);
-                thumbsDiv.append(downButton);
+            thumbsDiv.append(upButton);
+            thumbsDiv.append(downButton);
 
 
-                //album artwork information
-                var thumbnail = playlist[i].thumbnail;
-                var thumbnailImg = $("<img>").addClass("album-pic current-album");
-                thumbnailImg.attr("src", thumbnail);
+            //album artwork information
+            var thumbnail = playlist[i].thumbnail;
+            var thumbnailImg = $("<img>").addClass("album-pic current-album");
+            thumbnailImg.attr("src", thumbnail);
 
-                nameContainer.append(songNameP, artistNameP);
-                queuedTrack.append(thumbnailImg);
-                queuedTrack.append(nameContainer);
-                queuedTrack.append(thumbsDiv);
+            nameContainer.append(songNameP, artistNameP);
+            queuedTrack.append(thumbnailImg);
+            queuedTrack.append(nameContainer);
+            queuedTrack.append(thumbsDiv);
 
-                $("#current-track-box").empty();
-                $("#current-track-box").append(queuedTrack);
-            }
-            else {
-                var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
-                var nameContainer = $("<div>").addClass("name-container");
-                var artistName = playlist[i].artistName;
-                var songName = playlist[i].songName;
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                var thumbsDiv = $("<div>");
-
-                //album artwork information
-                var thumbnail = playlist[i].thumbnail;
-                var thumbnailImg = $("<img>").addClass("album-pic");
-                thumbnailImg.attr("src", thumbnail);
-
-                var upButton = $("<a>");
-                // upButton.attr("type", "button");
-                upButton.attr("data-index", i);
-                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
-                upButton.html("<i class='material-icons'>thumb_up</i>");
-
-                var downButton = $("<a>");
-                // downButton.attr("type", "button");
-                downButton.attr("data-index", i);
-                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
-                downButton.html("<i class='material-icons'>thumb_down</i>");
-
-                thumbsDiv.append(upButton);
-                thumbsDiv.append(downButton);
-
-                nameContainer.append(songNameP, artistNameP);
-                queuedTrack.append(thumbnailImg);
-                queuedTrack.append(nameContainer);
-                queuedTrack.append(thumbsDiv);
-
-                $(".queued-track-container").append(queuedTrack);
-            }
+            $("#current-track-box").empty();
+            $("#current-track-box").append(queuedTrack);
         }
-        database.ref().push({
-            playlist: playlist,
-            songindex: songIndex
-        })
+        else {
+            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", playlist[i].deezerID);
+            var nameContainer = $("<div>").addClass("name-container");
+            var artistName = playlist[i].artistName;
+            var songName = playlist[i].songName;
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            var thumbsDiv = $("<div>");
+
+            //album artwork information
+            var thumbnail = playlist[i].thumbnail;
+            var thumbnailImg = $("<img>").addClass("album-pic");
+            thumbnailImg.attr("src", thumbnail);
+
+            var upButton = $("<a>");
+            // upButton.attr("type", "button");
+            upButton.attr("data-index", i);
+            upButton.addClass("btn btn-flat waves-effect waves-green upvote");
+            upButton.html("<i class='material-icons'>thumb_up</i>");
+
+            var downButton = $("<a>");
+            // downButton.attr("type", "button");
+            downButton.attr("data-index", i);
+            downButton.addClass("btn btn-flat waves-effect waves-red downvote");
+            downButton.html("<i class='material-icons'>thumb_down</i>");
+
+            thumbsDiv.append(upButton);
+            thumbsDiv.append(downButton);
+
+            nameContainer.append(songNameP, artistNameP);
+            queuedTrack.append(thumbnailImg);
+            queuedTrack.append(nameContainer);
+            queuedTrack.append(thumbsDiv);
+
+            $(".queued-track-container").append(queuedTrack);
+        }
+    }
 }
 
 function clearSearchResults() {
@@ -231,7 +231,7 @@ $("#search-input").keyup(function (event) {
         $.ajax(settings).done(function (response) {
             var results = response.data;
             searchResultArr = results;
-            
+
             for (var i = 0; i < 10; i++) {
                 var searchResult = $("<div>").addClass("search-result").attr("data-target", "#add-song-modal").attr("data-toggle", "modal").attr("data-backdrop", "false");
                 var nameContainers = $("<div>").addClass("name-container search-name");
@@ -266,15 +266,23 @@ $("#search-input").keyup(function (event) {
 });
 
 $(document).on("click", ".search-result", function (event) {
-    console.log(this);
     for (var i = 0; i < 25; i++) {
         if (searchResultArr[i].id == $(this).attr("data-deezer")) {
+            // push to firebase
+            // database.ref("/playlist").push({
+            //     artistName: searchResultArr[i].artist.name,
+            //     songName: searchResultArr[i].title_short, 
+            //     thumbnail: searchResultArr[i].album.cover, 
+            //     preview: searchResultArr[i].preview, 
+            //     upvote: 0, 
+            //     deezerID: searchResultArr[i].id
+            // });
             var newSong = {};
 
-            newSong = { artistName: searchResultArr[i].artist.name, songName: searchResultArr[i].title_short, thumbnail: searchResultArr[i].album.cover, preview: searchResultArr[i].preview, upvote: 0, downvote: 0, deezerID: searchResultArr[i].id };
+            newSong = { artistName: searchResultArr[i].artist.name, songName: searchResultArr[i].title_short, thumbnail: searchResultArr[i].album.cover, preview: searchResultArr[i].preview, upvote: 0, deezerID: searchResultArr[i].id };
             playlist.push(newSong);
             renderQueue();
-            
+
             $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
                 window.setTimeout(function () {
                     $("#add-song-modal").modal("hide");
@@ -322,7 +330,7 @@ $("#song").on("ended", (event) => {
         songIndex++;
         playing = true;
         $("#song").attr("src", playlist[songIndex].preview);
-        
+
         playPause();
         // getLyrics();
         renderQueue();
@@ -342,7 +350,7 @@ function getLyrics() {
 
 
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-    
+
     $.ajax({
         url: queryURL,
         type: "GET",
@@ -363,7 +371,7 @@ function getLyrics() {
             $(".music-lyrics-container").append(lyricTitleDiv);
             $(".music-lyrics-container").append(musicLyrics);
             $(".music-lyrics").append(musicLyrics);
-            
+
         })
 
 
@@ -389,7 +397,7 @@ function sortPlaylist(arr) {
 $(document).on("click", ".upvote", function (event) {
     var index = $(this).attr("data-index");
     playlist[index].upvote++;
-    sortPlaylist(playlist);    
+    sortPlaylist(playlist);
 })
 
 $(document).on("click", ".downvote", function (event) {
