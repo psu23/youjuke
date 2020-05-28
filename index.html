@@ -30,20 +30,20 @@
 
   <header id="masthead">
 
-      <div id="logo-tagline">
-        <h1>YouJuke</h1>
-        <p id="slogan">Sick of algorithms telling you what to listen to?</p>
-      </div>
+    <div id="logo-tagline">
+      <h1>YouJuke</h1>
+      <p id="slogan">Sick of algorithms telling you what to listen to?</p>
+    </div>
 
-      <div id="current-track-wrapper">
-        <div id="current-track-box"></div>
-      </div>
+    <div id="current-track-wrapper">
+      <div id="current-track-box"></div>
+    </div>
 
-      <div id="header-menu-buttons">
-        <button type="button" class="btn btn-secondary" id="start-listening">Start
-          Listening</button>
-        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-          data-whatever="@mdo">Sign in</button>
+    <div id="header-menu-buttons">
+      <button type="button" class="btn btn-secondary" id="start-listening">Start
+        Listening</button>
+      <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+        data-whatever="@mdo">Sign in</button>
 
 
   </header>
@@ -56,22 +56,49 @@
 
       <div class="col-lg-5 col-md-5" id="left-panel">
 
-        <div class="wrapper queued-track-wrapper">
+
+        <ul class="nav nav-tabs" id="myTabLeft" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="queue-tab" data-toggle="tab" href="#queue" role="tab" aria-controls="queue"
+              aria-selected="true"><i class="material-icons">playlist_play</i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
+              aria-selected="false"><i class="material-icons">chat_bubble_outline</i></a>
+          </li>
+        </ul>
 
 
+        <div class="tab-content" id="myTabContentLeft">
+          <div class="tab-pane fade show active" id="queue" role="tabpanel" aria-labelledby="queue-tab">
+            <div class="wrapper queued-track-wrapper">
 
-          <div id="left-panel-title">
-            <h2><i class="material-icons queue-title-text">playlist_play</i></h2>
+              <div id="left-panel-title">
+              </div>
+              <div class="queued-track-container"></div>
+            </div>
+
           </div>
-          <div class="queued-track-container"></div>
+          <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
+          </div>
+
         </div>
 
+
+
       </div>
+
+
+
+
+
+
+
 
       <div class="col-lg-7 col-md-7" id="right-panel">
 
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="myTabRight" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="search"
               aria-selected="true"><i class="material-icons">search</i></a>
@@ -89,7 +116,7 @@
               aria-selected="false"><i class="material-icons">info</i></a>
           </li>
         </ul>
-        <div class="tab-content" id="myTabContent">
+        <div class="tab-content" id="myTabContentRight">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="input-group mb-3">
               <input type="text" class="form-control" id="search-input" placeholder="enter track title or artist..."
@@ -111,7 +138,9 @@
             <canvas id="myChart" width="200" height="200"></canvas>
           </div>
           <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
-            <div class="about-app"><p>About app and instructions coming soon</p></div>
+            <div class="about-app">
+              <p>About app and instructions coming soon</p>
+            </div>
           </div>
         </div>
 
@@ -122,7 +151,7 @@
 
   </div>
 
-  
+
 
   <!-- modal for add song -->
   <div class="modal fade" id="add-song-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
