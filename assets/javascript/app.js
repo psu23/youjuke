@@ -184,10 +184,10 @@ function renderQueue() {
                 $(".queued-track-container").append(queuedTrack);
             }
         }
-        database.ref().push({
-            playlist: playlist,
-            songindex: songIndex
-        })
+        // database.ref().push({
+        //     playlist: playlist,
+        //     songindex: songIndex
+        // })
 }
 
 function clearSearchResults() {
