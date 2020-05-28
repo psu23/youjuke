@@ -90,7 +90,8 @@ var myRadarChart = new Chart(ctx, {
             labels: {
                 fontColor: 'white'
             }
-        }
+        },
+        responsive: true
     }
 });
 
@@ -116,18 +117,6 @@ function renderQueue() {
 
                 thumbsDiv.addClass("btn-group");
                 thumbsDiv.attr("role", "group");
-
-                // var upButton = $("<button>");
-                // upButton.attr("type", "button");
-                // upButton.attr("data-index", i);
-                // upButton.addClass("btn btn-secondary upvote");
-                // upButton.text("👍");
-
-                // var downButton = $("<button>");
-                // downButton.attr("type", "button");
-                // downButton.attr("data-index", i);
-                // downButton.addClass("btn btn-secondary downvote");
-                // downButton.text("👎");
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
@@ -172,18 +161,6 @@ function renderQueue() {
                 var thumbnailImg = $("<img>").addClass("album-pic");
                 thumbnailImg.attr("src", thumbnail);
 
-                // var upButton = $("<button>");
-                // upButton.attr("type", "button");
-                // upButton.attr("data-index", i);
-                // upButton.addClass("btn btn-secondary upvote");
-                // upButton.text("👍");
-
-                // var downButton = $("<button>");
-                // downButton.attr("type", "button");
-                // downButton.attr("data-index", i);
-                // downButton.addClass("btn btn-secondary downvote");
-                // downButton.text("👎");
-
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
                 upButton.attr("data-index", i);
@@ -207,6 +184,10 @@ function renderQueue() {
                 $(".queued-track-container").append(queuedTrack);
             }
         }
+        database.ref().push({
+            playlist: playlist,
+            songindex: songIndex
+        })
 }
 
 function clearSearchResults() {
