@@ -57,7 +57,8 @@ var database = firebase.database();
 //         deezerID: 67511941
 //     }
 // ];
-var playlist = [];
+var livePlaylist = [];
+var totalSongs = 6;
 
 Chart.defaults.global.defaultFontColor = 'white';
 
@@ -103,96 +104,92 @@ var userName = "";
 function renderQueue() {
     database.ref("/playlist").on("value", function (snapshot) {
         livePlaylist = snapshot.val();
-        for (var property in livePlaylist) {
-            console.log(`${property}: ${livePlaylist[property].artistName}`);
-            console.log(livePlaylist[property].index)
-        }
-    
-    $(".queued-track-container").empty();
 
-    // for (var i = songIndex; i < playlist.length; i++) {
+        $(".queued-track-container").empty();
+
+        // for (var i = songIndex; i < playlist.length; i++) {
         for (var property in livePlaylist) {
-        // if (i == songIndex) {
+            // if (i == songIndex) {
             if (songIndex == livePlaylist[property].index) {
-            var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
-            var nameContainer = $("<div>").addClass("name-container current-song");
-            var artistName = livePlaylist[property].artistName;
-            var songName = livePlaylist[property].songName;
+                var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
+                var nameContainer = $("<div>").addClass("name-container current-song");
+                var artistName = livePlaylist[property].artistName;
+                var songName = livePlaylist[property].songName;
 
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsDiv = $("<div>").addClass("thumbs-container");
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-            thumbsDiv.addClass("btn-group");
-            thumbsDiv.attr("role", "group");
+                thumbsDiv.addClass("btn-group");
+                thumbsDiv.attr("role", "group");
 
-            var upButton = $("<a>");
-            // upButton.attr("type", "button");
-            upButton.attr("data-index", livePlaylist[property].index);
-            upButton.addClass("btn btn-flat waves-effect waves-green upvote");
-            upButton.html("<i class='material-icons'>thumb_up</i>");
+                var upButton = $("<a>");
+                // upButton.attr("type", "button");
+                upButton.attr("data-index", livePlaylist[property].index);
+                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
+                upButton.html("<i class='material-icons'>thumb_up</i>");
 
-            var downButton = $("<a>");
-            // downButton.attr("type", "button");
-            downButton.attr("data-index", livePlaylist[property].index);
-            downButton.addClass("btn btn-flat waves-effect waves-red downvote");
-            downButton.html("<i class='material-icons'>thumb_down</i>");
+                var downButton = $("<a>");
+                // downButton.attr("type", "button");
+                downButton.attr("data-index", livePlaylist[property].index);
+                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
+                downButton.html("<i class='material-icons'>thumb_down</i>");
 
-            thumbsDiv.append(upButton);
-            thumbsDiv.append(downButton);
+                thumbsDiv.append(upButton);
+                thumbsDiv.append(downButton);
 
 
-            //album artwork information
-            var thumbnail = livePlaylist[property].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic current-album");
-            thumbnailImg.attr("src", thumbnail);
+                //album artwork information
+                var thumbnail = livePlaylist[property].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic current-album");
+                thumbnailImg.attr("src", thumbnail);
 
-            nameContainer.append(songNameP, artistNameP);
-            queuedTrack.append(thumbnailImg);
-            queuedTrack.append(nameContainer);
-            queuedTrack.append(thumbsDiv);
+                nameContainer.append(songNameP, artistNameP);
+                queuedTrack.append(thumbnailImg);
+                queuedTrack.append(nameContainer);
+                queuedTrack.append(thumbsDiv);
 
-            $("#current-track-box").empty();
-            $("#current-track-box").append(queuedTrack);
+                $("#current-track-box").empty();
+                $("#current-track-box").append(queuedTrack);
+            }
+            else if (songIndex < livePlaylist[property].index) { 
+                var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
+                var nameContainer = $("<div>").addClass("name-container");
+                var artistName = livePlaylist[property].artistName;
+                var songName = livePlaylist[property].songName;
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                var thumbsDiv = $("<div>");
+
+                //album artwork information
+                var thumbnail = livePlaylist[property].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic");
+                thumbnailImg.attr("src", thumbnail);
+
+                var upButton = $("<a>");
+                // upButton.attr("type", "button");
+                upButton.attr("data-index", livePlaylist[property].index);
+                upButton.addClass("btn btn-flat waves-effect waves-green upvote");
+                upButton.html("<i class='material-icons'>thumb_up</i>");
+
+                var downButton = $("<a>");
+                // downButton.attr("type", "button");
+                downButton.attr("data-index", livePlaylist[property].index);
+                downButton.addClass("btn btn-flat waves-effect waves-red downvote");
+                downButton.html("<i class='material-icons'>thumb_down</i>");
+
+                thumbsDiv.append(upButton);
+                thumbsDiv.append(downButton);
+
+                nameContainer.append(songNameP, artistNameP);
+                queuedTrack.append(thumbnailImg);
+                queuedTrack.append(nameContainer);
+                queuedTrack.append(thumbsDiv);
+
+                $(".queued-track-container").append(queuedTrack);
+            }
         }
-        else {
-            var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
-            var nameContainer = $("<div>").addClass("name-container");
-            var artistName = livePlaylist[property].artistName;
-            var songName = livePlaylist[property].songName;
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsDiv = $("<div>");
-
-            //album artwork information
-            var thumbnail = livePlaylist[property].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
-
-            var upButton = $("<a>");
-            // upButton.attr("type", "button");
-            upButton.attr("data-index", livePlaylist[property].index);
-            upButton.addClass("btn btn-flat waves-effect waves-green upvote");
-            upButton.html("<i class='material-icons'>thumb_up</i>");
-
-            var downButton = $("<a>");
-            // downButton.attr("type", "button");
-            downButton.attr("data-index", livePlaylist[property].index);
-            downButton.addClass("btn btn-flat waves-effect waves-red downvote");
-            downButton.html("<i class='material-icons'>thumb_down</i>");
-
-            thumbsDiv.append(upButton);
-            thumbsDiv.append(downButton);
-
-            nameContainer.append(songNameP, artistNameP);
-            queuedTrack.append(thumbnailImg);
-            queuedTrack.append(nameContainer);
-            queuedTrack.append(thumbsDiv);
-
-            $(".queued-track-container").append(queuedTrack);
-        }
-    }
-});
+    });
 }
 
 function clearSearchResults() {
@@ -299,19 +296,23 @@ $(document).on("click", ".search-result", function (event) {
 $(document).on("click", "#clear-search", clearSearchResults);
 
 $("#start-listening").on("click", function () {
-    $("#song").attr("src", playlist[songIndex].preview);
-    playPause();
-    // requires sign in for music to play
-    // if (userName != "") {
-    //     playPause();
-    // }   
+    for (var property in livePlaylist) {
+        if (songIndex == livePlaylist[property].index) {
+            $("#song").attr("src", livePlaylist[property].preview);
+            playPause();
+            // requires sign in for music to play
+            // if (userName != "") {
+            //     playPause();
+            // }   
+        }
+    }
 });
 
 let playing = true;
 
 function playPause() {
     if (playing) {
-        getLyrics();
+        // getLyrics();
         const song = document.querySelector('#song');
 
         song.play(); //this will play the audio track
@@ -327,58 +328,69 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
+    songIndex++;
     //remove first (most recently finished) track from playlist
     // var playedTrack = playlist.shift();
     // playedTracks.push(playedTrack);
     // sortPlaylist(playlist);
-    if (songIndex < playlist.length - 1) {
-        songIndex++;
-        playing = true;
-        $("#song").attr("src", playlist[songIndex].preview);
-
-        playPause();
-        // getLyrics();
-        renderQueue();
-    }
-    else {
-        playPause();
-        songIndex++;
+    if (songIndex < totalSongs) {
+    for (var property in livePlaylist) {
+        if (songIndex == livePlaylist[property].index) {
+            playing = true;
+            $("#song").attr("src", livePlaylist[property].preview);
+            console.log(songIndex);
+            
+            playPause();
+            // getLyrics();
+            // songIndex++;
+            renderQueue();
+            }
+            else {
+                playPause();
+                // songIndex++;
+                console.log(songIndex);
+            }
+        }
     }
 });
 
 function getLyrics() {
+    for (var property in livePlaylist) {
+        if (songIndex == livePlaylist[property].index) {
 
-    $(".music-lyrics-container").empty();
-    var musicLyrics = $("<div>");
-    musicLyrics.addClass("music-lyrics");
-    // musicLyrics.css("overflow", "auto");
+            $(".music-lyrics-container").empty();
+            var musicLyrics = $("<div>");
+            musicLyrics.addClass("music-lyrics");
+            // musicLyrics.css("overflow", "auto");
 
 
-    var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
+            var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + livePlaylist[property].songName + "&q_artist=" + livePlaylist[property].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
 
-    $.ajax({
-        url: queryURL,
-        type: "GET",
-        data: {
-            format: "jsonp",
-            callback: "jsonp_callback"
-        },
-        dataType: "jsonp",
-        jsonpCallback: "jsonp_callback",
-        contentType: "application/json"
-    })
-        .then(function (response) {
-            var results = response;
-            var musicLyrics = results.message.body.lyrics.lyrics_body;
-            var lyricTitle = playlist[songIndex].songName;
-            var lyricTitleDiv = $("<h3>");
-            lyricTitleDiv.append("\'" + lyricTitle + "\':");
-            $(".music-lyrics-container").append(lyricTitleDiv);
-            $(".music-lyrics-container").append(musicLyrics);
-            $(".music-lyrics").append(musicLyrics);
+            $.ajax({
+                url: queryURL,
+                type: "GET",
+                data: {
+                    format: "jsonp",
+                    callback: "jsonp_callback"
+                },
+                dataType: "jsonp",
+                jsonpCallback: "jsonp_callback",
+                contentType: "application/json"
+            })
+                .then(function (response) {
 
-        })
+                    var results = response;
+                    var musicLyrics = results.message.body.lyrics.lyrics_body;
+                    var lyricTitle = livePlaylist[songIndex].songName;
+                    var lyricTitleDiv = $("<h3>");
+                    lyricTitleDiv.append("\'" + lyricTitle + "\':");
+                    $(".music-lyrics-container").append(lyricTitleDiv);
+                    $(".music-lyrics-container").append(musicLyrics);
+                    $(".music-lyrics").append(musicLyrics);
 
+                })
+        }
+    }
 
 }
 
