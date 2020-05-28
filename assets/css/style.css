@@ -1,5 +1,6 @@
 body, html {
-    background: linear-gradient(180deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+    background-image: -webkit-linear-gradient(90deg, rgba(87, 36, 94, 0.5), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.5));
+    background-attachment: fixed;
     color: white;
     height: 100%;
     margin-top: 0;
@@ -61,14 +62,14 @@ a {
     border-top-right-radius: .25rem;
 }
 
-#contact {
+#graph {
     width: 30vw;
 }
 
 .queued-track-container {
     height: 36em;
     overflow: auto;
-    background: rgb(58, 58, 58);
+    /* background: rgb(58, 58, 58); */
 }
 
 .name-container {
@@ -95,7 +96,7 @@ a {
 .search-results-container {
     height: 31.5em;
     overflow: auto;
-    background: rgb(34, 34, 34);
+    /* background: rgb(34, 34, 34); */
 }
 
 .search-results {
@@ -386,35 +387,11 @@ canvas {
 
 
 @media screen and (max-width: 980px) {
-    /* body, html {
-        background: black;
-    }
 
-    .queued-track-container {
-        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
-    } */
 
 }
 
 @media screen and (max-width: 768px) {
-
-    /* #masthead {
-        position: fixed;
-        z-index: 99;
-        width: 100%;
-        margin: 0 0 10px;
-        border-bottom: 10px;
-        vertical-align: center;
-        padding-bottom: 5px;
-    } */
-
-    body, html {
-        background: black;
-    }
-
-    .queued-track-container {
-        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
-    }
 
     #masthead {
         position: relative;
@@ -434,22 +411,10 @@ canvas {
         width: 200%;
     }
 
-    /* .name-container {
-        width: 220px;
-    }
-
-    .artist-name {
-        font-size: 1em;
-    } */
-
     #header-menu-buttons {
         clear: both;
     }
     
-    /* .main-container {
-        padding-top: 260px;
-    } */
-
     .main-container {
         padding-top: 0;
     }
