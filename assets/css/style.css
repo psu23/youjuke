@@ -96,11 +96,6 @@ a {
 .search-results-container {
     height: 31.5em;
     overflow: auto;
-    /* background: rgb(34, 34, 34); */
-}
-
-.search-results {
-    height: 100%;
 }
 
 .search-result {
@@ -112,8 +107,28 @@ a {
     margin-bottom: 5px;
 }
 
+.chat-container {
+    height: 36em;
+    overflow: auto;
+}
+
 .music-lyrics-container {
-    max-height: 470px;
+    height: 36em;
+    overflow: auto;
+}
+
+.canvas-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.rankings-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.about-app {
+    height: 36em;
     overflow: auto;
 }
 
