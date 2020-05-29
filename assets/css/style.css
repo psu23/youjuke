@@ -17,14 +17,14 @@ a {
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
-    padding: 10px 10px 0 10px;
+    padding: 0 5px 0 5px;
 }
 
 #logo-tagline {
     float: left;
     width: 25%;
     position: static;
-    /* margin: 10px; */
+    margin-top: 5px;
 }
 
 #logo-img {
@@ -46,8 +46,12 @@ a {
 
 #current-track-box {
     background: black;
-    padding: 10px;
+    padding: 15px;
 
+}
+
+#header-menu-buttons {
+    margin-top: 5px;
 }
 
 
@@ -72,25 +76,28 @@ a {
 }
 
 #graph {
-    width: 30vw;
+    /* width: 30vw; */
+    text-align: center;
 }
 
 .queued-track-container {
     height: 36em;
     overflow: auto;
+    padding-top: 5px;
     /* background: rgb(58, 58, 58); */
 }
 
 .name-container {
     margin: 0;
-    width: 105px;
+    width: 180px;
     min-height: 50px;
     height: 100%;
     text-align: center;
+    padding-top: 2px;
 }
 
 .current-song {
-    width: 200px;
+    width: 300px;
 }
 
 .name-container p {
@@ -99,7 +106,11 @@ a {
 
 .search-result:hover, .queued-song:hover {
     cursor: pointer;
-    background-color: rgb(95, 95, 95);
+    /* background-color: rgb(95, 95, 95); */
+    /* background: linear-gradient(90deg, rgba(87, 36, 94, 0.4), rgba(51, 112, 131, 0.4), rgba(87, 36, 94, 0.4)); */
+    /* background: linear-gradient(90deg, rgb(34, 34, 34, 0.2), rgb(24, 24, 24, 0.2), rgb(34, 34, 34, 0.2)); */
+    background: rgba(51, 112, 131, 0.6);
+    transition: 0.5s;
 }
 
 .search-results-container {
@@ -131,9 +142,14 @@ a {
     overflow: auto;
 }
 
+#myChart {
+    margin: auto;
+}
+
 .rankings-container {
     height: 36em;
     overflow: auto;
+    padding-top: 8px;
 }
 
 .about-app {
@@ -145,6 +161,7 @@ a {
     display: flex;
     min-height: 50px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .album-pic {
@@ -163,8 +180,8 @@ a {
 
 .btn {
     padding: 5px;
-    height: 36px;
-    margin-top: 5px;
+    /* height: 36px;
+    margin-top: 5px; */
     margin-right: 3px;
 }
 
@@ -189,7 +206,8 @@ a {
 .thumbs-container {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    /* justify-content: end; */
+    align-items: flex-start;
 }
 
 #left-panel .container {
@@ -251,6 +269,7 @@ a {
     min-height: 50px;
     justify-content: space-between;
     align-items: center;
+    font-size: 18px;
 }
 
 .current-album {
