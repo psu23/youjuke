@@ -1,3 +1,6 @@
+// getlyrics not working
+// 
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyDIAOPYeVbv9YgJsKQ9JDSHImO3CGcYzJ8",
@@ -57,7 +60,7 @@ var database = firebase.database();
 //         deezerID: 67511941
 //     }
 // ];
-var livePlaylist = [];
+var livePlaylist = {};
 var totalSongs = 0;
 var totalCount = 0;
 
@@ -102,7 +105,9 @@ var songIndex = 0;
 var searchResultArr = {};
 var userName = "";
 
+
 function renderQueue() {
+
     database.ref().on("value", function (snapshot) {
         livePlaylist = snapshot.val().playlist;
         totalCount = snapshot.val().totalsongs;
@@ -155,8 +160,8 @@ function renderQueue() {
                 $("#current-track-box").empty();
                 $("#current-track-box").append(queuedTrack);
             }
-            else if (songIndex < livePlaylist[property].index) { 
-                
+            else if (songIndex < livePlaylist[property].index) {
+
                 var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
                 var nameContainer = $("<div>").addClass("name-container");
                 var artistName = livePlaylist[property].artistName;
@@ -277,14 +282,14 @@ $(document).on("click", ".search-result", function (event) {
             // push song data to firebase
             database.ref("/playlist").push({
                 artistName: searchResultArr[i].artist.name,
-                songName: searchResultArr[i].title_short, 
-                thumbnail: searchResultArr[i].album.cover, 
-                preview: searchResultArr[i].preview, 
-                upvote: 0, 
+                songName: searchResultArr[i].title_short,
+                thumbnail: searchResultArr[i].album.cover,
+                preview: searchResultArr[i].preview,
+                upvote: 0,
                 deezerID: searchResultArr[i].id,
                 index: totalSongs
             });
-            // totalSongs++;
+            totalSongs++;
             // push total song count to firebase
             database.ref("/totalsongs").set({
                 count: totalSongs
@@ -322,7 +327,7 @@ let playing = true;
 
 function playPause() {
     if (playing) {
-        // getLyrics();
+        getLyrics();
         const song = document.querySelector('#song');
 
         song.play(); //this will play the audio track
@@ -338,30 +343,31 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
-    songIndex++;
+    // songIndex++;
     //remove first (most recently finished) track from playlist
     // var playedTrack = playlist.shift();
     // playedTracks.push(playedTrack);
-    // sortPlaylist(playlist);
+    // sortPlaylist(livePlaylist);
     if (songIndex < totalSongs) {
-        
-    for (var property in livePlaylist) {
-        if (songIndex == livePlaylist[property].index) {
-            
-            playing = true;
-            $("#song").attr("src", livePlaylist[property].preview);
-            
-            
-            playPause();
-            // getLyrics();
-            // songIndex++;
-            renderQueue();
+        songIndex++
+        for (var property in livePlaylist) {
+            if (songIndex == livePlaylist[property].index) {
+
+                playing = true;
+                $("#song").attr("src", livePlaylist[property].preview);
+
+
+                playPause();
+                // getLyrics();
+                // songIndex++;
+                renderQueue();
             }
         }
     }
     else {
-        
+        songIndex++;
         playing = true;
+        playPause();
         $("#start-listening").text("Start Listening");
     }
 });
@@ -378,7 +384,7 @@ function getLyrics() {
 
 
             var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + livePlaylist[property].songName + "&q_artist=" + livePlaylist[property].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-
+            console.log(queryURL);
             $.ajax({
                 url: queryURL,
                 type: "GET",
@@ -411,7 +417,7 @@ function sortPlaylist(arr) {
     var sorted = false;
     while (!sorted) {
         sorted = true;
-        for (var i = songIndex + 1; i < arr.length - 1; i++) {
+        for (var i = songIndex + 1; i < totalSongs - 1; i++) {
             if (arr[i].upvote < arr[i + 1].upvote) {
                 sorted = false;
                 var temp = arr[i];
@@ -425,30 +431,31 @@ function sortPlaylist(arr) {
 }
 
 // push upvotes/downvotes to firebase
-$(document).on("click", ".upvote", function(event){
+$(document).on("click", ".upvote", function (event) {
 
-    for (var property in livePlaylist){
-        if (livePlaylist[property].index == $(this).attr("data-index")){
+    for (var property in livePlaylist) {
+        if (livePlaylist[property].index == $(this).attr("data-index")) {
             // add upvote to local playlist array
             livePlaylist[property].upvote++
             // variable to hold new upvote value
             var updates = {}
-            updates ["/playlist/" + property + "/upvote"] = livePlaylist[property].upvote;
+            updates["/playlist/" + property + "/upvote"] = livePlaylist[property].upvote;
             // push to firebase
             return database.ref().update(updates);
         }
     }
+    // sortPlaylist(livePlaylist);
 })
 
-$(document).on("click", ".downvote", function(event){
+$(document).on("click", ".downvote", function (event) {
 
-    for (var property in livePlaylist){
-        if (livePlaylist[property].index == $(this).attr("data-index")){
+    for (var property in livePlaylist) {
+        if (livePlaylist[property].index == $(this).attr("data-index")) {
             // add upvote to local playlist array
             livePlaylist[property].upvote--
             // variable to hold new upvote value
             var updates = {}
-            updates ["/playlist/" + property + "/upvote"] = livePlaylist[property].upvote;
+            updates["/playlist/" + property + "/upvote"] = livePlaylist[property].upvote;
             // push to firebase
             return database.ref().update(updates);
         }
