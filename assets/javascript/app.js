@@ -199,6 +199,7 @@ function renderQueue() {
             }
         }
     });
+
 }
 
 function clearSearchResults() {
