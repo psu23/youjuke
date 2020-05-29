@@ -76,7 +76,8 @@ a {
 }
 
 #graph {
-    width: 30vw;
+    /* width: 30vw; */
+    text-align: center;
 }
 
 .queued-track-container {
@@ -108,7 +109,8 @@ a {
     /* background-color: rgb(95, 95, 95); */
     /* background: linear-gradient(90deg, rgba(87, 36, 94, 0.4), rgba(51, 112, 131, 0.4), rgba(87, 36, 94, 0.4)); */
     /* background: linear-gradient(90deg, rgb(34, 34, 34, 0.2), rgb(24, 24, 24, 0.2), rgb(34, 34, 34, 0.2)); */
-    background: rgba(51, 112, 131, 0.4);
+    background: rgba(51, 112, 131, 0.6);
+    transition: 0.5s;
 }
 
 .search-results-container {
@@ -138,6 +140,10 @@ a {
 .canvas-container {
     height: 36em;
     overflow: auto;
+}
+
+#myChart {
+    margin: auto;
 }
 
 .rankings-container {
