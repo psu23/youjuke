@@ -27,6 +27,17 @@ a {
     /* margin: 10px; */
 }
 
+#logo-img {
+    height: 100%;
+    width: 100%;
+    padding: 10px 10px 10px 7px;
+}
+
+#slogan {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
 #current-track-wrapper {
     width: 50%;
     /* position: static; */
@@ -408,6 +419,10 @@ canvas {
 
     #masthead {
         position: relative;
+    }
+
+    #slogan {
+        font-size: 1rem;
     }
 
     .header-container {
