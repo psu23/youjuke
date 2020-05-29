@@ -66,6 +66,10 @@ a {
     margin: auto;
 }
 
+.modal-content {
+    width: 195px;
+}
+
 .queued-track-container {
     height: 36em;
     overflow: auto;
