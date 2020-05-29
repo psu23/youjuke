@@ -154,7 +154,7 @@ function renderQueue() {
             var songName = playlist[i].songName;
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsDiv = $("<div>");
+            var thumbsDiv = $("<div>").addClass("thumbs-container");
 
             //album artwork information
             var thumbnail = playlist[i].thumbnail;

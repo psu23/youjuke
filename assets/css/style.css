@@ -87,6 +87,7 @@ a {
     min-height: 50px;
     height: 100%;
     text-align: center;
+    padding-top: 2px;
 }
 
 .current-song {
@@ -145,6 +146,7 @@ a {
     display: flex;
     min-height: 50px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .album-pic {
@@ -163,8 +165,8 @@ a {
 
 .btn {
     padding: 5px;
-    height: 36px;
-    margin-top: 5px;
+    /* height: 36px;
+    margin-top: 5px; */
     margin-right: 3px;
 }
 
@@ -189,7 +191,8 @@ a {
 .thumbs-container {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    /* justify-content: end; */
+    align-items: flex-start;
 }
 
 #left-panel .container {
@@ -251,6 +254,7 @@ a {
     min-height: 50px;
     justify-content: space-between;
     align-items: center;
+    font-size: 18px;
 }
 
 .current-album {
