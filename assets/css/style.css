@@ -46,7 +46,7 @@ a {
 
 #current-track-box {
     background: black;
-    padding: 14px;
+    padding: 15px;
 
 }
 
@@ -105,7 +105,10 @@ a {
 
 .search-result:hover, .queued-song:hover {
     cursor: pointer;
-    background-color: rgb(95, 95, 95);
+    /* background-color: rgb(95, 95, 95); */
+    /* background: linear-gradient(90deg, rgba(87, 36, 94, 0.4), rgba(51, 112, 131, 0.4), rgba(87, 36, 94, 0.4)); */
+    /* background: linear-gradient(90deg, rgb(34, 34, 34, 0.2), rgb(24, 24, 24, 0.2), rgb(34, 34, 34, 0.2)); */
+    background: rgba(51, 112, 131, 0.4);
 }
 
 .search-results-container {
