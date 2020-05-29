@@ -105,7 +105,7 @@ var songIndex = 0;
 var searchResultArr = {};
 var userName = "";
 
-
+var currentSong = false;
 function renderQueue() {
 
     database.ref().on("value", function (snapshot) {
@@ -114,8 +114,10 @@ function renderQueue() {
         totalSongs = totalCount.count;
 
         $(".queued-track-container").empty();
-
+        
         // for (var i = songIndex; i < playlist.length; i++) {
+            var tempIndex = 0;
+            
         for (var property in livePlaylist) {
             // if (i == songIndex) {
             if (songIndex == livePlaylist[property].index) {
@@ -133,13 +135,13 @@ function renderQueue() {
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
-                upButton.attr("data-index", livePlaylist[property].index);
+                upButton.attr("data-index", "0");
                 upButton.addClass("btn btn-flat waves-effect waves-green upvote");
                 upButton.html("<i class='material-icons'>thumb_up</i>");
 
                 var downButton = $("<a>");
                 // downButton.attr("type", "button");
-                downButton.attr("data-index", livePlaylist[property].index);
+                downButton.attr("data-index", "0");
                 downButton.addClass("btn btn-flat waves-effect waves-red downvote");
                 downButton.html("<i class='material-icons'>thumb_down</i>");
 
@@ -159,9 +161,15 @@ function renderQueue() {
 
                 $("#current-track-box").empty();
                 $("#current-track-box").append(queuedTrack);
+                $(".queued-track-container").append(queuedTrack);
+                // update firebase with tempIndex
+                database.ref("/playlist/" + property).update({
+                    index: totalSongs
+                });
+                return currentSong = true
             }
-            else if (songIndex < livePlaylist[property].index) {
-
+            else {
+                tempIndex++;
                 var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
                 var nameContainer = $("<div>").addClass("name-container");
                 var artistName = livePlaylist[property].artistName;
@@ -177,13 +185,13 @@ function renderQueue() {
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
-                upButton.attr("data-index", livePlaylist[property].index);
+                upButton.attr("data-index", tempIndex);
                 upButton.addClass("btn btn-flat waves-effect waves-green upvote");
                 upButton.html("<i class='material-icons'>thumb_up</i>");
 
                 var downButton = $("<a>");
                 // downButton.attr("type", "button");
-                downButton.attr("data-index", livePlaylist[property].index);
+                downButton.attr("data-index", tempIndex);
                 downButton.addClass("btn btn-flat waves-effect waves-red downvote");
                 downButton.html("<i class='material-icons'>thumb_down</i>");
 
@@ -196,6 +204,11 @@ function renderQueue() {
                 queuedTrack.append(thumbsDiv);
 
                 $(".queued-track-container").append(queuedTrack);
+                // update firebase with tempIndex
+                database.ref("/playlist/" + property).update({
+                    index: tempIndex
+                })
+                // console.log(snapshot.val().playlist[property].index)
             }
         }
     });
@@ -312,7 +325,7 @@ $(document).on("click", "#clear-search", clearSearchResults);
 
 $("#start-listening").on("click", function () {
     for (var property in livePlaylist) {
-        if (songIndex == livePlaylist[property].index) {
+        if (livePlaylist[property].index == 0) {
             $("#song").attr("src", livePlaylist[property].preview);
             playPause();
             // requires sign in for music to play
