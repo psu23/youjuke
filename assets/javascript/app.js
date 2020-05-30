@@ -108,7 +108,7 @@ var userName = "";
 var currentSong = false;
 function renderQueue() {
 
-    database.ref().on("value", function (snapshot) {
+    database.ref().once("value", function (snapshot) {
         livePlaylist = snapshot.val().playlist;
         totalCount = snapshot.val().totalsongs;
         totalSongs = totalCount.count;
@@ -120,7 +120,8 @@ function renderQueue() {
             
         for (var property in livePlaylist) {
             // if (i == songIndex) {
-            if (songIndex == livePlaylist[property].index) {
+            if (!currentSong) {
+                currentSong = true;
                 var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
                 var nameContainer = $("<div>").addClass("name-container current-song");
                 var artistName = livePlaylist[property].artistName;
@@ -161,16 +162,16 @@ function renderQueue() {
 
                 $("#current-track-box").empty();
                 $("#current-track-box").append(queuedTrack);
-                $(".queued-track-container").append(queuedTrack);
+                // $(".queued-track-container").append(queuedTrack);
                 // update firebase with tempIndex
                 database.ref("/playlist/" + property).update({
-                    index: totalSongs
+                    index: 0
                 });
-                return currentSong = true
             }
             else {
+                
                 tempIndex++;
-                var queuedTrack = $("<div>").addClass("queued-song").attr("data-id", livePlaylist[property].deezerID);
+                var queuedTrack = $("<div>").addClass("queued-song");
                 var nameContainer = $("<div>").addClass("name-container");
                 var artistName = livePlaylist[property].artistName;
                 var songName = livePlaylist[property].songName;
@@ -208,7 +209,6 @@ function renderQueue() {
                 database.ref("/playlist/" + property).update({
                     index: tempIndex
                 })
-                // console.log(snapshot.val().playlist[property].index)
             }
         }
     });
@@ -340,6 +340,7 @@ let playing = true;
 
 function playPause() {
     if (playing) {
+        
         getLyrics();
         const song = document.querySelector('#song');
 
@@ -356,15 +357,22 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
+    for (property in livePlaylist) {
+        if (livePlaylist[property] == 0) {
+            database.ref("/playlist/" + property).update({
+                index: -1
+            })
+        }
+    }
     // songIndex++;
     //remove first (most recently finished) track from playlist
     // var playedTrack = playlist.shift();
     // playedTracks.push(playedTrack);
     // sortPlaylist(livePlaylist);
     if (songIndex < totalSongs) {
-        songIndex++
+        songIndex++;
         for (var property in livePlaylist) {
-            if (songIndex == livePlaylist[property].index) {
+            if (livePlaylist[property].index == 0) {
 
                 playing = true;
                 $("#song").attr("src", livePlaylist[property].preview);
@@ -386,10 +394,9 @@ $("#song").on("ended", (event) => {
 });
 
 function getLyrics() {
-    console.log("hello");
     for (var property in livePlaylist) {
-        if (songIndex == livePlaylist[property].index) {
-
+        if (livePlaylist[property].index == 0) {
+            var lyricTitle = livePlaylist[property].songName;
             $(".music-lyrics-container").empty();
             var musicLyrics = $("<div>");
             musicLyrics.addClass("music-lyrics");
@@ -397,7 +404,7 @@ function getLyrics() {
 
 
             var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + livePlaylist[property].songName + "&q_artist=" + livePlaylist[property].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-            console.log(queryURL);
+            
             $.ajax({
                 url: queryURL,
                 type: "GET",
@@ -410,16 +417,16 @@ function getLyrics() {
                 contentType: "application/json"
             })
                 .then(function (response) {
-
+                    
                     var results = response;
                     var musicLyrics = results.message.body.lyrics.lyrics_body;
-                    var lyricTitle = livePlaylist[songIndex].songName;
+                    
                     var lyricTitleDiv = $("<h3>");
                     lyricTitleDiv.append("\'" + lyricTitle + "\':");
                     $(".music-lyrics-container").append(lyricTitleDiv);
                     $(".music-lyrics-container").append(musicLyrics);
                     $(".music-lyrics").append(musicLyrics);
-
+                    
                 })
         }
     }
