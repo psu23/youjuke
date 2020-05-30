@@ -91,6 +91,7 @@ var myRadarChart = new Chart(ctx, {
                 fontColor: 'white'
             }
         },
+        maintainAspectRatio: false,//ensures no overflow but properly scales to parent div dimensions
         responsive: true
     }
 });
