@@ -222,6 +222,11 @@ function clearSearchResults() {
 }
 
 $(document).ready(renderQueue());
+database.ref().on("value", function (snapshot) {
+    // console.log(snapshot.val().playlist);
+    livePlaylist = snapshot.val().playlist;
+    totalCount = snapshot.val().totalsongs;
+});
 
 $("#search-input").keyup(function (event) {
     //first remove the results from any previous search
@@ -289,6 +294,7 @@ $("#search-input").keyup(function (event) {
         })
     }
 });
+
 
 $(document).on("click", ".search-result", function (event) {
     for (var i = 0; i < 25; i++) {
@@ -358,7 +364,7 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
-    currentDeezer = "";
+    currentSong = "";
     totalSongs--;
     for (property in livePlaylist) {
 
@@ -374,7 +380,7 @@ $("#song").on("ended", (event) => {
     if (songIndex < totalSongs) {
         songIndex++;
         for (var property in livePlaylist) {
-            if (livePlaylist[property].index == 0) {
+            if (livePlaylist[property].index == 1) {
 
                 playing = true;
                 $("#song").attr("src", livePlaylist[property].preview);
