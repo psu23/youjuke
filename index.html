@@ -30,21 +30,27 @@
 
   <header id="masthead">
 
-    <div id="logo-tagline">
+    <div class="row header-row">
+      <div id="logo-tagline" class="col-md-3">
 
-      <img src="assets/css/youjuke_logo_0.png" id="logo-img">
-      <p id="slogan">Sick of algorithms telling you what to listen to?</p>
-    </div>
+        <img src="assets/css/youjuke_logo_0.png" id="logo-img">
+        <p id="slogan">Sick of algorithms telling you what to listen to?</p>
+      </div>
 
-    <div id="current-track-wrapper">
-      <div id="current-track-box"></div>
-    </div>
+      <div id="current-track-wrapper" class="col-md-6">
+        <div id="play-track-container">
+          <button type="button" class="btn" id="start-listening"><i
+            class="large material-icons">play_circle_outline</i></button>
+          <div id="current-track-box"></div>
+        </div>
+      </div>
 
-    <div id="header-menu-buttons">
-      <button type="button" class="btn btn-secondary" id="start-listening">Start
-        Listening</button>
-      <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-        data-whatever="@mdo">Sign in</button>
+      <div id="header-menu-buttons" class="col-md-3">
+
+        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+          data-whatever="@mdo">Sign in</button>
+
+      </div>
 
 
   </header>
@@ -149,7 +155,7 @@
 
               <p>Youjuke is a music forum that allows groups of visitors to compile
                 a shared playlist and listen to it together, live. Anyone can add a track
-                to the playlist, but it is up to all users as a whole to decide the order of the 
+                to the playlist, but it is up to all users as a whole to decide the order of the
                 playlist. Whether you want to share tracks with a larger audience,
                 or want to break out into a virtual party with friends, Youjuke has you covered.</p>
 
@@ -174,7 +180,7 @@
                   at the bottom of the playlist.</li>
                 <li>In this demo version, you have unlimited voting, but users will have
                   limited votes per amount of songs that are added to the playlist.</li>
-                <li>Want to sing along to the current song? The tab next to the search tab shows lyrics of the 
+                <li>Want to sing along to the current song? The tab next to the search tab shows lyrics of the
                   current song.
                 </li>
                 <li>The graph tab shows a chart that keeps track of music preferences of users.</li>
