@@ -91,6 +91,7 @@ var myRadarChart = new Chart(ctx, {
                 fontColor: 'white'
             }
         },
+        maintainAspectRatio: false,//ensures no overflow but properly scales to parent div dimensions
         responsive: true
     }
 });
@@ -303,11 +304,11 @@ function playPause() {
 
         song.play(); //this will play the audio track
         playing = false;
-        $("#start-listening").text("Stop Listening")
+        $("#start-listening").html("<i class='large material-icons play-pause'>pause_circle_outline</i>");
     } else {
         song.pause();
         playing = true;
-        $("#start-listening").text("Start Listening")
+        $("#start-listening").html("<i class='large material-icons play-pause'>play_circle_outline</i>");
     }
 }
 
@@ -414,6 +415,25 @@ $(document).on("click", "#sign-in-submit", function (event) {
 })
 
 $("#recipient-name").text(localStorage.getItem("username"));
+
+// if (localStorage.getItem("username") == null) {
+//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username" + "?"));
+//     $(document).on("click", "#sign-in-submit", function (event) {
+//         event.preventDefault();
+//         var userName = $("#recipient-name").val().trim();
+//         localStorage.setItem("username", userName);
+//         $("#sign-in-button").text("Sign out " + localStorage.getItem("username") + "?");
+//     })
+// }
+
+// else if (localStorage.getItem("username") !== null) {
+//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username" + "?"));
+//     $(document).on("click", "#sign-in-button", function (event) {
+//         // $("#sign-in-button").text("Sign In");
+//         localStorage.clear();
+//         location.reload();
+//     })
+// }
 
 function listRankings() {
     $("#rankings-list").empty();
