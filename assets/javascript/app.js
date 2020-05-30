@@ -65,9 +65,9 @@ var ctx = $('#myChart');
 var myRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ['Punk', 'Rap', 'Rock', 'Indie', 'Metal'],
+        labels: ['Punk', 'Rap', 'Rock', 'Indie', 'Metal', 'Electronic', 'Pop', 'Country', 'R&B', 'Other'],
         datasets: [{
-            data: [20, 30, 60, 75, 10],
+            data: [20, 30, 60, 75, 10, 50, 60, 30, 30],
             borderColor: 'red',
             backgroundColor: 'rgba(255, 10, 13, 0.1)',
             label: 'Current Users'
@@ -97,7 +97,7 @@ var myRadarChart = new Chart(ctx, {
 
 var songIndex = 0;
 var searchResultArr = {};
-var userName = "";
+// var userName = "";
 
 function renderQueue() {
 
@@ -342,7 +342,7 @@ function getLyrics() {
 
 
     var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlist[songIndex].songName + "&q_artist=" + playlist[songIndex].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
-
+    
     $.ajax({
         url: queryURL,
         type: "GET",
@@ -356,6 +356,7 @@ function getLyrics() {
     })
         .then(function (response) {
             var results = response;
+            console.log(results);
             var musicLyrics = results.message.body.lyrics.lyrics_body;
             var lyricTitle = playlist[songIndex].songName;
             var lyricTitleDiv = $("<h3>");
@@ -405,8 +406,14 @@ $(document).on("click", ".downvote", function (event) {
 })
 
 $(document).on("click", "#sign-in-submit", function (event) {
-    userName = $("#recipient-name").val().trim();
+    event.preventDefault();
+    var userName = $("#recipient-name").val().trim();
+    localStorage.clear();
+    localStorage.setItem("username", userName);
+    $("#recipient-name").text(localStorage.getItem("username"));
 })
+
+$("#recipient-name").text(localStorage.getItem("username"));
 
 function listRankings() {
     $("#rankings-list").empty();
