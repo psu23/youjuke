@@ -358,12 +358,12 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
-    currentSong = "";
+    currentDeezer = "";
+    totalSongs--;
     for (property in livePlaylist) {
-        if (livePlaylist[property] == 0) {
-            database.ref("/playlist/" + property).update({
-                index: -1
-            })
+
+        if (livePlaylist[property].index == 0) {
+            database.ref("/playlist/" + property).remove();
         }
     }
     // songIndex++;
