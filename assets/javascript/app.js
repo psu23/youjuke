@@ -64,7 +64,6 @@ var livePlaylist = {};
 var previouslyPlayed = {};
 var totalSongs = 0;
 var totalCount = 0;
-var playlistArr = {};
 
 Chart.defaults.global.defaultFontColor = 'white';
 
@@ -118,22 +117,21 @@ function renderQueue() {
         // playlistArr = Object.entries(livePlaylist);
 
         $(".queued-track-container").empty();
-        var returnToObject = sortPlaylist();
-        console.log(returnToObject);
+        sortPlaylist();
         // console.log(sortPlaylist);
         // for (var i = songIndex; i < playlist.length; i++) {
-        // var tempIndex = 0;
+        var tempIndex = 0;
 
-        for (var property in returnToObject) {
+        for (var i = 0; i < playlistArr.length; i++) {
             // if (i == songIndex) {
             if (currentSong == "") {
                 // currentSong = true;
-                currentSong = returnToObject[property].deezerID;
-                $("#song").attr("src", returnToObject[property].preview);
-                var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", returnToObject[property].deezerID);
+                currentSong = playlistArr[i][1].deezerID;
+                $("#song").attr("src", playlistArr[i][1].preview);
+                var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlistArr[i][1].deezerID);
                 var nameContainer = $("<div>").addClass("name-container current-song");
-                var artistName = returnToObject[property].artistName;
-                var songName = returnToObject[property].songName;
+                var artistName = playlistArr[i][1].artistName;
+                var songName = playlistArr[i][1].songName;
 
                 var songNameP = $("<p>").text(songName).addClass("song-name");
                 var artistNameP = $("<p>").text(artistName).addClass("artist-name");
@@ -159,7 +157,7 @@ function renderQueue() {
 
 
                 //album artwork information
-                var thumbnail = returnToObject[property].thumbnail;
+                var thumbnail = playlistArr[i][1].thumbnail;
                 var thumbnailImg = $("<img>").addClass("album-pic current-album");
                 thumbnailImg.attr("src", thumbnail);
 
@@ -172,23 +170,23 @@ function renderQueue() {
                 $("#current-track-box").append(queuedTrack);
                 // $(".queued-track-container").append(queuedTrack);
                 // update firebase with tempIndex
-                // database.ref("/playlist/" + property).update({
-                //     index: 0
-                // });
+                database.ref("/playlist/" + playlistArr[i][0]).update({
+                    index: 0
+                });
             }
-            else if (currentSong !== returnToObject[property].deezerID) {
+            else if (currentSong !== playlistArr[i][1].deezerID) {
 
                 tempIndex++;
                 var queuedTrack = $("<div>").addClass("queued-song");
                 var nameContainer = $("<div>").addClass("name-container");
-                var artistName = returnToObject[property].artistName;
-                var songName = returnToObject[property].songName;
+                var artistName = playlistArr[i][1].artistName;
+                var songName = playlistArr[i][1].songName;
                 var songNameP = $("<p>").text(songName).addClass("song-name");
                 var artistNameP = $("<p>").text(artistName).addClass("artist-name");
                 var thumbsDiv = $("<div>");
 
                 //album artwork information
-                var thumbnail = returnToObject[property].thumbnail;
+                var thumbnail = playlistArr[i][1].thumbnail;
                 var thumbnailImg = $("<img>").addClass("album-pic");
                 thumbnailImg.attr("src", thumbnail);
 
@@ -214,7 +212,7 @@ function renderQueue() {
 
                 $(".queued-track-container").append(queuedTrack);
                 // update firebase with tempIndex
-                database.ref("/playlist/" + property).update({
+                database.ref("/playlist/" + playlistArr[i][0]).update({
                     index: tempIndex
                 })
             }
@@ -463,11 +461,10 @@ function sortPlaylist() {
                 playlistArr[i] = playlistArr[i + 1];
                 playlistArr[i + 1] = temp;
             }
-            // console.log(playlistArr[i]);
+            playlistArr[i][1].index = i;
         }
     }
-    var returnToObject = Object.assign({}, playlistArr);
-    return returnToObject;
+    return playlistArr
     
     // })
     // var sorted = false;
@@ -510,6 +507,7 @@ $(document).on("click", ".upvote", function (event) {
     }
     // sortPlaylist(livePlaylist);
     renderQueue();
+
 })
 
 $(document).on("click", ".downvote", function (event) {
