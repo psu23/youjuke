@@ -105,7 +105,7 @@ var songIndex = 0;
 var searchResultArr = {};
 var userName = "";
 
-var currentSong = false;
+var currentSong = "";
 function renderQueue() {
 
     database.ref().once("value", function (snapshot) {
@@ -120,8 +120,9 @@ function renderQueue() {
             
         for (var property in livePlaylist) {
             // if (i == songIndex) {
-            if (!currentSong) {
-                currentSong = true;
+            if (currentSong == "") {
+                // currentSong = true;
+                currentSong = livePlaylist[property].deezerID;
                 var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
                 var nameContainer = $("<div>").addClass("name-container current-song");
                 var artistName = livePlaylist[property].artistName;
@@ -168,7 +169,7 @@ function renderQueue() {
                     index: 0
                 });
             }
-            else {
+            else if (currentSong !== livePlaylist[property].deezerID) {
                 
                 tempIndex++;
                 var queuedTrack = $("<div>").addClass("queued-song");
@@ -357,6 +358,7 @@ function playPause() {
 var playedTracks = [];
 
 $("#song").on("ended", (event) => {
+    currentSong = "";
     for (property in livePlaylist) {
         if (livePlaylist[property] == 0) {
             database.ref("/playlist/" + property).update({
