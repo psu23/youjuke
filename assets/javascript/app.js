@@ -303,11 +303,11 @@ function playPause() {
 
         song.play(); //this will play the audio track
         playing = false;
-        $("#start-listening").html("<i class='large material-icons'>pause_circle_outline</i>");
+        $("#start-listening").html("<i class='large material-icons play-pause'>pause_circle_outline</i>");
     } else {
         song.pause();
         playing = true;
-        $("#start-listening").html("<i class='large material-icons'>play_circle_outline</i>");
+        $("#start-listening").html("<i class='large material-icons play-pause'>play_circle_outline</i>");
     }
 }
 

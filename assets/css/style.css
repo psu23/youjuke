@@ -63,6 +63,10 @@ a {
     background: black;
 }
 
+.material-icons.play-pause {
+    font-size: 40px;
+}
+
 #current-track-box {
     background: black;
     padding: 15px;
