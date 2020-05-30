@@ -123,6 +123,7 @@ function renderQueue() {
             if (currentSong == "") {
                 // currentSong = true;
                 currentSong = livePlaylist[property].deezerID;
+                $("#song").attr("src", livePlaylist[property].preview);
                 var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", livePlaylist[property].deezerID);
                 var nameContainer = $("<div>").addClass("name-container current-song");
                 var artistName = livePlaylist[property].artistName;
@@ -372,29 +373,30 @@ $("#song").on("ended", (event) => {
             database.ref("/playlist/" + property).remove();
         }
     }
+    
     // songIndex++;
     //remove first (most recently finished) track from playlist
     // var playedTrack = playlist.shift();
     // playedTracks.push(playedTrack);
     // sortPlaylist(livePlaylist);
     if (songIndex < totalSongs) {
-        songIndex++;
+        
         for (var property in livePlaylist) {
             if (livePlaylist[property].index == 1) {
 
                 playing = true;
-                $("#song").attr("src", livePlaylist[property].preview);
-
-
+                // $("#song").attr("src", livePlaylist[property].preview);
+                
                 playPause();
                 // getLyrics();
                 // songIndex++;
                 renderQueue();
             }
         }
+        songIndex++;
     }
     else {
-        songIndex++;
+        // songIndex++;
         playing = true;
         playPause();
         $("#start-listening").text("Start Listening");
