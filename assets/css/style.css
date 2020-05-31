@@ -24,6 +24,7 @@ a {
 .header-row {
     margin-top: -5px;
     margin-bottom: -5px;
+    width: 100%
 }
 
 #logo-tagline {
@@ -76,9 +77,13 @@ a {
 }
 
 #header-menu-buttons {
-    margin-top: 5px;
+    margin-top: 5px;   
+
 }
 
+.welcome-box {
+    font-size: 2em;
+}
 
 #left-panel, #right-panel {
     padding: 5px;
