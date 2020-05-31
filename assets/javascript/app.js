@@ -17,49 +17,6 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 var database = firebase.database();
-
-// var playlist = [
-//     {
-//         artistName: "Arctic Monkeys",
-//         songName: "Do I Wanna Know?",
-//         thumbnail: "https://api.deezer.com/album/6899610/image",
-//         preview: "https://cdns-preview-6.dzcdn.net/stream/c-6f1dc690a43d4c7914384b4d61636d2b-4.mp3",
-//         upvote: 0,
-//         deezerID: 70322130
-//     },
-//     {
-//         artistName: "The Kinks",
-//         songName: "Shangri-La",
-//         thumbnail: "https://api.deezer.com/album/115918642/image",
-//         preview: "https://cdns-preview-c.dzcdn.net/stream/c-c91369d8fbb0d5c5eacc14c839741090-2.mp3",
-//         upvote: 0,
-//         deezerID: 781869182
-//     },
-//     {
-//         artistName: "Pink Floyd",
-//         songName: "Money",
-//         thumbnail: "https://api.deezer.com/album/12114240/image",
-//         preview: "https://cdns-preview-f.dzcdn.net/stream/c-f15121774a7b2486d30328d0ca4b5d05-2.mp3",
-//         upvote: 0,
-//         deezerID: 116914026
-//     },
-//     {
-//         artistName: "The Mars Volta",
-//         songName: "The Widow",
-//         thumbnail: "https://api.deezer.com/album/230048/image",
-//         preview: "https://cdns-preview-b.dzcdn.net/stream/c-ba2309052dbba45d2362d5175f306db8-6.mp3",
-//         upvote: 0,
-//         deezerID: 2309096
-//     },
-//     {
-//         artistName: "Portugal. The Man",
-//         songName: "Modern Jesus",
-//         thumbnail: "https://api.deezer.com/album/6607726/image",
-//         preview: "https://cdns-preview-d.dzcdn.net/stream/c-d6afe829858e7b165d53df214a2123a8-2.mp3",
-//         upvote: 0,
-//         deezerID: 67511941
-//     }
-// ];
 var livePlaylist = {};
 var previouslyPlayed = {};
 var totalSongs = 0;
@@ -72,9 +29,9 @@ var ctx = $('#myChart');
 var myRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ['Punk', 'Rap', 'Rock', 'Indie', 'Metal'],
+        labels: ['Punk', 'Rap', 'Rock', 'Indie', 'Metal', 'Electronic', 'Pop', 'Country', 'R&B', 'Other'],
         datasets: [{
-            data: [20, 30, 60, 75, 10],
+            data: [20, 30, 60, 75, 10, 50, 60, 30, 30],
             borderColor: 'red',
             backgroundColor: 'rgba(255, 10, 13, 0.1)',
             label: 'Current Users'
@@ -98,13 +55,14 @@ var myRadarChart = new Chart(ctx, {
                 fontColor: 'white'
             }
         },
+        maintainAspectRatio: false,//ensures no overflow but properly scales to parent div dimensions
         responsive: true
     }
 });
 
 // var songIndex = 0;
 var searchResultArr = {};
-var userName = "";
+// var userName = "";
 
 var currentSong = "";
 function renderQueue() {
@@ -133,12 +91,12 @@ function renderQueue() {
                 var artistName = playlistArr[i][1].artistName;
                 var songName = playlistArr[i][1].songName;
 
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                var thumbsDiv = $("<div>").addClass("thumbs-container");
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-                thumbsDiv.addClass("btn-group");
-                thumbsDiv.attr("role", "group");
+            thumbsDiv.addClass("btn-group");
+            thumbsDiv.attr("role", "group");
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
@@ -152,9 +110,8 @@ function renderQueue() {
                 downButton.addClass("btn btn-flat waves-effect waves-red downvote");
                 downButton.html("<i class='material-icons'>thumb_down</i>");
 
-                thumbsDiv.append(upButton);
-                thumbsDiv.append(downButton);
-
+            thumbsDiv.append(upButton);
+            thumbsDiv.append(downButton);
 
                 //album artwork information
                 var thumbnail = playlistArr[i][1].thumbnail;
@@ -218,6 +175,7 @@ function renderQueue() {
             }
         }
     });
+
 }
 
 function clearSearchResults() {
@@ -358,11 +316,11 @@ function playPause() {
 
         song.play(); //this will play the audio track
         playing = false;
-        $("#start-listening").text("Stop Listening")
+        $("#start-listening").html("<i class='large material-icons play-pause'>pause_circle_outline</i>");
     } else {
         song.pause();
         playing = true;
-        $("#start-listening").text("Start Listening")
+        $("#start-listening").html("<i class='large material-icons play-pause'>play_circle_outline</i>");
     }
 }
 
@@ -403,6 +361,7 @@ $("#song").on("ended", (event) => {
 });
 
 function getLyrics() {
+
     for (var i = 0; i < playlistArr.length; i++) {
         if (currentSong == playlistArr[i][1].deezerID) {
             console.log("hi");
@@ -440,9 +399,7 @@ function getLyrics() {
                 })
         }
     }
-
 }
-
 
 function sortPlaylist() {
     playlistArr = Object.entries(livePlaylist);
@@ -492,7 +449,6 @@ function sortPlaylist() {
 
 // push upvotes/downvotes to firebase
 $(document).on("click", ".upvote", function (event) {
-
     for (var property in livePlaylist) {
         if (livePlaylist[property].deezerID == $(this).attr("data-deezer")) {
             // add upvote to local playlist array
@@ -525,5 +481,82 @@ $(document).on("click", ".downvote", function (event) {
 })
 
 $(document).on("click", "#sign-in-submit", function (event) {
-    userName = $("#recipient-name").val().trim();
+    event.preventDefault();
+    var userName = $("#recipient-name").val().trim();
+    localStorage.clear();
+    localStorage.setItem("username", userName);
+    $("#recipient-name").text(localStorage.getItem("username"));
 })
+
+$("#recipient-name").text(localStorage.getItem("username"));
+
+// if (localStorage.getItem("username") == null) {
+//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username" + "?"));
+//     $(document).on("click", "#sign-in-submit", function (event) {
+//         event.preventDefault();
+//         var userName = $("#recipient-name").val().trim();
+//         localStorage.setItem("username", userName);
+//         $("#sign-in-button").text("Sign out " + localStorage.getItem("username") + "?");
+//     })
+// }
+
+// else if (localStorage.getItem("username") !== null) {
+//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username" + "?"));
+//     $(document).on("click", "#sign-in-button", function (event) {
+//         // $("#sign-in-button").text("Sign In");
+//         localStorage.clear();
+//         location.reload();
+//     })
+// }
+
+function listRankings() {
+    $("#rankings-list").empty();
+
+    var arr = [...playlist];//copies the playlist array, otherwise, bubblesort will rearrange queue live
+    var sorted = false;
+    while (!sorted) {
+        sorted = true;
+        for (var i = 0; i < arr.length - 1; i++) {
+            if (arr[i].upvote < arr[i + 1].upvote) {
+                sorted = false;
+                var temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+    }
+
+    var orderedList = $("<ol>");
+
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].upvote > 0) {
+            //artist and song
+            var rankedTrack = $("<div>").addClass("ranked-song");
+            var nameContainer = $("<div>").addClass("name-container");
+            var artistName = arr[i].artistName;
+            var songName = arr[i].songName;
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name"); 
+            //artwork
+            var thumbnail = arr[i].thumbnail;
+            var thumbnailImg = $("<img>").addClass("album-pic");
+            thumbnailImg.attr("src", thumbnail);
+            //ranking
+            var songLikes = arr[i].upvote;
+            var songLikesP = $("<p>").html("&uarr;" + songLikes).addClass("song-likes");
+            //append song details together
+            nameContainer.append(songNameP, artistNameP);
+            rankedTrack.append("<li></li>");
+            rankedTrack.append(thumbnailImg);
+            rankedTrack.append(nameContainer);
+            rankedTrack.append(songLikesP);
+            //append song to list
+            orderedList.append(rankedTrack);
+
+        }
+
+    }
+
+    $("#rankings-list").append(orderedList);
+
+}
