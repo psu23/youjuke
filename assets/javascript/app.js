@@ -287,7 +287,7 @@ $(document).on("click", ".search-result", function (event) {
 $(document).on("click", "#clear-search", clearSearchResults);
 
 $("#start-listening").on("click", function () {
-    $("#song").attr("src", playlist[songIndex].preview);
+    // $("#song").attr("src", playlist[songIndex].preview);//if this line gets un-commented , when pause button is clicked the preview will start from the beginning upon re-click
     playPause();
     // requires sign in for music to play
     // if (userName != "") {
