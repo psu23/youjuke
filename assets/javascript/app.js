@@ -108,7 +108,6 @@ var userName = "";
 
 var currentSong = "";
 function renderQueue() {
-console.log("rendered queue");
     database.ref().once("value", function (snapshot) {
         livePlaylist = snapshot.val().playlist;
         totalCount = snapshot.val().totalsongs;
@@ -404,16 +403,17 @@ $("#song").on("ended", (event) => {
 });
 
 function getLyrics() {
-    for (var property in livePlaylist) {
-        if (livePlaylist[property].index == 0) {
-            var lyricTitle = livePlaylist[property].songName;
+    for (var i = 0; i < playlistArr.length; i++) {
+        if (currentSong == playlistArr[i][1].deezerID) {
+            console.log("hi");
+            var lyricTitle = playlistArr[i][1].songName;
             $(".music-lyrics-container").empty();
             var musicLyrics = $("<div>");
             musicLyrics.addClass("music-lyrics");
             // musicLyrics.css("overflow", "auto");
 
 
-            var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + livePlaylist[property].songName + "&q_artist=" + livePlaylist[property].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
+            var queryURL = "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=" + playlistArr[i][1].songName + "&q_artist=" + playlistArr[i][1].artistName + "&apikey=2cfbc4e7d607a2feef36118210237514";
 
             $.ajax({
                 url: queryURL,
