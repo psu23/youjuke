@@ -77,9 +77,14 @@ a {
 }
 
 #header-menu-buttons {
-    margin-top: 5px;
+    margin-top: 5px;   
 }
 
+.welcome-box {
+    font-size: 1.75em;
+    line-height: 1.2em;
+    font-family: 'Mada', sans-serif;
+}
 
 #left-panel, #right-panel {
     padding: 5px;
@@ -100,6 +105,7 @@ a {
     border-bottom-right-radius: .25rem;
     border-top-right-radius: .25rem;
 }
+
 
 #graph {
     /* width: 30vw; */
@@ -137,6 +143,12 @@ a {
     /* background: linear-gradient(90deg, rgb(34, 34, 34, 0.2), rgb(24, 24, 24, 0.2), rgb(34, 34, 34, 0.2)); */
     background: rgba(51, 112, 131, 0.6);
     transition: 0.5s;
+
+}
+
+a:hover {
+    color: rgb(104, 199, 199);
+
 }
 
 .search-results-container {

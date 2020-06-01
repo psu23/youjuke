@@ -3,9 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>YouJuke</title>
+  <title>YouJuke -- Beta</title>
   <!-- Materialize Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Link for google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet"> 
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- link to ChartJS -->
@@ -52,6 +54,7 @@
         <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
           data-whatever="@mdo">Sign in</button>
 
+
       </div>
 
 
@@ -77,6 +80,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
+
               aria-selected="false"><i class="material-icons">forum</i></a>
           </li>
         </ul>
@@ -94,6 +98,7 @@
           </div>
           <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
             <div class="chat-container"></div>
+
           </div>
 
         </div>
@@ -102,7 +107,9 @@
 
       </div>
 
+
       <!--Right panel-->
+
       <div class="col-lg-7 col-md-7" id="right-panel">
 
 
@@ -111,6 +118,7 @@
             <a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab"
               aria-controls="search" aria-selected="true"><i class="material-icons">search</i></a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" id="lyr-tab" data-toggle="tab" href="#lyr" role="tab" aria-controls="lyr"
               aria-selected="false"><i class="material-icons">font_download</i></a>
@@ -120,8 +128,13 @@
               aria-selected="false"><i class="material-icons">bubble_chart</i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="rankings-tab" data-toggle="tab" href="#rankings" role="tab" aria-controls="rankings"
+            <a class="nav-link" id="fav-tab" data-toggle="tab" href="#fav" role="tab" aria-controls="fav"
               aria-selected="false"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="rankings-tab" data-toggle="tab" href="#rankings" role="tab" aria-controls="rankings"
+              aria-selected="false"><i class="material-icons">show_chart</i></a>
+
           </li>
           <li class="nav-item">
             <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info"
@@ -129,7 +142,9 @@
           </li>
         </ul>
         <div class="tab-content" id="myTabContentRight">
+
           <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
+
             <div class="input-group mb-3">
               <input type="text" class="form-control" id="search-input" placeholder="enter track title or artist..."
                 aria-label="Deezer search" aria-describedby="basic-addon2">
@@ -149,6 +164,13 @@
           <div class="tab-pane fade chart-container" id="graph" role="tabpanel" aria-labelledby="graph-tab">
             <div class="canvas-container"><canvas id="myChart" width="200" height="200"></canvas></div>
           </div>
+
+          <div class="tab-pane fade chart-container" id="fav" role="tabpanel" aria-labelledby="fav-tab">
+            <div class="favs-container">
+              <div id="favs-list"></div>
+            </div>
+          </div>
+
           <div class="tab-pane fade chart-container" id="rankings" role="tabpanel" aria-labelledby="rankings-tab">
             <div class="rankings-container">
               <div id="rankings-list"></div>
@@ -156,6 +178,7 @@
           </div>
           <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
             <div class="about-app">
+
               <h3>What is Youjuke?</h3>
 
               <p>Youjuke is a music forum that allows groups of visitors to compile
