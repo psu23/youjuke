@@ -184,6 +184,7 @@ function renderQueue() {
 
     listRankings()
 
+
 }
 
 function clearSearchResults() {
