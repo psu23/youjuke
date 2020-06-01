@@ -245,9 +245,8 @@ a:hover {
 
 .thumbs-container {
     display: flex;
-    flex-direction: row;
-    /* justify-content: end; */
-    align-items: flex-start;
+    /* flex-direction: column;
+    align-items: center; */
 }
 
 #left-panel .container {

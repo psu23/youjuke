@@ -85,6 +85,7 @@ function renderQueue() {
                 var artistName = playlistArr[i][1].artistName;
                 var songName = playlistArr[i][1].songName;
 
+
                 var songNameP = $("<p>").text(songName).addClass("song-name");
                 var artistNameP = $("<p>").text(artistName).addClass("artist-name");
                 var thumbsDiv = $("<div>").addClass("thumbs-container");
@@ -587,6 +588,7 @@ function listRankings() {
 // shows tops songs after clicking on rankings tab
 $("#rankings-tab").on("click", listRankings);
 
+
 //Volume control
 var volume = document.querySelector("#volume");
 var songFile = document.querySelector("#song");
@@ -594,3 +596,4 @@ var songFile = document.querySelector("#song");
 volume.addEventListener('change', function (e) {
     songFile.volume = e.currentTarget.value / 100;
 })
+
