@@ -85,12 +85,12 @@ function renderQueue() {
                 var artistName = playlistArr[i][1].artistName;
                 var songName = playlistArr[i][1].songName;
 
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                var thumbsDiv = $("<div>").addClass("thumbs-container");
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-                thumbsDiv.addClass("btn-group");
-                thumbsDiv.attr("role", "group");
+            thumbsDiv.addClass("btn-group");
+            thumbsDiv.attr("role", "group");
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
@@ -106,6 +106,7 @@ function renderQueue() {
 
                 thumbsDiv.append(upButton);
                 thumbsDiv.append(downButton);
+
 
                 //album artwork information
                 var thumbnail = playlistArr[i][1].thumbnail;
@@ -180,7 +181,9 @@ function renderQueue() {
             }
         }
     });
+
     listRankings()
+
 }
 
 function clearSearchResults() {
@@ -419,9 +422,11 @@ function sortPlaylist() {
 
 // push upvotes/downvotes to firebase
 $(document).on("click", ".upvote", function (event) {
+
     listRankings();
     for (var i = 0; i < playlistArr.length; i++) {
         if (playlistArr[i][1].deezerID == $(this).attr("data-deezer")) {
+
             // add upvote to local playlist array
             playlistArr[i][1].upvote++
             if (likedSongs.length !== 0) {
@@ -497,6 +502,7 @@ $(document).on("click", ".downvote", function (event) {
 
 $(document).on("click", "#sign-in-submit", function (event) {
     event.preventDefault();
+
     $(".welcome-box").remove();
     var userName = $("#recipient-name").val().trim();
     localStorage.clear();
@@ -520,15 +526,20 @@ $(document).ready(function (event) {
 $("#recipient-name").attr("value", localStorage.getItem("username"));
 
 
+
 function listRankings() {
     $("#rankings-list").empty();
 
+
     var arr = [...totalSongPlaylist];
+
     var sorted = false;
     while (!sorted) {
         sorted = true;
         for (var i = 0; i < arr.length - 1; i++) {
+
             if (arr[i][1].upvote < arr[i + 1][1].upvote) {
+
                 sorted = false;
                 var temp = arr[i];
                 arr[i] = arr[i + 1];
@@ -540,6 +551,7 @@ function listRankings() {
     var orderedList = $("<ol>");
 
     for (var i = 0; i < arr.length; i++) {
+
         if (arr[i][1].upvote > 0) {
             //artist and song
             var rankedTrack = $("<div>").addClass("queued-song ranked-song");
@@ -554,6 +566,7 @@ function listRankings() {
             thumbnailImg.attr("src", thumbnail);
             //ranking
             var songLikes = arr[i][1].upvote;
+
             var songLikesP = $("<p>").html("&uarr;" + songLikes).addClass("song-likes");
             //append song details together
             nameContainer.append(songNameP, artistNameP);
@@ -570,3 +583,4 @@ function listRankings() {
 };
 // shows tops songs after clicking on rankings tab
 $("#rankings-tab").on("click", listRankings);
+
