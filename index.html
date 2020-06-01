@@ -44,16 +44,27 @@
           <button type="button" class="btn" id="start-listening"><i
               class="large material-icons play-pause">play_circle_outline</i></button>
           <div id="current-track-box"></div>
+
         </div>
+
       </div>
 
       <div id="header-menu-buttons" class="col-md-3">
 
-        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-          data-whatever="@mdo">Sign in</button>
+        <div id="volume-sign-in">
+          <input id="volume" type="range" min="0" max="100" step="1" value="90"></input>
+          <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+            data-whatever="@mdo">Sign in</button>
+        </div>
 
+        <div id="user-info">
+          <div id="welcome-container"></div>
+        </div>
 
       </div>
+
+
+
 
 
   </header>

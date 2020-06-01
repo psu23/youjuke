@@ -443,7 +443,39 @@ $(document).on("click", ".upvote", function (event) {
     renderQueue();
 
 });
-// listens for click on any downvote button
+
+// pull liked songs from local storage to show on fav tab
+$(document).ready(function (event) {
+    if (Array.isArray(likedSongs)) {
+        var favs = JSON.parse(localStorage.getItem("Liked Songs"));
+        var favList = $("<ol>");
+        if (likedSongs.length !== 0) {
+            for (var i = 0; i < favs.length; i++) {
+                var favTrack = $("<div>").addClass("queued-song ranked-song");
+                var nameContainer = $("<div>").addClass("name-container");
+                var artistName = favs[i].artistName;
+                var songName = favs[i].songName;
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                //artwork
+                var thumbnail = favs[i].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic");
+                thumbnailImg.attr("src", thumbnail);
+
+                //append song details together
+                nameContainer.append(songNameP, artistNameP);
+                favTrack.append("<li></li>");
+                favTrack.append(thumbnailImg);
+                favTrack.append(nameContainer);
+                //append song to list
+                favList.append(favTrack);
+
+                $("#favs-list").append(favList);
+            }
+        }
+    }
+});
+
 $(document).on("click", ".downvote", function (event) {
 
     for (var property in livePlaylist) {
@@ -470,7 +502,7 @@ $(document).on("click", "#sign-in-submit", function (event) {
     // $("#recipient-name").text(localStorage.getItem("username"));
     var welcome = $("<div>").addClass("welcome-box");
     welcome.text("Welcome " + userName + "!");
-    $("#header-menu-buttons").append(welcome);
+    $("#welcome-container").append(welcome);
     $("#sign-in-button").text("Sign out");
 });
 
@@ -482,7 +514,7 @@ $(document).ready(function (event) {
         var welcomeBack = $("<div>").addClass("welcome-box");
         $("#sign-in-button").text("Sign out");
         welcomeBack.text("Welcome back " + localStorage.getItem("username") + "!");
-        $("#header-menu-buttons").append(welcomeBack);
+        $("#welcome-container").append(welcomeBack);
     }
 });
 // checks local storage for favorite song on page load
@@ -535,7 +567,17 @@ $("#song").on("ended", (event) => {
     }
 });
 
+
 // update livePlaylist variable when firebase is changed
 database.ref().on("value", function (snapshot) {
     livePlaylist = snapshot.val().playlist;
 });
+
+//Volume control
+var volume = document.querySelector("#volume");
+var songFile = document.querySelector("#song");
+
+volume.addEventListener('change', function (e) {
+    songFile.volume = e.currentTarget.value / 100;
+})
+
