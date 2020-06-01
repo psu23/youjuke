@@ -20,7 +20,7 @@ var database = firebase.database();
 var livePlaylist = {};
 var previouslyPlayed = {};
 var totalSongPlaylist = [];
-var totalCount = 0;
+var likedSongs = [];
 
 Chart.defaults.global.defaultFontColor = 'white';
 
@@ -71,7 +71,7 @@ function renderQueue() {
 
         $(".queued-track-container").empty();
 
-        sortPlaylist(playlistArr);
+        sortPlaylist();
         // loads playlist on screen
         for (var i = 0; i < playlistArr.length; i++) {
             // if (i == songIndex) {
@@ -168,14 +168,14 @@ function renderQueue() {
                 for (var v = 0; v < totalSongPlaylist.length; v++) {
                     if (playlistArr[i][1].deezerID == totalSongPlaylist[v][1].deezerID) {
                         existing = true;
-                    }                    
+                    }
                 }
                 if (!existing) {
-                totalSongPlaylist.push(playlistArr[i]);                   
-                }                     
+                    totalSongPlaylist.push(playlistArr[i]);
+                }
             }
             else {
-                totalSongPlaylist.push(playlistArr[i]); 
+                totalSongPlaylist.push(playlistArr[i]);
             }
         }
     });
@@ -396,45 +396,78 @@ function getLyrics() {
     }
 }
 
-function sortPlaylist(arr) {
-    arr = Object.entries(livePlaylist);
+function sortPlaylist() {
+    playlistArr = Object.entries(livePlaylist);
 
-    if (arr.length > 2) {
+    if (playlistArr.length > 2) {
         var sorted = false;
         while (!sorted) {
             sorted = true;
-            for (var i = 1; i < arr.length - 1; i++) {
-                if ((arr[i][1].upvote < arr[i + 1][1].upvote)) {
+            for (var i = 1; i < playlistArr.length - 1; i++) {
+                if ((playlistArr[i][1].upvote < playlistArr[i + 1][1].upvote)) {
                     sorted = false;
-                    var temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
+                    var temp = playlistArr[i];
+                    playlistArr[i] = playlistArr[i + 1];
+                    playlistArr[i + 1] = temp;
                     // })
                 }
-                // arr[i][1].index = i;
+                // playlistArr[i][1].index = i;
             }
         }
     }
-    return arr
+    return playlistArr
 }
 
 // push upvotes/downvotes to firebase
 $(document).on("click", ".upvote", function (event) {
     listRankings();
-    for (var property in livePlaylist) {
-        if (livePlaylist[property].deezerID == $(this).attr("data-deezer")) {
+    for (var i = 0; i < playlistArr.length; i++) {
+        if (playlistArr[i][1].deezerID == $(this).attr("data-deezer")) {
             // add upvote to local playlist array
-            livePlaylist[property].upvote++
+            playlistArr[i][1].upvote++
+            // push to likedSongs and push likedSongs to local storage
+            likedSongs.push(playlistArr[i][1]);
+            localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
             // variable to hold new upvote value
             var updates = {}
-            updates["/playlist/" + property + "/upvote"] = livePlaylist[property].upvote;
+            updates["/playlist/" + playlistArr[i][0] + "/upvote"] = playlistArr[i][1].upvote;
             // push to firebase
             return database.ref().update(updates);
         }
     }
-    // sortPlaylist(livePlaylist);
+    // update playlist with new upvote count
     renderQueue();
-})
+
+});
+
+// pull liked songs from local storage to show on fav tab
+$(document).ready(function (event) {
+    
+    var favs = JSON.parse(localStorage.getItem("Liked Songs"));
+    var favList = $("<ol>");
+        for (var i = 0; i < favs.length; i++) {
+            var favTrack = $("<div>").addClass("queued-song ranked-song");
+            var nameContainer = $("<div>").addClass("name-container");
+            var artistName = favs[i].artistName;
+            var songName = favs[i].songName;
+            var songNameP = $("<p>").text(songName).addClass("song-name");
+            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            //artwork
+            var thumbnail = favs[i].thumbnail;
+            var thumbnailImg = $("<img>").addClass("album-pic");
+            thumbnailImg.attr("src", thumbnail);
+
+            //append song details together
+            nameContainer.append(songNameP, artistNameP);
+            favTrack.append("<li></li>");
+            favTrack.append(thumbnailImg);
+            favTrack.append(nameContainer);
+            //append song to list
+            favList.append(favTrack);
+
+            $("#favs-list").append(favList);
+        }
+});
 
 $(document).on("click", ".downvote", function (event) {
 
@@ -449,7 +482,8 @@ $(document).on("click", ".downvote", function (event) {
             return database.ref().update(updates);
         }
     }
-})
+    renderQueue();
+});
 
 $(document).on("click", "#sign-in-submit", function (event) {
     event.preventDefault();
@@ -462,7 +496,7 @@ $(document).on("click", "#sign-in-submit", function (event) {
     welcome.text("Welcome " + userName + "!");
     $("#header-menu-buttons").append(welcome);
     $("#sign-in-button").text("Sign out");
-})
+});
 
 $(document).ready(function (event) {
     if (localStorage.getItem("username") !== null) {
@@ -475,55 +509,29 @@ $(document).ready(function (event) {
 
 $("#recipient-name").attr("value", localStorage.getItem("username"));
 
-// if (localStorage.getItem("username") == null) {
-//     var welcomeBack = $("<div>");
-//     $("#sign-in-button").text("Sign out");
-//     welcomeBack.text("Welcome back " + localStorage.getItem("username"));
-//     $("#header-menu-buttons").append(welcomeBack);
-// }
-
-// else if (localStorage.getItem("username") !== null) {
-//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username" + "?"));
-//     $(document).on("click", "#sign-in-button", function (event) {
-//         // $("#sign-in-button").text("Sign In");
-//         localStorage.clear();
-//         location.reload();
-//     })
-// }
-
-// $(document).on("click", "#sign-in-submit", function (event) {
-//     event.preventDefault();
-//     var userName = $("#recipient-name").val().trim();
-//     localStorage.setItem("username", userName);
-//     $("#sign-in-button").text("Sign out " + localStorage.getItem("username") + "?");
-// })
-
-
 
 function listRankings() {
     $("#rankings-list").empty();
 
-    // var sorted = false;
-    // while (!sorted) {
-    //     sorted = true;
-    //     for (var i = 0; i < totalSongPlaylist.length - 1; i++) {
-    //         if (totalSongPlaylist[i][1].upvote < totalSongPlaylist[i + 1][1].upvote) {
-    //             sorted = false;
-    //             var temp = totalSongPlaylist[i];
-    //             totalSongPlaylist[i] = totalSongPlaylist[i + 1];
-    //             totalSongPlaylist[i + 1] = temp;
-    //         }
-    //     }
-    // }
-
-    sortPlaylist(totalSongPlaylist);
+    var sorted = false;
+    while (!sorted) {
+        sorted = true;
+        for (var i = 0; i < totalSongPlaylist.length - 1; i++) {
+            if (totalSongPlaylist[i][1].upvote < totalSongPlaylist[i + 1][1].upvote) {
+                sorted = false;
+                var temp = totalSongPlaylist[i];
+                totalSongPlaylist[i] = totalSongPlaylist[i + 1];
+                totalSongPlaylist[i + 1] = temp;
+            }
+        }
+    }
 
     var orderedList = $("<ol>");
 
     for (var i = 0; i < totalSongPlaylist.length; i++) {
         if (totalSongPlaylist[i][1].upvote > 0) {
             //artist and song
-            var rankedTrack = $("<div>").addClass("ranked-song");
+            var rankedTrack = $("<div>").addClass("queued-song ranked-song");
             var nameContainer = $("<div>").addClass("name-container");
             var artistName = totalSongPlaylist[i][1].artistName;
             var songName = totalSongPlaylist[i][1].songName;
@@ -548,6 +556,6 @@ function listRankings() {
             $("#rankings-list").append(orderedList);
         }
     }
-}
-
-// $(document).ready(listRankings());
+};
+// shows tops songs after clicking on rankings tab
+$("#rankings-tab").on("click", listRankings);

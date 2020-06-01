@@ -6,6 +6,8 @@
   <title>YouJuke -- Beta</title>
   <!-- Materialize Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Link for google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet"> 
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- link to ChartJS -->
@@ -115,8 +117,12 @@
               aria-selected="false"><i class="material-icons">bubble_chart</i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="rankings-tab" data-toggle="tab" href="#rankings" role="tab" aria-controls="rankings"
+            <a class="nav-link" id="fav-tab" data-toggle="tab" href="#fav" role="tab" aria-controls="fav"
               aria-selected="false"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="rankings-tab" data-toggle="tab" href="#rankings" role="tab" aria-controls="rankings"
+              aria-selected="false"><i class="material-icons">show_chart</i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info"
@@ -143,6 +149,11 @@
           </div>
           <div class="tab-pane fade chart-container" id="graph" role="tabpanel" aria-labelledby="graph-tab">
             <div class="canvas-container"><canvas id="myChart" width="200" height="200"></canvas></div>
+          </div>
+          <div class="tab-pane fade chart-container" id="fav" role="tabpanel" aria-labelledby="fav-tab">
+            <div class="favs-container">
+              <div id="favs-list"></div>
+            </div>
           </div>
           <div class="tab-pane fade chart-container" id="rankings" role="tabpanel" aria-labelledby="rankings-tab">
             <div class="rankings-container">
