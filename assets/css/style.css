@@ -114,6 +114,10 @@ a {
     text-align: center;
 }
 
+#volume {
+    background-color: #37353A;
+}
+
 .queued-track-container {
     height: 36em;
     overflow: auto;
