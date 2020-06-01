@@ -7,7 +7,7 @@
   <!-- Materialize Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Link for google font -->
-  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet">
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- link to ChartJS -->
@@ -42,7 +42,7 @@
       <div id="current-track-wrapper" class="col-md-6">
         <div id="play-track-container">
           <button type="button" class="btn" id="start-listening"><i
-            class="large material-icons play-pause">play_circle_outline</i></button>
+              class="large material-icons play-pause">play_circle_outline</i></button>
           <div id="current-track-box"></div>
         </div>
       </div>
@@ -64,23 +64,23 @@
 
     <div class="row main-row">
 
-      <!--Left panel-->
+      <!--Left panel tab section-->
       <div class="col-lg-5 col-md-5" id="left-panel">
 
-
+        <!-- playlist tab -->
         <ul class="nav nav-tabs" id="myTabLeft" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="queue-tab" data-toggle="tab" href="#queue" role="tab" aria-controls="queue"
               aria-selected="true"><i class="material-icons">playlist_play</i></a>
           </li>
+          <!-- chat tab  -->
           <li class="nav-item">
             <a class="nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
-
               aria-selected="false"><i class="material-icons">forum</i></a>
           </li>
         </ul>
 
-
+        <!-- playlist body -->
         <div class="tab-content" id="myTabContentLeft">
           <div class="tab-pane fade show active" id="queue" role="tabpanel" aria-labelledby="queue-tab">
             <div class="wrapper queued-track-wrapper">
@@ -89,7 +89,7 @@
               </div>
               <div class="queued-track-container"></div>
             </div>
-
+          <!-- chat body -->
           </div>
           <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
             <div class="chat-container"></div>
@@ -107,7 +107,7 @@
 
       <div class="col-lg-7 col-md-7" id="right-panel">
 
-
+        <!--Right Panel Tab section -->
         <ul class="nav nav-tabs" id="myTabRight" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab"
@@ -136,6 +136,8 @@
               aria-selected="false"><i class="material-icons">info</i></a>
           </li>
         </ul>
+
+        <!-- Right Panel Body -->
         <div class="tab-content" id="myTabContentRight">
 
           <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
