@@ -1,5 +1,6 @@
 body, html {
-    background: linear-gradient(180deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
+    background-image: -webkit-linear-gradient(90deg, rgba(87, 36, 94, 0.5), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.5));
+    background-attachment: fixed;
     color: white;
     height: 100%;
     margin-top: 0;
@@ -11,37 +12,87 @@ a {
 }
 
 #masthead {
-    background: rgb(34, 34, 34);
+    background: linear-gradient(90deg, rgb(34, 34, 34, 0.80), rgb(24, 24, 24, 0.80), rgb(34, 34, 34, 0.80));
     position: fixed;
     z-index: 99;
     width: 100%;
     margin: 0 0 10px;
-    padding: 10px 10px 0 10px;
-    border-bottom: 2px solid rgb(49, 49, 49);
+    padding: 0 5px 0 5px;
+    display: flex;
+}
+
+.header-row {
+    margin-top: -5px;
+    margin-bottom: -5px;
+
+    width: 100%
+
 }
 
 #logo-tagline {
     float: left;
-    width: 25%;
+    /* width: 25%; */
     position: static;
-    /* margin: 10px; */
+    margin-top: 5px;
+}
+
+#logo-img {
+    /* height: 100%; */
+    width: 100%;
+    padding: 10px 10px 10px 7px;
+    align-self: center;
+}
+
+#slogan {
+    font-size: 0.8rem;
+    text-align: center;
 }
 
 #current-track-wrapper {
-    width: 50%;
-    /* position: static; */
+    width: 100%;
     float: left;
+
+}
+
+#play-track-container {
+    display: flex;
+    width: 100%;
+    background: black;
+}
+
+#start-listening {
+    float: left;
+    color: white;
+    background: black;
+}
+
+.material-icons.play-pause {
+    font-size: 40px;
 }
 
 #current-track-box {
     background: black;
-    padding: 10px;
-
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
+#header-menu-buttons {
+    margin-top: 5px;   
+
+
+#header-menu-buttons {
+    margin-top: 5px;
+}
+
+.welcome-box {
+    font-size: 1.75em;
+    line-height: 1.2em;
+    font-family: 'Mada', sans-serif;
+}
 
 #left-panel, #right-panel {
-    background-color: rgb(34, 34, 34);
     padding: 5px;
     height: 40em;
     /* border-radius: 10px; */
@@ -61,31 +112,30 @@ a {
     border-top-right-radius: .25rem;
 }
 
-#contact {
-    width: 30vw;
-    margin: auto;
-}
 
-.modal-content {
-    width: 195px;
+#graph {
+    /* width: 30vw; */
+    text-align: center;
 }
 
 .queued-track-container {
     height: 36em;
     overflow: auto;
-    background: rgb(58, 58, 58);
+    padding-top: 5px;
+    /* background: rgb(58, 58, 58); */
 }
 
 .name-container {
     margin: 0;
-    width: 105px;
+    width: 180px;
     min-height: 50px;
     height: 100%;
     text-align: center;
+    padding-top: 2px;
 }
 
 .current-song {
-    width: 200px;
+    width: 100%;
 }
 
 .name-container p {
@@ -94,17 +144,22 @@ a {
 
 .search-result:hover, .queued-song:hover {
     cursor: pointer;
-    background-color: rgb(95, 95, 95);
+    /* background-color: rgb(95, 95, 95); */
+    /* background: linear-gradient(90deg, rgba(87, 36, 94, 0.4), rgba(51, 112, 131, 0.4), rgba(87, 36, 94, 0.4)); */
+    /* background: linear-gradient(90deg, rgb(34, 34, 34, 0.2), rgb(24, 24, 24, 0.2), rgb(34, 34, 34, 0.2)); */
+    background: rgba(51, 112, 131, 0.6);
+    transition: 0.5s;
+
+}
+
+a:hover {
+    color: rgb(104, 199, 199);
+
 }
 
 .search-results-container {
     height: 31.5em;
     overflow: auto;
-    background: rgb(34, 34, 34);
-}
-
-.search-results {
-    height: 100%;
 }
 
 .search-result {
@@ -116,15 +171,41 @@ a {
     margin-bottom: 5px;
 }
 
-.music-lyrics-container {
-    max-height: 470px;
+.chat-container {
+    height: 36em;
     overflow: auto;
 }
 
-.queued-song {
+.music-lyrics-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.canvas-container {
+    height: 36em;
+    overflow: auto;
+}
+
+#myChart {
+    margin: auto;
+}
+
+.rankings-container {
+    height: 36em;
+    overflow: auto;
+    padding-top: 8px;
+}
+
+.about-app {
+    height: 36em;
+    overflow: auto;
+}
+
+.queued-song, .ranked-song {
     display: flex;
     min-height: 50px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .album-pic {
@@ -143,8 +224,8 @@ a {
 
 .btn {
     padding: 5px;
-    height: 36px;
-    margin-top: 5px;
+    /* height: 36px;
+    margin-top: 5px; */
     margin-right: 3px;
 }
 
@@ -169,7 +250,8 @@ a {
 .thumbs-container {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    /* justify-content: end; */
+    align-items: flex-start;
 }
 
 #left-panel .container {
@@ -228,9 +310,12 @@ a {
 
 .current-song-container {
     display: flex;
+    display: inline block;
     min-height: 50px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
+    font-size: 16px;
+    width: 100%;
 }
 
 .current-album {
@@ -391,38 +476,22 @@ canvas {
 
 
 @media screen and (max-width: 980px) {
-    /* body, html {
-        background: black;
+    #masthead {
+        flex: none;
     }
 
-    .queued-track-container {
-        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
-    } */
+    
 
 }
 
 @media screen and (max-width: 768px) {
 
-    /* #masthead {
-        position: fixed;
-        z-index: 99;
-        width: 100%;
-        margin: 0 0 10px;
-        border-bottom: 10px;
-        vertical-align: center;
-        padding-bottom: 5px;
-    } */
-
-    body, html {
-        background: black;
-    }
-
-    .queued-track-container {
-        background: linear-gradient(90deg, rgba(87, 36, 94, 0.53), rgba(51, 112, 131, 0.82), rgba(87, 36, 94, 0.53));
-    }
-
     #masthead {
         position: relative;
+    }
+
+    #slogan {
+        font-size: 1rem;
     }
 
     .header-container {
@@ -431,30 +500,23 @@ canvas {
     
     #logo-tagline {
         text-align: center;
+        float: none;
         margin: 0px;
         width: 100%;
     }
 
+    #current-track-wrapper {
+        float: none;
+    }
+
     #current-track-box {
-        width: 200%;
+        /* width: 200%; */
     }
-
-    /* .name-container {
-        width: 220px;
-    }
-
-    .artist-name {
-        font-size: 1em;
-    } */
 
     #header-menu-buttons {
         clear: both;
     }
     
-    /* .main-container {
-        padding-top: 260px;
-    } */
-
     .main-container {
         padding-top: 0;
     }

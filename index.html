@@ -6,6 +6,8 @@
   <title>YouJuke -- Beta</title>
   <!-- Materialize Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Link for google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet"> 
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- link to ChartJS -->
@@ -30,20 +32,28 @@
 
   <header id="masthead">
 
-    <div id="logo-tagline">
-      <h1>YouJuke</h1>
-      <p id="slogan">Sick of algorithms telling you what to listen to?</p>
-    </div>
+    <div class="row header-row">
+      <div id="logo-tagline" class="col-md-3">
 
-    <div id="current-track-wrapper">
-      <div id="current-track-box"></div>
-    </div>
+        <img src="assets/css/youjuke_logo_0.png" id="logo-img">
+        <p id="slogan">Sick of algorithms telling you what to listen to?</p>
+      </div>
 
-    <div id="header-menu-buttons">
-      <button type="button" class="btn btn-secondary" id="start-listening">Start
-        Listening</button>
-      <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-        data-whatever="@mdo">Sign in</button>
+      <div id="current-track-wrapper" class="col-md-6">
+        <div id="play-track-container">
+          <button type="button" class="btn" id="start-listening"><i
+            class="large material-icons play-pause">play_circle_outline</i></button>
+          <div id="current-track-box"></div>
+        </div>
+      </div>
+
+      <div id="header-menu-buttons" class="col-md-3">
+
+        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+          data-whatever="@mdo">Sign in</button>
+
+
+      </div>
 
 
   </header>
@@ -54,6 +64,7 @@
 
     <div class="row main-row">
 
+      <!--Left panel-->
       <div class="col-lg-5 col-md-5" id="left-panel">
 
 
@@ -64,7 +75,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
-              aria-selected="false"><i class="material-icons">chat_bubble_outline</i></a>
+
+              aria-selected="false"><i class="material-icons">forum</i></a>
           </li>
         </ul>
 
@@ -80,6 +92,8 @@
 
           </div>
           <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
+            <div class="chat-container"></div>
+
           </div>
 
         </div>
@@ -89,27 +103,33 @@
       </div>
 
 
-
-
-
-
-
+      <!--Right panel-->
 
       <div class="col-lg-7 col-md-7" id="right-panel">
 
 
         <ul class="nav nav-tabs" id="myTabRight" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="search"
-              aria-selected="true"><i class="material-icons">search</i></a>
+            <a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab"
+              aria-controls="search" aria-selected="true"><i class="material-icons">search</i></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="lyr-tab" data-toggle="tab" href="#lyr" role="tab" aria-controls="lyr"
+              aria-selected="false"><i class="material-icons">font_download</i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-              aria-selected="false"><i class="material-icons">library_books</i></a>
+            <a class="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph"
+              aria-selected="false"><i class="material-icons">bubble_chart</i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-              aria-selected="false"><i class="material-icons">insert_chart</i></a>
+            <a class="nav-link" id="fav-tab" data-toggle="tab" href="#fav" role="tab" aria-controls="fav"
+              aria-selected="false"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="rankings-tab" data-toggle="tab" href="#rankings" role="tab" aria-controls="rankings"
+              aria-selected="false"><i class="material-icons">show_chart</i></a>
+
           </li>
           <li class="nav-item">
             <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info"
@@ -117,7 +137,9 @@
           </li>
         </ul>
         <div class="tab-content" id="myTabContentRight">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+          <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
+
             <div class="input-group mb-3">
               <input type="text" class="form-control" id="search-input" placeholder="enter track title or artist..."
                 aria-label="Deezer search" aria-describedby="basic-addon2">
@@ -130,16 +152,72 @@
 
             </div>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade" id="lyr" role="tabpanel" aria-labelledby="lyr-tab">
             <div class="music-lyrics-container">
             </div>
           </div>
-          <div class="tab-pane fade chart-container" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <canvas id="myChart" width="200" height="200"></canvas>
+          <div class="tab-pane fade chart-container" id="graph" role="tabpanel" aria-labelledby="graph-tab">
+            <div class="canvas-container"><canvas id="myChart" width="200" height="200"></canvas></div>
+          </div>
+
+          <div class="tab-pane fade chart-container" id="fav" role="tabpanel" aria-labelledby="fav-tab">
+            <div class="favs-container">
+              <div id="favs-list"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade chart-container" id="rankings" role="tabpanel" aria-labelledby="rankings-tab">
+            <div class="rankings-container">
+              <div id="rankings-list"></div>
+            </div>
           </div>
           <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
             <div class="about-app">
-              <p>About app and instructions coming soon</p>
+
+              <h3>What is Youjuke?</h3>
+
+              <p>Youjuke is a music forum that allows groups of visitors to compile
+                a shared playlist and listen to it together, live. Anyone can add a track
+                to the playlist, but it is up to all users as a whole to decide the order of the
+                playlist. Whether you want to share tracks with a larger audience,
+                or want to break out into a virtual party with friends, Youjuke has you covered.</p>
+
+              <p>Want to know which music the audience likes? Youjuke keeps track of the user's
+                music preferences and favorite tracks. Want to have a virtual karaoke party
+                while video chatting with friends? Just select the lyrics tab and sing away.
+              </p>
+
+              <p>Let you be the algorithm to your listening party.</p>
+
+              <h3>How do I use Youjuke?</h3>
+
+              <ul>
+                <li>In this demo version of Youjuke, some tracks may already be in the playlist.</li>
+                <li>First sign in, then click on 'Start Listening' to play the playlist. Search for a song, and
+                  click
+                  on it to add to the playlist.</li>
+                <li>Want to hear that song you just added more than any of
+                  the others already in the playlist? Give that song a thumbs up to vote it to the top, and if that song
+                  has more thumbs-ups than the other tracks, it will come on after the current song. </li>
+                <li>Hate a song in the playlist? Give that song a thumbs down. The most down-voted songs will appear
+                  at the bottom of the playlist.</li>
+                <li>In this demo version, you have unlimited voting, but users will have
+                  limited votes per amount of songs that are added to the playlist.</li>
+                <li>Want to sing along to the current song? The tab next to the search tab shows lyrics of the
+                  current song.
+                </li>
+                <li>The graph tab shows a chart that keeps track of music preferences of users.</li>
+                <li>The star tab shows the most up-voted songs.</li>
+              </ul>
+
+
+              <h3>More information</h3>
+
+              <p>Due to licensing, this version of Youjuke currently only plays previews and not complete
+                songs. Full lyrics may also not be available for songs.
+              </p>
+
+
             </div>
           </div>
         </div>
@@ -190,16 +268,26 @@
               <br>
               <div class="check-box-container">
                 <form action="/action_page.php">
-                  <input type="checkbox" id="genre1" name="genre1" value="Punk">
-                  <label for="genre1"> Punk</label><br>
-                  <input type="checkbox" id="genre2" name="genre2" value="Rock">
-                  <label for="genre2"> Rock</label><br>
-                  <input type="checkbox" id="genre3" name="genre3" value="Rap">
-                  <label for="genre3"> Rap</label><br>
-                  <input type="checkbox" id="genre4" name="genre4" value="Indie">
-                  <label for="genre4"> Indie</label><br>
-                  <input type="checkbox" id="genre5" name="genre5" value="Metal">
-                  <label for="genre5"> Metal</label><br>
+                  <input type="checkbox" id="genre01" name="genre01" value="Punk">
+                  <label for="genre01"> Punk</label><br>
+                  <input type="checkbox" id="genre02" name="genre02" value="Rock">
+                  <label for="genre02"> Rock</label><br>
+                  <input type="checkbox" id="genre03" name="genre03" value="Rap">
+                  <label for="genre03"> Rap</label><br>
+                  <input type="checkbox" id="genre04" name="genre04" value="Indie">
+                  <label for="genre04"> Indie</label><br>
+                  <input type="checkbox" id="genre05" name="genre05" value="Metal">
+                  <label for="genre05"> Metal</label><br>
+                  <input type="checkbox" id="genre06" name="genre06" value="Electronic">
+                  <label for="genre06"> Electronic</label><br>
+                  <input type="checkbox" id="genre07" name="genre07" value="Pop">
+                  <label for="genre07"> Pop</label><br>
+                  <input type="checkbox" id="genre08" name="genre08" value="Country">
+                  <label for="genre08"> Country</label><br>
+                  <input type="checkbox" id="genre09" name="genre09" value="Other">
+                  <label for="genre09"> R&B</label><br>
+                  <input type="checkbox" id="genre10" name="genre10" value="Other">
+                  <label for="genre10"> Other</label><br>
                 </form>
               </div>
             </div>
