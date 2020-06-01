@@ -85,13 +85,13 @@ function renderQueue() {
                 var artistName = playlistArr[i][1].artistName;
                 var songName = playlistArr[i][1].songName;
 
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            // var thumbsVol = $("<div>").addClass("thumbs-volume");
-            var thumbsDiv = $("<div>").addClass("thumbs-container");
 
-            thumbsDiv.addClass("btn-group");
-            thumbsDiv.attr("role", "group");
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                var thumbsDiv = $("<div>").addClass("thumbs-container");
+
+                thumbsDiv.addClass("btn-group");
+                thumbsDiv.attr("role", "group");
 
                 var upButton = $("<a>");
                 // upButton.attr("type", "button");
@@ -461,27 +461,29 @@ $(document).ready(function (event) {
     if (Array.isArray(likedSongs)) {
         var favs = JSON.parse(localStorage.getItem("Liked Songs"));
         var favList = $("<ol>");
-        for (var i = 0; i < favs.length; i++) {
-            var favTrack = $("<div>").addClass("queued-song ranked-song");
-            var nameContainer = $("<div>").addClass("name-container");
-            var artistName = favs[i].artistName;
-            var songName = favs[i].songName;
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            //artwork
-            var thumbnail = favs[i].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
+        if (likedSongs.length !== 0) {
+            for (var i = 0; i < favs.length; i++) {
+                var favTrack = $("<div>").addClass("queued-song ranked-song");
+                var nameContainer = $("<div>").addClass("name-container");
+                var artistName = favs[i].artistName;
+                var songName = favs[i].songName;
+                var songNameP = $("<p>").text(songName).addClass("song-name");
+                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+                //artwork
+                var thumbnail = favs[i].thumbnail;
+                var thumbnailImg = $("<img>").addClass("album-pic");
+                thumbnailImg.attr("src", thumbnail);
 
-            //append song details together
-            nameContainer.append(songNameP, artistNameP);
-            favTrack.append("<li></li>");
-            favTrack.append(thumbnailImg);
-            favTrack.append(nameContainer);
-            //append song to list
-            favList.append(favTrack);
+                //append song details together
+                nameContainer.append(songNameP, artistNameP);
+                favTrack.append("<li></li>");
+                favTrack.append(thumbnailImg);
+                favTrack.append(nameContainer);
+                //append song to list
+                favList.append(favTrack);
 
-            $("#favs-list").append(favList);
+                $("#favs-list").append(favList);
+            }
         }
     }
 });
@@ -512,7 +514,7 @@ $(document).on("click", "#sign-in-submit", function (event) {
     // $("#recipient-name").text(localStorage.getItem("username"));
     var welcome = $("<div>").addClass("welcome-box");
     welcome.text("Welcome " + userName + "!");
-    $("#header-menu-buttons").append(welcome);
+    $("#welcome-container").append(welcome);
     $("#sign-in-button").text("Sign out");
 });
 
@@ -521,7 +523,7 @@ $(document).ready(function (event) {
         var welcomeBack = $("<div>").addClass("welcome-box");
         $("#sign-in-button").text("Sign out");
         welcomeBack.text("Welcome back " + localStorage.getItem("username") + "!");
-        $("#header-menu-buttons").append(welcomeBack);
+        $("#welcome-container").append(welcomeBack);
     }
 });
 
@@ -586,4 +588,12 @@ function listRankings() {
 // shows tops songs after clicking on rankings tab
 $("#rankings-tab").on("click", listRankings);
 
+
+//Volume control
+var volume = document.querySelector("#volume");
+var songFile = document.querySelector("#song");
+
+volume.addEventListener('change', function (e) {
+    songFile.volume = e.currentTarget.value / 100;
+})
 
