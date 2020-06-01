@@ -87,6 +87,7 @@ function renderQueue() {
 
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+            // var thumbsVol = $("<div>").addClass("thumbs-volume");
             var thumbsDiv = $("<div>").addClass("thumbs-container");
 
             thumbsDiv.addClass("btn-group");
@@ -584,4 +585,5 @@ function listRankings() {
 };
 // shows tops songs after clicking on rankings tab
 $("#rankings-tab").on("click", listRankings);
+
 
