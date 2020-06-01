@@ -75,7 +75,7 @@ a {
 }
 
 #header-menu-buttons {
-    margin-top: 5px;   
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
