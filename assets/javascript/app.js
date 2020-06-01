@@ -114,7 +114,7 @@ function renderQueue() {
 
             var songNameP = $("<p>").text(songName).addClass("song-name");
             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            var thumbsVol = $("<div>").addClass("thumbs-volume");
+            // var thumbsVol = $("<div>").addClass("thumbs-volume");
             var thumbsDiv = $("<div>").addClass("thumbs-container");
 
             thumbsDiv.addClass("btn-group");
@@ -132,13 +132,13 @@ function renderQueue() {
             downButton.addClass("btn btn-flat waves-effect waves-red downvote");
             downButton.html("<i class='material-icons'>thumb_down</i>");
 
-            var volSlider = $("<input>").attr("id", "volume").attr("type", "range").attr("min", "0")
-            .attr("max", "100").attr("step", "1").attr("value", "90");
+            // var volSlider = $("<input>").attr("id", "volume").attr("type", "range").attr("min", "0")
+            // .attr("max", "100").attr("step", "1").attr("value", "90");
 
             thumbsDiv.append(upButton);
             thumbsDiv.append(downButton);
-            thumbsVol.append(thumbsDiv);
-            thumbsVol.append(volSlider);
+            // thumbsVol.append(thumbsDiv);
+            // thumbsVol.append(volSlider);
 
 
             //album artwork information
@@ -149,7 +149,8 @@ function renderQueue() {
             nameContainer.append(songNameP, artistNameP);
             queuedTrack.append(thumbnailImg);
             queuedTrack.append(nameContainer);
-            queuedTrack.append(thumbsVol);
+            // queuedTrack.append(thumbsVol);
+            queuedTrack.append(thumbsDiv);
 
             $("#current-track-box").empty();
             $("#current-track-box").append(queuedTrack);
