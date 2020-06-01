@@ -7,7 +7,7 @@
   <!-- Materialize Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Link for google font -->
-  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet">
   <!--Link to bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- link to ChartJS -->
@@ -42,16 +42,22 @@
       <div id="current-track-wrapper" class="col-md-6">
         <div id="play-track-container">
           <button type="button" class="btn" id="start-listening"><i
-            class="large material-icons play-pause">play_circle_outline</i></button>
+              class="large material-icons play-pause">play_circle_outline</i></button>
           <div id="current-track-box"></div>
         </div>
       </div>
 
       <div id="header-menu-buttons" class="col-md-3">
 
-        <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
-          data-whatever="@mdo">Sign in</button>
+        <div id="volume-sign-in">
+          <input id="volume" type="range" min="0" max="100" step="1" value="90"></input>
+          <button type="button" class="btn btn-secondary" id="sign-in-button" data-toggle="modal" data-target="#sign-in"
+            data-whatever="@mdo">Sign in</button>
+        </div>
 
+        <div id="user-info">
+          <div id="welcome-container"></div>
+        </div>
 
       </div>
 
@@ -75,7 +81,6 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
-
               aria-selected="false"><i class="material-icons">forum</i></a>
           </li>
         </ul>
