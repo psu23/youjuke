@@ -261,7 +261,7 @@ function sortPlaylist() {
             }
         }
     }
-    return playlistArr
+    return playlistArr;
 }
 // sorts top songs based on upvote count
 function listRankings() {
