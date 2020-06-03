@@ -1,6 +1,6 @@
 # Youjuke
 
-Deployed beta version: https://psu23.github.io/Youjuke/
+Deployed beta version: https://psu23.github.io/youjuke/
 
 
               ###**What is Youjuke?**###
