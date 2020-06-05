@@ -154,8 +154,8 @@ function renderQueue() {
                 // append song to playlist container on page
                 $(".queued-track-container").append(queuedTrack);
             }
-        } 
-    })     
+        }
+    })
 }
 // function that clears search results
 function clearSearchResults() {
@@ -413,18 +413,24 @@ $(document).on("click", ".upvote", function (event) {
             // add upvote to local playlist array
             playlistArr[i][1].upvote++
             if (likedSongs.length !== 0) {
+                var addSong = true;
                 for (var u = 0; u < likedSongs.length; u++) {
-                    if (likedSongs[u].deezerID !== playlistArr[i][1].deezerID) {
-                        // push to likedSongs and push likedSongs to local storage
+                    if (playlistArr[i][1].deezerID !== likedSongs[u].deezerID && addSong) {
                         likedSongs.push(playlistArr[i][1]);
+                        addSong = false;
+                        localStorage.setItem("Liked Songs", "");
                         localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
+                        renderFavs();
                     }
                 }
             }
             else {
                 likedSongs.push(playlistArr[i][1]);
+                localStorage.setItem("Liked Songs", "");
                 localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
+                renderFavs();
             }
+
             // variable to hold new upvote value
             var updates = {};
             updates["/playlist/" + playlistArr[i][0] + "/upvote"] = playlistArr[i][1].upvote;
@@ -434,39 +440,67 @@ $(document).on("click", ".upvote", function (event) {
     }
     // update playlist with new upvote count
     renderQueue();
-
 });
+
+function renderFavs() {
+    for (var i = 0; i < likedSongs.length; i++) {
+        var favList = $("<ol>");
+        var favTrack = $("<div>").addClass("queued-song ranked-song");
+        var nameContainer = $("<div>").addClass("name-container");
+        var artistName = likedSongs[i].artistName;
+        var songName = likedSongs[i].songName;
+        var songNameP = $("<p>").text(songName).addClass("song-name");
+        var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+        //artwork
+        var thumbnail = likedSongs[i].thumbnail;
+        var thumbnailImg = $("<img>").addClass("album-pic");
+        thumbnailImg.attr("src", thumbnail);
+
+        //append song details together
+        nameContainer.append(songNameP, artistNameP);
+        favTrack.append("<li></li>");
+        favTrack.append(thumbnailImg);
+        favTrack.append(nameContainer);
+        //append song to list
+        favList.append(favTrack);
+
+        $("#favs-list").append(favList);
+    }
+}
 
 // pull liked songs from local storage to show on fav tab
 $(document).ready(function (event) {
-    if (Array.isArray(likedSongs)) {
-        var favs = JSON.parse(localStorage.getItem("Liked Songs"));
-        var favList = $("<ol>");
-        if (likedSongs.length !== 0) {
-            for (var i = 0; i < favs.length; i++) {
-                var favTrack = $("<div>").addClass("queued-song ranked-song");
-                var nameContainer = $("<div>").addClass("name-container");
-                var artistName = favs[i].artistName;
-                var songName = favs[i].songName;
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                //artwork
-                var thumbnail = favs[i].thumbnail;
-                var thumbnailImg = $("<img>").addClass("album-pic");
-                thumbnailImg.attr("src", thumbnail);
-
-                //append song details together
-                nameContainer.append(songNameP, artistNameP);
-                favTrack.append("<li></li>");
-                favTrack.append(thumbnailImg);
-                favTrack.append(nameContainer);
-                //append song to list
-                favList.append(favTrack);
-
-                $("#favs-list").append(favList);
-            }
-        }
+    if (localStorage.getItem("Liked Songs")) {
+        likedSongs = JSON.parse(localStorage.getItem("Liked Songs"));
     }
+    // if (Array.isArray(likedSongs)) {
+    //     var favs = JSON.parse(localStorage.getItem("Liked Songs"));
+    //     var favList = $("<ol>");
+    //     if (likedSongs.length !== 0) {
+    //         for (var i = 0; i < favs.length; i++) {
+    //             var favTrack = $("<div>").addClass("queued-song ranked-song");
+    //             var nameContainer = $("<div>").addClass("name-container");
+    //             var artistName = favs[i].artistName;
+    //             var songName = favs[i].songName;
+    //             var songNameP = $("<p>").text(songName).addClass("song-name");
+    //             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+    //             //artwork
+    //             var thumbnail = favs[i].thumbnail;
+    //             var thumbnailImg = $("<img>").addClass("album-pic");
+    //             thumbnailImg.attr("src", thumbnail);
+
+    //             //append song details together
+    //             nameContainer.append(songNameP, artistNameP);
+    //             favTrack.append("<li></li>");
+    //             favTrack.append(thumbnailImg);
+    //             favTrack.append(nameContainer);
+    //             //append song to list
+    //             favList.append(favTrack);
+
+    //             $("#favs-list").append(favList);
+    //         }
+    //     }
+    // }
 });
 
 $(document).on("click", ".downvote", function (event) {
@@ -511,34 +545,34 @@ $(document).ready(function (event) {
     }
 });
 // checks local storage for favorite song on page load
-$(document).ready(function (event) {
-    if (Array.isArray(likedSongs)) {
-        var favs = JSON.parse(localStorage.getItem("Liked Songs"));
-        var favList = $("<ol>");
-        for (var i = 0; i < favs.length; i++) {
-            var favTrack = $("<div>").addClass("queued-song ranked-song");
-            var nameContainer = $("<div>").addClass("name-container");
-            var artistName = favs[i].artistName;
-            var songName = favs[i].songName;
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            //artwork
-            var thumbnail = favs[i].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
+// $(document).ready(function (event) {
+//     if (Array.isArray(likedSongs)) {
+//         var favs = JSON.parse(localStorage.getItem("Liked Songs"));
+//         var favList = $("<ol>");
+//         for (var i = 0; i < favs.length; i++) {
+//             var favTrack = $("<div>").addClass("queued-song ranked-song");
+//             var nameContainer = $("<div>").addClass("name-container");
+//             var artistName = favs[i].artistName;
+//             var songName = favs[i].songName;
+//             var songNameP = $("<p>").text(songName).addClass("song-name");
+//             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+//             //artwork
+//             var thumbnail = favs[i].thumbnail;
+//             var thumbnailImg = $("<img>").addClass("album-pic");
+//             thumbnailImg.attr("src", thumbnail);
 
-            //append song details together
-            nameContainer.append(songNameP, artistNameP);
-            favTrack.append("<li></li>");
-            favTrack.append(thumbnailImg);
-            favTrack.append(nameContainer);
-            //append song to list
-            favList.append(favTrack);
+//             //append song details together
+//             nameContainer.append(songNameP, artistNameP);
+//             favTrack.append("<li></li>");
+//             favTrack.append(thumbnailImg);
+//             favTrack.append(nameContainer);
+//             //append song to list
+//             favList.append(favTrack);
 
-            $("#favs-list").append(favList);
-        }
-    }
-});
+//             $("#favs-list").append(favList);
+//         }
+//     }
+// });
 
 // listens for end of song 
 $("#song").on("ended", (event) => {
