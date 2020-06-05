@@ -1,6 +1,3 @@
-// getlyrics not working
-// 
-
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyDIAOPYeVbv9YgJsKQ9JDSHImO3CGcYzJ8",
@@ -80,7 +77,7 @@ function renderQueue() {
             // checks if there is a current song
             if (currentSong == "") {
                 //creates playlist format for each song
-                currentSong = playlistArr[i][1].deezerID;
+                currentSong = playlistArr[i][1];
                 $("#song").attr("src", playlistArr[i][1].preview);
                 var queuedTrack = $("<div>").addClass("current-song-container").attr("data-id", playlistArr[i][1].deezerID);
                 var nameContainer = $("<div>").addClass("name-container current-song");
@@ -122,7 +119,7 @@ function renderQueue() {
                 $("#current-track-box").append(queuedTrack);
             }
             // checks if song ID matches current song ID
-            else if (currentSong !== playlistArr[i][1].deezerID) {
+            else if (currentSong.deezerID !== playlistArr[i][1].deezerID) {
                 //creates playlist format for each song
                 var queuedTrack = $("<div>").addClass("queued-song");
                 var nameContainer = $("<div>").addClass("name-container");
@@ -157,25 +154,8 @@ function renderQueue() {
                 // append song to playlist container on page
                 $(".queued-track-container").append(queuedTrack);
             }
-            // set up to push array that holds all songs
-            if (totalSongPlaylist.length !== 0) {
-                var existing = false;
-                for (var v = 0; v < totalSongPlaylist.length; v++) {
-                    if (playlistArr[i][1].deezerID == totalSongPlaylist[v][1].deezerID) {
-                        existing = true;
-                    }
-                }
-                if (!existing) {
-                    totalSongPlaylist.push(playlistArr[i]);
-                }
-            }
-            else {
-                totalSongPlaylist.push(playlistArr[i]);
-            }
-        }
-    });
-    // update top songs chart
-    listRankings()
+        } 
+    })     
 }
 // function that clears search results
 function clearSearchResults() {
@@ -267,9 +247,7 @@ function sortPlaylist() {
 function listRankings() {
     $("#rankings-list").empty();
 
-
-    var arr = [...totalSongPlaylist];
-
+    var arr = Object.entries(totalSongPlaylist);
     var sorted = false;
     while (!sorted) {
         sorted = true;
@@ -291,7 +269,7 @@ function listRankings() {
 
         if (arr[i][1].upvote > 0) {
             //artist and song
-            var rankedTrack = $("<div>").addClass("queued-song ranked-song");
+            var rankedTrack = $("<div>").addClass("queued-song ranked-song").attr("data-deezer", arr[i][1].deezerID);
             var nameContainer = $("<div>").addClass("name-container");
             var artistName = arr[i][1].artistName;
             var songName = arr[i][1].songName;
@@ -317,6 +295,7 @@ function listRankings() {
             $("#rankings-list").append(orderedList);
         }
     }
+    return totalSongPlaylist = arr;
 };
 // listens for key strokes in the search
 $("#search-input").keyup(function (event) {
@@ -381,9 +360,24 @@ $("#search-input").keyup(function (event) {
 $("#start-listening").on("click", function () {
     playPause();
 });
-// listens for click on rankings tab and updates top songs list
-$("#rankings-tab").on("click", listRankings);
 
+$(document).on("click", ".ranked-song", function (event) {
+    for (var i = 0; i < totalSongPlaylist.length; i++) {
+        if (totalSongPlaylist[i][1].deezerID == $(this).attr("data-deezer")) {
+            // push song data to firebase
+            database.ref("/playlist").push({
+                artistName: totalSongPlaylist[i][1].artistName,
+                songName: totalSongPlaylist[i][1].songName,
+                thumbnail: totalSongPlaylist[i][1].thumbnail,
+                preview: totalSongPlaylist[i][1].preview,
+                upvote: totalSongPlaylist[i][1].upvote,
+                deezerID: totalSongPlaylist[i][1].deezerID,
+            });
+
+            renderQueue();
+        }
+    }
+});
 // listens for click on song in search result
 $(document).on("click", ".search-result", function (event) {
     for (var i = 0; i < 25; i++) {
@@ -413,7 +407,6 @@ $(document).on("click", "#clear-search", clearSearchResults);
 // listens for click on any upvote button
 $(document).on("click", ".upvote", function (event) {
 
-    listRankings();
     for (var i = 0; i < playlistArr.length; i++) {
         if (playlistArr[i][1].deezerID == $(this).attr("data-deezer")) {
 
@@ -433,7 +426,7 @@ $(document).on("click", ".upvote", function (event) {
                 localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
             }
             // variable to hold new upvote value
-            var updates = {}
+            var updates = {};
             updates["/playlist/" + playlistArr[i][0] + "/upvote"] = playlistArr[i][1].upvote;
             // push to firebase
             return database.ref().update(updates);
@@ -549,13 +542,14 @@ $(document).ready(function (event) {
 
 // listens for end of song 
 $("#song").on("ended", (event) => {
+    database.ref("/playedsongs").push(playlistArr[0][1]);
     currentSong = "";
     var removeSong = playlistArr[0][0];
     // removes ended song from firebase
     database.ref("/playlist/" + removeSong).remove();
 
     renderQueue();
-
+    // check if there are more songs on the playlist
     if (playlistArr.length > 0) {
         playing = true;
         playPause();
@@ -565,12 +559,18 @@ $("#song").on("ended", (event) => {
         playPause();
         $("#start-listening").text("Start Listening");
     }
+
 });
 
 
 // update livePlaylist variable when firebase is changed
 database.ref().on("value", function (snapshot) {
     livePlaylist = snapshot.val().playlist;
+});
+// update totalSongPlaylist variable when firebase is changed
+database.ref("/playedsongs").on("value", function (snapshot) {
+    totalSongPlaylist = snapshot.val();
+    listRankings();
 });
 
 //Volume control
