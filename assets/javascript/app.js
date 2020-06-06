@@ -418,17 +418,15 @@ $(document).on("click", ".upvote", function (event) {
                     if (playlistArr[i][1].deezerID !== likedSongs[u].deezerID && addSong) {
                         likedSongs.push(playlistArr[i][1]);
                         addSong = false;
-                        localStorage.setItem("Liked Songs", "");
-                        localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                         renderFavs();
+                        localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                     }
                 }
             }
             else {
                 likedSongs.push(playlistArr[i][1]);
-                localStorage.setItem("Liked Songs", "");
-                localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                 renderFavs();
+                localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
             }
 
             // variable to hold new upvote value
@@ -443,10 +441,11 @@ $(document).on("click", ".upvote", function (event) {
 });
 
 function renderFavs() {
+    $("#favs-list").empty();
     for (var i = 0; i < likedSongs.length; i++) {
         var favList = $("<ol>");
         var favTrack = $("<div>").addClass("queued-song ranked-song");
-        var nameContainer = $("<div>").addClass("name-container");
+        var nameContainer = $("<div>").addClass("name-container fav-container");
         var artistName = likedSongs[i].artistName;
         var songName = likedSongs[i].songName;
         var songNameP = $("<p>").text(songName).addClass("song-name");
@@ -458,7 +457,6 @@ function renderFavs() {
 
         //append song details together
         nameContainer.append(songNameP, artistNameP);
-        favTrack.append("<li></li>");
         favTrack.append(thumbnailImg);
         favTrack.append(nameContainer);
         //append song to list
@@ -472,6 +470,7 @@ function renderFavs() {
 $(document).ready(function (event) {
     if (localStorage.getItem("Liked Songs")) {
         likedSongs = JSON.parse(localStorage.getItem("Liked Songs"));
+        renderFavs();
     }
     // if (Array.isArray(likedSongs)) {
     //     var favs = JSON.parse(localStorage.getItem("Liked Songs"));
