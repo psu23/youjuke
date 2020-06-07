@@ -198,6 +198,16 @@ a:hover {
     overflow: auto;
 }
 
+.favs-container {
+    height: 36em;
+    overflow: auto;
+}
+
+.rankings-container {
+    height: 36em;
+    overflow: auto;
+}
+
 #myChart {
     margin: auto;
 }
