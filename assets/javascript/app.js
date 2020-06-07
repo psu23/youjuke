@@ -432,29 +432,34 @@ $(document).on("click", "#clear-search", clearSearchResults);
 $(document).on("click", ".upvote", function (event) {
     for (var i = 0; i < playlistArr.length; i++) {
         if (playlistArr[i][1].deezerID == $(this).attr("data-deezer")) {
-
+            var newLike = playlistArr[i];
             // add upvote to local playlist array
-            playlistArr[i][1].upvote++
+            newLike[1].upvote++
             if (likedSongs.length !== 0) {
                 var addSong = true;
                 for (var u = 0; u < likedSongs.length; u++) {
-                    if (playlistArr[i][1].deezerID !== likedSongs[u].deezerID && addSong) {
-                        likedSongs.push(playlistArr[i][1]);
+                    if (newLike[1].deezerID == likedSongs[u].deezerID && addSong) {
+                        // likedSongs.push(playlistArr[i][1]);
                         addSong = false;
-                        renderFavs();
-                        localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
+                        // renderFavs();
+                        // localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                     }
+                }
+                if (addSong) {
+                    likedSongs.push(newLike[1]);
+                    renderFavs();
+                    localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                 }
             }
             else {
-                likedSongs.push(playlistArr[i][1]);
+                likedSongs.push(newLike[1]);
                 renderFavs();
                 localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
             }
 
             // variable to hold new upvote value
             var updates = {};
-            updates["/playlist/" + playlistArr[i][0] + "/upvote"] = playlistArr[i][1].upvote;
+            updates["/playlist/" + newLike[0] + "/upvote"] = newLike[1].upvote;
             // push to firebase
             return database.ref().update(updates);
         }
