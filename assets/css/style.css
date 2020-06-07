@@ -81,6 +81,14 @@ a {
     justify-content: space-between;
 }
 
+#volume:hover {
+    cursor: grab;
+}
+
+#volume:active {
+    cursor: grabbing;
+}
+
 .fav-container {
     margin: auto !important;
 }
