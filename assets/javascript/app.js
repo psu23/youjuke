@@ -154,8 +154,8 @@ function renderQueue() {
                 // append song to playlist container on page
                 $(".queued-track-container").append(queuedTrack);
             }
-        } 
-    })     
+        }
+    })
 }
 // function that clears search results
 function clearSearchResults() {
@@ -297,6 +297,32 @@ function listRankings() {
     }
     return totalSongPlaylist = arr;
 };
+// adds liked songs to the fav tab
+function renderFavs() {
+    $("#favs-list").empty();
+    for (var i = 0; i < likedSongs.length; i++) {
+        var favList = $("<ol>");
+        var favTrack = $("<div>").addClass("queued-song ranked-song").attr("data-deezer", likedSongs[i].deezerID);
+        var nameContainer = $("<div>").addClass("name-container fav-container");
+        var artistName = likedSongs[i].artistName;
+        var songName = likedSongs[i].songName;
+        var songNameP = $("<p>").text(songName).addClass("song-name");
+        var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+        //artwork
+        var thumbnail = likedSongs[i].thumbnail;
+        var thumbnailImg = $("<img>").addClass("album-pic");
+        thumbnailImg.attr("src", thumbnail);
+
+        //append song details together
+        nameContainer.append(songNameP, artistNameP);
+        favTrack.append(thumbnailImg);
+        favTrack.append(nameContainer);
+        //append song to list
+        favList.append(favTrack);
+
+        $("#favs-list").append(favList);
+    }
+}
 // listens for key strokes in the search
 $("#search-input").keyup(function (event) {
     //first remove the results from any previous search
@@ -360,7 +386,7 @@ $("#search-input").keyup(function (event) {
 $("#start-listening").on("click", function () {
     playPause();
 });
-
+// listens for click on top song or fav song
 $(document).on("click", ".ranked-song", function (event) {
     for (var i = 0; i < totalSongPlaylist.length; i++) {
         if (totalSongPlaylist[i][1].deezerID == $(this).attr("data-deezer")) {
@@ -370,7 +396,7 @@ $(document).on("click", ".ranked-song", function (event) {
                 songName: totalSongPlaylist[i][1].songName,
                 thumbnail: totalSongPlaylist[i][1].thumbnail,
                 preview: totalSongPlaylist[i][1].preview,
-                upvote: totalSongPlaylist[i][1].upvote,
+                upvote: 0,
                 deezerID: totalSongPlaylist[i][1].deezerID,
             });
 
@@ -392,8 +418,6 @@ $(document).on("click", ".search-result", function (event) {
                 deezerID: searchResultArr[i].id,
             });
 
-            renderQueue();
-
             $("#add-song-modal").modal("show").on("shown.bs.modal", function () {
                 window.setTimeout(function () {
                     $("#add-song-modal").modal("hide");
@@ -406,67 +430,78 @@ $(document).on("click", ".search-result", function (event) {
 $(document).on("click", "#clear-search", clearSearchResults);
 // listens for click on any upvote button
 $(document).on("click", ".upvote", function (event) {
-
     for (var i = 0; i < playlistArr.length; i++) {
         if (playlistArr[i][1].deezerID == $(this).attr("data-deezer")) {
-
+            var newLike = playlistArr[i];
             // add upvote to local playlist array
-            playlistArr[i][1].upvote++
+            newLike[1].upvote++
             if (likedSongs.length !== 0) {
+                var addSong = true;
                 for (var u = 0; u < likedSongs.length; u++) {
-                    if (likedSongs[u].deezerID !== playlistArr[i][1].deezerID) {
-                        // push to likedSongs and push likedSongs to local storage
-                        likedSongs.push(playlistArr[i][1]);
-                        localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
+                    if (newLike[1].deezerID == likedSongs[u].deezerID && addSong) {
+                        // likedSongs.push(playlistArr[i][1]);
+                        addSong = false;
+                        // renderFavs();
+                        // localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                     }
+                }
+                if (addSong) {
+                    likedSongs.push(newLike[1]);
+                    renderFavs();
+                    localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
                 }
             }
             else {
-                likedSongs.push(playlistArr[i][1]);
+                likedSongs.push(newLike[1]);
+                renderFavs();
                 localStorage.setItem("Liked Songs", JSON.stringify(likedSongs));
             }
+
             // variable to hold new upvote value
             var updates = {};
-            updates["/playlist/" + playlistArr[i][0] + "/upvote"] = playlistArr[i][1].upvote;
+            updates["/playlist/" + newLike[0] + "/upvote"] = newLike[1].upvote;
             // push to firebase
             return database.ref().update(updates);
         }
     }
     // update playlist with new upvote count
     renderQueue();
-
 });
 
 // pull liked songs from local storage to show on fav tab
 $(document).ready(function (event) {
-    if (Array.isArray(likedSongs)) {
-        var favs = JSON.parse(localStorage.getItem("Liked Songs"));
-        var favList = $("<ol>");
-        if (likedSongs.length !== 0) {
-            for (var i = 0; i < favs.length; i++) {
-                var favTrack = $("<div>").addClass("queued-song ranked-song");
-                var nameContainer = $("<div>").addClass("name-container");
-                var artistName = favs[i].artistName;
-                var songName = favs[i].songName;
-                var songNameP = $("<p>").text(songName).addClass("song-name");
-                var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-                //artwork
-                var thumbnail = favs[i].thumbnail;
-                var thumbnailImg = $("<img>").addClass("album-pic");
-                thumbnailImg.attr("src", thumbnail);
-
-                //append song details together
-                nameContainer.append(songNameP, artistNameP);
-                favTrack.append("<li></li>");
-                favTrack.append(thumbnailImg);
-                favTrack.append(nameContainer);
-                //append song to list
-                favList.append(favTrack);
-
-                $("#favs-list").append(favList);
-            }
-        }
+    if (localStorage.getItem("Liked Songs")) {
+        likedSongs = JSON.parse(localStorage.getItem("Liked Songs"));
+        renderFavs();
     }
+    // if (Array.isArray(likedSongs)) {
+    //     var favs = JSON.parse(localStorage.getItem("Liked Songs"));
+    //     var favList = $("<ol>");
+    //     if (likedSongs.length !== 0) {
+    //         for (var i = 0; i < favs.length; i++) {
+    //             var favTrack = $("<div>").addClass("queued-song ranked-song");
+    //             var nameContainer = $("<div>").addClass("name-container");
+    //             var artistName = favs[i].artistName;
+    //             var songName = favs[i].songName;
+    //             var songNameP = $("<p>").text(songName).addClass("song-name");
+    //             var artistNameP = $("<p>").text(artistName).addClass("artist-name");
+    //             //artwork
+    //             var thumbnail = favs[i].thumbnail;
+    //             var thumbnailImg = $("<img>").addClass("album-pic");
+    //             thumbnailImg.attr("src", thumbnail);
+
+    //             //append song details together
+    //             nameContainer.append(songNameP, artistNameP);
+    //             favTrack.append("<li></li>");
+    //             favTrack.append(thumbnailImg);
+    //             favTrack.append(nameContainer);
+    //             //append song to list
+    //             favList.append(favTrack);
+
+    //             $("#favs-list").append(favList);
+    //         }
+    //     }
+    // }
 });
 
 $(document).on("click", ".downvote", function (event) {
@@ -498,7 +533,6 @@ $(document).on("click", "#sign-in-submit", function (event) {
     $("#welcome-container").append(welcome);
     $("#sign-in-button").text("Sign out");
 });
-
 // set up playlist on page load
 $(document).ready(renderQueue());
 // checks local storage for existing username on page load
@@ -510,45 +544,36 @@ $(document).ready(function (event) {
         $("#welcome-container").append(welcomeBack);
     }
 });
-// checks local storage for favorite song on page load
-$(document).ready(function (event) {
-    if (Array.isArray(likedSongs)) {
-        var favs = JSON.parse(localStorage.getItem("Liked Songs"));
-        var favList = $("<ol>");
-        for (var i = 0; i < favs.length; i++) {
-            var favTrack = $("<div>").addClass("queued-song ranked-song");
-            var nameContainer = $("<div>").addClass("name-container");
-            var artistName = favs[i].artistName;
-            var songName = favs[i].songName;
-            var songNameP = $("<p>").text(songName).addClass("song-name");
-            var artistNameP = $("<p>").text(artistName).addClass("artist-name");
-            //artwork
-            var thumbnail = favs[i].thumbnail;
-            var thumbnailImg = $("<img>").addClass("album-pic");
-            thumbnailImg.attr("src", thumbnail);
-
-            //append song details together
-            nameContainer.append(songNameP, artistNameP);
-            favTrack.append("<li></li>");
-            favTrack.append(thumbnailImg);
-            favTrack.append(nameContainer);
-            //append song to list
-            favList.append(favTrack);
-
-            $("#favs-list").append(favList);
-        }
-    }
-});
 
 // listens for end of song 
 $("#song").on("ended", (event) => {
-    database.ref("/playedsongs").push(playlistArr[0][1]);
-    currentSong = "";
-    var removeSong = playlistArr[0][0];
-    // removes ended song from firebase
-    database.ref("/playlist/" + removeSong).remove();
+    var existing = false;
+    for (var i = 0; i < totalSongPlaylist.length; i++) {
+        if (totalSongPlaylist[i][1].deezerID == playlistArr[0][1].deezerID) {
+            existing = true;
+            console.log(totalSongPlaylist[i][0]);
+            var updates = {};
+            updates["/playedsongs/" + totalSongPlaylist[i][0] + "/upvote"] = totalSongPlaylist[i][1].upvote + playlistArr[0][1].upvote;
+            // push to firebase
+            database.ref().update(updates);
 
-    renderQueue();
+            currentSong = "";
+            var removeSong = playlistArr[0][0];
+            // removes song from firebase when song ends
+            database.ref("/playlist/" + removeSong).remove();
+            renderQueue();
+        }
+    }
+    if (!existing) {
+        database.ref("/playedsongs").push(playlistArr[0][1]);
+
+        currentSong = "";
+        var removeSong = playlistArr[0][0];
+        // removes song from firebase when song ends
+        database.ref("/playlist/" + removeSong).remove();
+        renderQueue();
+    }
+
     // check if there are more songs on the playlist
     if (playlistArr.length > 0) {
         playing = true;
@@ -562,10 +587,10 @@ $("#song").on("ended", (event) => {
 
 });
 
-
 // update livePlaylist variable when firebase is changed
 database.ref().on("value", function (snapshot) {
     livePlaylist = snapshot.val().playlist;
+    renderQueue();
 });
 // update totalSongPlaylist variable when firebase is changed
 database.ref("/playedsongs").on("value", function (snapshot) {
