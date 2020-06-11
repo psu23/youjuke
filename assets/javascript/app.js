@@ -181,7 +181,7 @@ function playPause() {
 function getLyrics() {
 
     for (var i = 0; i < playlistArr.length; i++) {
-        if (currentSong.deezerID == playlistArr[i][1].deezerID) {
+        if (currentSong[1].deezerID == playlistArr[i][1].deezerID) {
             var lyricTitle = playlistArr[i][1].songName;
             $(".music-lyrics-container").empty();
             var musicLyrics = $("<div>");
