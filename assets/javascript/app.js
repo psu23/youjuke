@@ -115,7 +115,7 @@ function renderQueue() {
         $("#current-track-box").append(queuedTrack);
     }
     // checks if song ID matches current song ID
-    for (var i = 1; i < playlistArr.length; i++) {
+    for (var i = 0; i < playlistArr.length; i++) {
         if (playlistArr[i][0] !== currentSong[0]) {
             //creates playlist format for each song
             var queuedTrack = $("<div>").addClass("queued-song");
@@ -459,8 +459,6 @@ $(document).on("click", ".upvote", function (event) {
             return database.ref().update(updates);
         }
     }
-    sortPlaylist(1);
-    renderQueue();
 });
 // pull liked songs from local storage to show on fav tab
 $(document).ready(function (event) {
